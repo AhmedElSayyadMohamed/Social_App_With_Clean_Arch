@@ -37,7 +37,6 @@ class RegisterScreenBodyState extends State<RegisterScreenBody> {
     return BlocConsumer<RegisterBloc, RegisterStates>(
       builder: (BuildContext context, RegisterStates state) {
         var cubit = RegisterBloc.get(context);
-
         return Center(
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
@@ -95,7 +94,7 @@ class RegisterScreenBodyState extends State<RegisterScreenBody> {
                       obSecureText: cubit.isSecure,
                       suffixIcon: const RegisterToggleEyeIcon(),
                       onFieldSubmitted: (value) =>
-                      _checkFormValidationAndRegisterWithEmailAndPassword,
+                          _checkFormValidationAndRegisterWithEmailAndPassword,
                       validator: (password) =>
                           PasswordValidation.checkPasswordValidation(password),
                     ),
@@ -110,7 +109,7 @@ class RegisterScreenBodyState extends State<RegisterScreenBody> {
                       obSecureText: cubit.isSecure,
                       suffixIcon: const RegisterToggleEyeIcon(),
                       onFieldSubmitted: (value) =>
-                      _checkFormValidationAndRegisterWithEmailAndPassword,
+                          _checkFormValidationAndRegisterWithEmailAndPassword,
                       validator: (password) =>
                           PasswordValidation.checkPasswordValidation(password),
                     ),
@@ -119,7 +118,7 @@ class RegisterScreenBodyState extends State<RegisterScreenBody> {
                     ),
                     RegisterButton(
                       onTap: () =>
-                      _checkFormValidationAndRegisterWithEmailAndPassword,
+                          _checkFormValidationAndRegisterWithEmailAndPassword,
                     ),
                   ],
                 ),
@@ -129,17 +128,24 @@ class RegisterScreenBodyState extends State<RegisterScreenBody> {
         );
       },
       listener: (BuildContext context, Object? state) {
-      if (state is RegisterSuccessState) {
-        // GeneralCubit.get(context).getUser();
-          Navigator.pushNamedAndRemoveUntil(context, Routes.layoutRoute, (route) => false);
-      }
-      else if (state is RegisterErrorState) {
-        Alarm.flutterToast(
+        if (state is RegisterSuccessState) {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            Routes.layoutRoute,
+            (route) => false,
+          );
+        } else if (state is RegisterErrorState) {
+          Alarm.flutterToast(
             massage: state.msg,
             toastState: ToastState.error,
-        );
-      }
-    },
+          );
+        } else if (state is UploadNewUserDataToFireStoreErrorState) {
+          Alarm.flutterToast(
+            massage: state.msg,
+            toastState: ToastState.error,
+          );
+        }
+      },
     );
   }
 

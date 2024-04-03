@@ -1,5 +1,8 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_app/feature/auth/domain/entities/user.dart';
+import '../../../data/models/user_model.dart';
 import '../../../domain/use_cases/base_auth_use_cases.dart';
 import '../../../domain/use_cases/register_use_case.dart';
 part 'register_event.dart';
@@ -12,15 +15,15 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterStates> {
   final SignUpUseCase _signUpUseCase;
 
   RegisterBloc(this._signUpUseCase) : super(RegisterInitial()) {
-    on<RegisterNewUserEvent>(_registerNewUserEvent);
+    on<RegisterNewUserEvent>(_registerNewUser);
+    on<UploadNewUserDataToFireStore>(_uploadNewUserDataToFireStore);
     on<TogglePasswordSecurityEyeEvent>(_togglePasswordSecurityEyeIcon);
   }
 
-  FutureOr<void> _registerNewUserEvent(
+  FutureOr<void> _registerNewUser(
     RegisterNewUserEvent event,
     Emitter<RegisterStates> emit,
   ) async {
-
     emit(RegisterLoadingState());
 
     final result = await _signUpUseCase(
@@ -30,10 +33,12 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterStates> {
       ),
     );
     result.fold(
-      (l) {
-        emit(RegisterErrorState(l.msg));
+      (left) {
+        emit(RegisterErrorState(left.msg));
       },
-      (r) {
+      (right) {
+
+        add(UploadNewUserDataToFireStore(right));
         emit(RegisterSuccessState());
       },
     );
@@ -45,5 +50,26 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterStates> {
   ) {
     isSecure = !isSecure;
     emit(RegisterPasswordSecurityState());
+  }
+
+  FutureOr<void> _uploadNewUserDataToFireStore(
+    UploadNewUserDataToFireStore event,
+    Emitter<RegisterStates> emit,
+  ) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(event.newUser.uId)
+        .set(event.newUser.toJson())
+        .then(
+      (value) {
+        emit(UploadNewUserDataToFireStoreSuccessState());
+        print('User data saved successfully!');
+      },
+    ).catchError(
+      (error) {
+        emit(UploadNewUserDataToFireStoreErrorState(error.toString()));
+        print('Error saving user data: $error');
+      },
+    );
   }
 }

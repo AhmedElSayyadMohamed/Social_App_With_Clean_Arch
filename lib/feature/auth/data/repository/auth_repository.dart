@@ -31,7 +31,7 @@ class AuthRepository extends BaseAuthRepository {
   }
 
   @override
-  Future<Either<Failure, UserEntity>> signUpWithEmailAndPassword({
+  Future<Either<Failure, UserModel>> signUpWithEmailAndPassword({
     required String email,
     required String password,
   }) async {

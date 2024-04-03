@@ -16,4 +16,10 @@ class RegisterNewUserEvent extends RegisterEvent{
     required this.password,
   });
 }
+class UploadNewUserDataToFireStore extends RegisterEvent{
+  final UserModel newUser;
+
+  UploadNewUserDataToFireStore(this.newUser);
+
+}
 class TogglePasswordSecurityEyeEvent extends RegisterEvent{}

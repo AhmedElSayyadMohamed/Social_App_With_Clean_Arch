@@ -11,3 +11,9 @@ class RegisterErrorState extends RegisterStates {
   final String msg;
   RegisterErrorState(this.msg);
 }
+class UploadNewUserDataToFireStoreLoadingState extends RegisterStates {}
+class UploadNewUserDataToFireStoreSuccessState extends RegisterStates {}
+class UploadNewUserDataToFireStoreErrorState extends RegisterStates {
+  final String msg;
+  UploadNewUserDataToFireStoreErrorState(this.msg);
+}
