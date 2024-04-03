@@ -19,21 +19,22 @@ class LoginBloc extends Bloc<LoginEvents, LoginStates> {
   FutureOr<void> _loginWithEmailAndPassword(
     LoginWithEmailAndPasswordEvent event,
     Emitter<LoginStates> emit,
-  ) async{
+  ) async {
     emit(LoginLoadingState());
-    final result = await loginUseCase(Parameters(
+    final result = await loginUseCase(
+      Parameters(
         email: event.email,
         password: event.password,
-      ),);
-      result.fold(
-              (l) {
-                print('hhhhh ${l.msg}');
-                emit(LoginErrorState(l.msg));
-              },
-              (r) {
-                emit(LoginSuccessState());
-              },
-      );
+      ),
+    );
+    result.fold(
+      (l) {
+        emit(LoginErrorState(l.msg));
+      },
+      (r) {
+        emit(LoginSuccessState());
+      },
+    );
   }
 
   FutureOr<void> _togglePasswordSecurityEyeIcon(

@@ -1,5 +1,4 @@
 class EmailValidator {
-
   static String? checkEmailValidation(String? email) {
     if (email!.isEmpty) {
       return 'Please Enter your email';
@@ -16,3 +15,5 @@ class EmailValidator {
     return emailRegex.hasMatch(email);
   }
 }
+
+

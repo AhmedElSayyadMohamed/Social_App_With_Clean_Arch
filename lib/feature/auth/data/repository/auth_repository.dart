@@ -34,8 +34,17 @@ class AuthRepository extends BaseAuthRepository {
   Future<Either<Failure, UserEntity>> signUpWithEmailAndPassword({
     required String email,
     required String password,
-  }) {
-    // TODO: implement signUpWithEmailAndPassword
-    throw UnimplementedError();
+  }) async {
+    final UserModel result;
+    try {
+      result = await _authDataSource.signUpWithEmailAndPassword(email, password);
+      return Right(result);
+    } on FirebaseAuthException catch (exception) {
+      return Left(
+        ServerErrorException(
+          msg: FirebaseAuthExceptionHandler.handleException(exception),
+        ),
+      );
+    }
   }
 }

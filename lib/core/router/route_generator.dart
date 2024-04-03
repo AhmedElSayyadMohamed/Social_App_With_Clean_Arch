@@ -4,6 +4,7 @@ import 'package:social_app/core/basics_shared_widgets/custom_text_button/custom_
 import 'package:social_app/core/router/routing_name.dart';
 import 'package:social_app/core/router/undefine_route.dart';
 import 'package:social_app/feature/auth/presentation/screens/login_screen/login_screen.dart';
+import 'package:social_app/feature/auth/presentation/screens/register_screen/register_screen.dart';
 import 'package:social_app/feature/layout_screen.dart';
 
 class RoutGenerator {
@@ -20,6 +21,10 @@ class RoutGenerator {
       case Routes.loginRoute:
         return MaterialPageRoute(
           builder: (_) => const LoginScreen(),
+        );
+      case Routes.signUpRoute:
+        return MaterialPageRoute(
+          builder: (_) => const RegisterScreen(),
         );
       case Routes.layoutRoute:
         return MaterialPageRoute(

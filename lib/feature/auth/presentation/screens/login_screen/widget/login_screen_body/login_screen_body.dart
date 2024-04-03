@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../../../../core/basics_shared_widgets/custom_button/custom_button.dart';
 import '../../../../../../../core/basics_shared_widgets/custom_text_form_field/custom_text_form_field.dart';
 import '../../../../../../../core/basics_shared_widgets/flutter_toast/flutter_toast.dart';
+import '../../../../../../../core/router/routing_name.dart';
 import '../../../../../../../core/validation/email_validation/email_validation.dart';
 import '../../../../../../../core/validation/password_validation/password_validation.dart';
 import '../../../../../../../utils/app_border/app_border.dart';
@@ -14,10 +13,10 @@ import '../../../../../../../utils/strings_manager/strings_manager.dart';
 import '../../../../business_logic/login_bloc/login_bloc.dart';
 import '../../../../business_logic/login_bloc/login_events.dart';
 import '../../../../business_logic/login_bloc/login_states.dart';
+import '../../../../widget/auth_title_widget/auth_title_widget.dart';
 import '../dont_have_account_text_widget/dont_have_account_text_widget.dart';
 import '../forget_password_button/forget_password_button.dart';
 import '../login_button/login_button.dart';
-import '../login_title_widget/login_title_widget.dart';
 import '../toggle_eye_icon/toggle_eye_icon.dart';
 
 class LoginScreenBody extends StatefulWidget {
@@ -34,10 +33,9 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LoginBloc, LoginStates>(
+    return BlocConsumer<LoginBloc, LoginStates>(
       builder: (context, state) {
         var cubit = LoginBloc.get(context);
-
         return Container(
           padding: const EdgeInsets.all(AppPadding.p20),
           decoration: BoxDecoration(
@@ -53,7 +51,9 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
               key: formKey,
               child: Column(
                 children: [
-                  const LoginTitleWidget(), // not rebuild
+                  const AuthenticationTitleWidget(
+                    screenName: StringsManager.signInTo,
+                  ), // not rebuild
                   const SizedBox(
                     height: AppSize.s3,
                   ), // not rebuild
@@ -91,6 +91,13 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
             ),
           ),
         );
+      },
+      listener: (BuildContext context, state) {
+        if(state is LoginErrorState){
+          Alarm.flutterToast(massage: state.error, toastState:ToastState.error);
+        }else if(state is LoginSuccessState){
+          Navigator.pushNamedAndRemoveUntil(context,Routes.layoutRoute,(_)=>false);
+        }
       },
     );
   }

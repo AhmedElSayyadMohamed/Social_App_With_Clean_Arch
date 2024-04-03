@@ -1,10 +1,10 @@
-
 import 'package:flutter/material.dart';
-
 import '../../../../../../../utils/strings_manager/strings_manager.dart';
 
-class LoginTitleWidget extends StatelessWidget{
-  const LoginTitleWidget({super.key});
+class AuthenticationTitleWidget extends StatelessWidget{
+  final String screenName;
+  const AuthenticationTitleWidget({super.key, required this.screenName});
+
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class LoginTitleWidget extends StatelessWidget{
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          StringsManager.signInTo,
+          screenName,
           style: Theme.of(context).textTheme.titleMedium,
         ),
         Text(
