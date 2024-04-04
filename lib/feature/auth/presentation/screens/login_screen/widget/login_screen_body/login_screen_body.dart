@@ -21,7 +21,6 @@ import '../toggle_eye_icon/toggle_eye_icon.dart';
 
 class LoginScreenBody extends StatefulWidget {
   const LoginScreenBody({super.key});
-
   @override
   State<LoginScreenBody> createState() => _LoginScreenBodyState();
 }
@@ -96,7 +95,7 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
         if(state is LoginErrorState){
           Alarm.flutterToast(massage: state.error, toastState:ToastState.error);
         }else if(state is LoginSuccessState){
-          Navigator.pushNamedAndRemoveUntil(context,Routes.layoutRoute,(_)=>false);
+          Navigator.pushNamedAndRemoveUntil(context,Routes.layoutRoute,arguments:state.user,(_)=>false);
         }
       },
     );

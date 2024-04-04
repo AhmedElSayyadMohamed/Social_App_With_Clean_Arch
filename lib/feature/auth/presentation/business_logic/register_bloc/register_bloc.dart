@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:social_app/feature/auth/domain/entities/user.dart';
 import '../../../data/models/user_model.dart';
 import '../../../domain/use_cases/base_auth_use_cases.dart';
 import '../../../domain/use_cases/register_use_case.dart';
@@ -44,13 +43,6 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterStates> {
     );
   }
 
-  FutureOr<void> _togglePasswordSecurityEyeIcon(
-    TogglePasswordSecurityEyeEvent event,
-    Emitter<RegisterStates> emit,
-  ) {
-    isSecure = !isSecure;
-    emit(RegisterPasswordSecurityState());
-  }
 
   FutureOr<void> _uploadNewUserDataToFireStore(
     UploadNewUserDataToFireStore event,
@@ -72,4 +64,14 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterStates> {
       },
     );
   }
+
+
+  FutureOr<void> _togglePasswordSecurityEyeIcon(
+      TogglePasswordSecurityEyeEvent event,
+      Emitter<RegisterStates> emit,
+      ) {
+    isSecure = !isSecure;
+    emit(RegisterPasswordSecurityState());
+  }
+
 }

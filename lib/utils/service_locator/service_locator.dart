@@ -7,13 +7,15 @@ import 'package:social_app/feature/auth/presentation/business_logic/register_blo
 import '../../feature/auth/data/repository/auth_repository.dart';
 import '../../feature/auth/domain/base_repository/base_auth_repository.dart';
 import '../../feature/auth/domain/use_cases/login_use_case.dart';
+import '../../feature/layout/presentation/bussiness_logic/social_bloc.dart';
 
 final sl = GetIt.instance;
 class ServiceLocator{
 
-  static void get setUp {
+  static Future<void> get setUp async {
 
     // bloc
+    sl.registerLazySingleton(() => SocialBloc());
     sl.registerLazySingleton(() => LoginBloc(sl()));
     sl.registerLazySingleton(() => RegisterBloc(sl()));
 

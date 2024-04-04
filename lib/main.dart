@@ -6,10 +6,18 @@ import 'application_root/application.dart';
 import 'core/bloc_observer/bloc_observer.dart';
 
 void main() async {
+  // Ensure Flutter bindings are initialized
   WidgetsFlutterBinding.ensureInitialized();
-  ServiceLocator.setUp;
-  await Firebase.initializeApp();
+
+  // Set up ServiceLocator and initialize Firebase asynchronously
+  await Future.wait([
+    ServiceLocator.setUp,
+    Firebase.initializeApp(),
+  ]);
+
+  // Set up Bloc observer
   Bloc.observer = const AppBlocObserver();
 
+  // Run the app
   runApp(SocialApp());
 }

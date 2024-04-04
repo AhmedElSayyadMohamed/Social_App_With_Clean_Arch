@@ -15,6 +15,7 @@ class StringsManager{
   static const String msgPasswordInCorrect = 'Wrong password provided for that user.';
   static const String defaultErrorMsg = 'An error occurred';
   static const String welcome = 'Welcome in Our ';
+  static const String layoutTitle = 'Feeds';
 
 
 }

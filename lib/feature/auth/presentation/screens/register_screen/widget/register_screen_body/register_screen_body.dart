@@ -107,7 +107,6 @@ class RegisterScreenBodyState extends State<RegisterScreenBody> {
                       keyboardType: TextInputType.emailAddress,
                       formBorderRadius: AppPadding.p20,
                       obSecureText: cubit.isSecure,
-                      suffixIcon: const RegisterToggleEyeIcon(),
                       onFieldSubmitted: (value) =>
                           _checkFormValidationAndRegisterWithEmailAndPassword,
                       validator: (password) =>
@@ -128,7 +127,7 @@ class RegisterScreenBodyState extends State<RegisterScreenBody> {
         );
       },
       listener: (BuildContext context, Object? state) {
-        if (state is RegisterSuccessState) {
+        if (state is UploadNewUserDataToFireStoreSuccessState) {
           Navigator.pushNamedAndRemoveUntil(
             context,
             Routes.layoutRoute,
