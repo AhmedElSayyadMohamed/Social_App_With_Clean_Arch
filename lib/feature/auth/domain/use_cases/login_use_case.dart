@@ -12,8 +12,8 @@ class LoginWithEmailAndPasswordUseCase extends BaseAuthUseCases<UserEntity,Param
   @override
   Future<Either<Failure, UserEntity>> call(Parameters parameter) async {
     return await _baseRepository.loginWithEmailAndPassword(
-        email:parameter.email,
-        password:parameter.password,
+        email:parameter.email!,
+        password:parameter.password!,
     );
   }
 }

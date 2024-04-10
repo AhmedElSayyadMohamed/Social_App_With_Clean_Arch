@@ -1,0 +1,33 @@
+
+import 'package:social_app/feature/profile/domain/entities/user.dart';
+
+class UserModel extends UserEntity {
+  const UserModel({
+    required super.uId,
+    required super.photo,
+    required super.name,
+    required super.phone,
+    required super.email,
+    required super.profileCover,
+    required super.bio,
+  });
+
+  factory UserModel.fromJson(user) => UserModel(
+        uId: user['uid'],
+        email: user['email'],
+        photo: user['image'],
+        name:user['name'],
+        phone:  user['phone'],
+        profileCover:user['profileCover'],
+        bio: user['bio'],
+      );
+
+  Map<String, dynamic> toJson() => {
+        'profileCover': profileCover,
+        'image': photo,
+        'name': name,
+        'bio': bio,
+        'email': email,
+        'phone': phone,
+      };
+}

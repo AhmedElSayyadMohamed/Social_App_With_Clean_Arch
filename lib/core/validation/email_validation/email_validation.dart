@@ -5,6 +5,9 @@ class EmailValidator {
     } else if (!validate(email)) {
       return 'email is\'t validate plz try to write valid email';
     }
+    else {
+      return null;
+    }
   }
 
   static bool validate(String email) {

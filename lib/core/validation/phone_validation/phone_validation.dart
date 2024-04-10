@@ -4,6 +4,8 @@ class PhoneValidator {
       return 'Please Enter your phoneNumber';
     } else if (!validate(phoneNumber)) {
       return 'phoneNumber is\'t validate plz try to write valid phoneNumber';
+    } else {
+      return null;
     }
   }
 

@@ -14,18 +14,20 @@ class LoginScreen extends StatelessWidget {
     return BlocProvider(
       create: (BuildContext context) => sl<LoginBloc>(),
       child: Scaffold(
-        body: Stack(
-          children: [
-            Image.asset(
-              ImagesManager.loginImage,
-              width: context.screenWidth,
-              height: context.heightPercent(AppSize.s4),
-            ), //not rebuild
-            const Align(
-              alignment: Alignment.bottomCenter,
-              child: LoginScreenBody(),
-            ),
-          ],
+        body: SafeArea(
+          child: Stack(
+            children: [
+              Image.asset(
+                ImagesManager.loginImage,
+                width: context.screenWidth,
+                height: context.heightPercent(AppSize.s4),
+              ), //not rebuild
+              const Align(
+                alignment: Alignment.bottomCenter,
+                child: LoginScreenBody(),
+              ),
+            ],
+          ),
         ),
       ),
     );

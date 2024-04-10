@@ -32,7 +32,7 @@ class LoginBloc extends Bloc<LoginEvents, LoginStates> {
         emit(LoginErrorState(l.msg));
       },
       (r) {
-        emit(LoginSuccessState(r));
+        emit(LoginSuccessState());
       },
     );
   }

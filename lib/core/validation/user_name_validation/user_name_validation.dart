@@ -4,6 +4,8 @@ class NameValidator {
       return 'Please Enter your name';
     } else if (username.toString().length < 8) {
       return 'name is\'t validate plz write minimum 8 char';
+    } else {
+      return null;
     }
   }
 }

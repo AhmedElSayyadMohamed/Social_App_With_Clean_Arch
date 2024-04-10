@@ -38,10 +38,10 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
         return Container(
           padding: const EdgeInsets.all(AppPadding.p20),
           decoration: BoxDecoration(
-            color: Colors.lightBlue[50],
+            color: Colors.indigo[50]!.withOpacity(0.6),
             borderRadius: const BorderRadiusDirectional.only(
-              topStart: Radius.circular(AppBorder.b28),
-              topEnd: Radius.circular(AppBorder.b28),
+              topStart: Radius.circular(AppBorder.b24),
+              topEnd: Radius.circular(AppBorder.b24),
             ),
           ),
           child: SingleChildScrollView(
@@ -60,7 +60,7 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
                     controller: emailController,
                     textFormLabel: StringsManager.email,
                     keyboardType: TextInputType.emailAddress,
-                    formBorderRadius: AppPadding.p20,
+                    formBorderRadius: AppPadding.p12,
                     validator: (email) =>
                         EmailValidator.checkEmailValidation(email),
                   ),
@@ -71,7 +71,7 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
                     controller: passwordController,
                     textFormLabel: StringsManager.password,
                     keyboardType: TextInputType.emailAddress,
-                    formBorderRadius: AppPadding.p20,
+                    formBorderRadius: AppPadding.p12,
                     obSecureText: cubit.isSecure,
                     suffixIcon: const ToggleEyeIcon(),
                     onFieldSubmitted: (value) =>
@@ -95,7 +95,7 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
         if(state is LoginErrorState){
           Alarm.flutterToast(massage: state.error, toastState:ToastState.error);
         }else if(state is LoginSuccessState){
-          Navigator.pushNamedAndRemoveUntil(context,Routes.layoutRoute,arguments:state.user,(_)=>false);
+          Navigator.pushNamedAndRemoveUntil(context,Routes.layoutRoute,(_)=>false);
         }
       },
     );

@@ -12,8 +12,7 @@ class UserModel extends UserEntity {
     required super.bio,
   });
 
-  factory UserModel.fromJson(UserCredential userCredential) =>
-      UserModel(
+  factory UserModel.fromJson(UserCredential userCredential) => UserModel(
         uId: userCredential.user!.uid,
         email: userCredential.user!.email ?? 'example@example.com',
         photo: userCredential.user!.photoURL ??

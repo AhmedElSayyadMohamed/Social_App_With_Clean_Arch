@@ -4,10 +4,16 @@ import 'package:social_app/feature/auth/data/data_source/data_source.dart';
 import 'package:social_app/feature/auth/domain/use_cases/register_use_case.dart';
 import 'package:social_app/feature/auth/presentation/business_logic/login_bloc/login_bloc.dart';
 import 'package:social_app/feature/auth/presentation/business_logic/register_bloc/register_bloc.dart';
+import 'package:social_app/feature/profile/presentation/business_logic/profile_bloc.dart';
 import '../../feature/auth/data/repository/auth_repository.dart';
 import '../../feature/auth/domain/base_repository/base_auth_repository.dart';
 import '../../feature/auth/domain/use_cases/login_use_case.dart';
 import '../../feature/layout/presentation/bussiness_logic/social_bloc.dart';
+import '../../feature/profile/data/data_source/base_data_source.dart';
+import '../../feature/profile/data/data_source/data_source.dart';
+import '../../feature/profile/data/repository/profile_repository.dart';
+import '../../feature/profile/domain/base_repository/base_profile_repository.dart';
+import '../../feature/profile/domain/use_cases/get_user_data.dart';
 
 final sl = GetIt.instance;
 class ServiceLocator{
@@ -18,15 +24,19 @@ class ServiceLocator{
     sl.registerLazySingleton(() => SocialBloc());
     sl.registerLazySingleton(() => LoginBloc(sl()));
     sl.registerLazySingleton(() => RegisterBloc(sl()));
+    sl.registerLazySingleton(() => ProfileBloc(sl()));
 
     //use cases
     sl.registerLazySingleton(() => LoginWithEmailAndPasswordUseCase(sl()));
     sl.registerLazySingleton(() => SignUpUseCase(sl()));
+    sl.registerLazySingleton(() => GetUserDataUseCase(sl()));
 
     // auth repository
     sl.registerLazySingleton<BaseAuthRepository>(() => AuthRepository(sl()));
+    sl.registerLazySingleton<BaseProfileRepository>(() => ProfileRepository(sl()));
 
     // auth datasource
     sl.registerLazySingleton<BaseAuthDataSource>(() => AuthDataSource());
+    sl.registerLazySingleton<BaseProfileRemoteDataSource>(() => ProfileRemoteDataSource());
   }
 }

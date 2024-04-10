@@ -3,23 +3,22 @@ import 'package:equatable/equatable.dart';
 import '../../../../core/network/failure/failure.dart';
 
 abstract class BaseAuthUseCases<T, Parameters> {
-
   Future<Either<Failure, T>> call(Parameters parameter);
 }
 
-
 class Parameters extends Equatable {
-
-  final String email;
-  final String password;
+  final String? uId;
+  final String? email;
+  final String? password;
 
   const Parameters({
-    required this.email,
-    required this.password,
+    this.uId,
+    this.email,
+    this.password,
   });
 
   @override
-  List<Object> get props => [email, password];
+  List<Object?> get props => [uId, email, password];
 }
-class NoParameters{}
 
+class NoParameters {}

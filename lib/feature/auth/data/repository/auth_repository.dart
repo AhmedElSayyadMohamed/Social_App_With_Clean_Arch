@@ -12,15 +12,17 @@ class AuthRepository extends BaseAuthRepository {
   final BaseAuthDataSource _authDataSource;
   AuthRepository(this._authDataSource);
 
+
   @override
   Future<Either<Failure, UserEntity>> loginWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
-    final UserModel result;
+    final UserModel userModel;
     try {
-      result = await _authDataSource.loginWithEmailAndPassword(email, password);
-      return Right(result);
+      userModel = await _authDataSource
+          .loginWithEmailAndPassword(email, password);
+      return Right(userModel);
     } on FirebaseAuthException catch (exception) {
       return Left(
         ServerErrorException(
@@ -37,7 +39,8 @@ class AuthRepository extends BaseAuthRepository {
   }) async {
     final UserModel result;
     try {
-      result = await _authDataSource.signUpWithEmailAndPassword(email, password);
+      result =
+          await _authDataSource.signUpWithEmailAndPassword(email, password);
       return Right(result);
     } on FirebaseAuthException catch (exception) {
       return Left(

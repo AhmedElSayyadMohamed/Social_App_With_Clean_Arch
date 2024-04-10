@@ -16,6 +16,7 @@ class StringsManager{
   static const String defaultErrorMsg = 'An error occurred';
   static const String welcome = 'Welcome in Our ';
   static const String layoutTitle = 'Feeds';
+  static const String follow = "Follow";
 
 
 }

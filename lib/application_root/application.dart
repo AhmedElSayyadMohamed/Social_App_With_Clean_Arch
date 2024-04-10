@@ -3,7 +3,6 @@ import '../core/router/route_generator.dart';
 import '../core/router/routing_name.dart';
 import '../core/theme/light_mode_theme.dart';
 import '../utils/strings_manager/strings_manager.dart';
-import 'controller.dart';
 
 
 class SocialApp extends StatelessWidget {
