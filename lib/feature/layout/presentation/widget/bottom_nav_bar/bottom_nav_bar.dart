@@ -1,10 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/core/extension/responsive_context.dart';
 import 'package:social_app/core/icon_broken/icon_broken.dart';
 import 'package:social_app/feature/layout/presentation/bussiness_logic/social_bloc.dart';
 import 'package:social_app/utils/app_padding/app_padding.dart';
+import '../../../../../core/router/routing_name.dart';
 import '../../../../../utils/app_border/app_border.dart';
 import '../../../../../utils/service_locator/service_locator.dart';
 
@@ -48,7 +48,9 @@ class CustomBottomNavBar extends StatelessWidget {
                   ),
                   Expanded(
                     child: InkWell(
-                      onTap: () =>sl<SocialBloc>().add(ToggleNavBarIndexEvent(2)),
+                      onTap: () {
+                        Navigator.pushNamed(context, Routes.createPost);
+                      },
                       borderRadius: BorderRadius.circular(20),
                       child: CircleAvatar(
                         backgroundColor: Colors.orange,
@@ -61,19 +63,19 @@ class CustomBottomNavBar extends StatelessWidget {
                     ),
                   ),
                   IconButton(
-                    onPressed: () =>sl<SocialBloc>().add(ToggleNavBarIndexEvent(3)),
+                    onPressed: () =>sl<SocialBloc>().add(ToggleNavBarIndexEvent(2)),
                     icon: Icon(
                       IconBroken.Notification,
-                      color:bloc.selectedIconColor(3),
-                      size: bloc.selectedIconSize(3),
+                      color:bloc.selectedIconColor(2),
+                      size: bloc.selectedIconSize(2),
                     ),
                   ),
                   IconButton(
-                    onPressed: () => sl<SocialBloc>().add(ToggleNavBarIndexEvent(4)),
+                    onPressed: () => sl<SocialBloc>().add(ToggleNavBarIndexEvent(3)),
                     icon: Icon(
                       IconBroken.Setting,
-                      color:bloc.selectedIconColor(4),
-                      size: bloc.selectedIconSize(4),
+                      color:bloc.selectedIconColor(3),
+                      size: bloc.selectedIconSize(3),
                     ),
                   ),
                 ],

@@ -23,6 +23,7 @@ class UserModel extends UserEntity {
       );
 
   Map<String, dynamic> toJson() => {
+        'uid':uId,
         'profileCover': profileCover,
         'image': photo,
         'name': name,

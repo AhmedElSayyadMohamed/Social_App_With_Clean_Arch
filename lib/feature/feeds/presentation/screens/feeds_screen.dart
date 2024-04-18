@@ -1,6 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../../../../core/basics_shared_widgets/custom_text_button/custom_text_button.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_app/feature/feeds/presentation/bussiness_logic/feeds_bloc.dart';
+import '../../../../utils/service_locator/service_locator.dart';
 import '../widgets/all_posts/all_posts.dart';
 import '../widgets/friends_status/friends_status.dart';
 
@@ -10,21 +11,15 @@ class FeedsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          const FriendsStatus(),
-          Container(
-            color: Colors.redAccent,
-            child: CustomTextButton(
-              onTap: () async {
-                await FirebaseAuth.instance.signOut();
-              },
-              buttonLabel: 'logout',
-            ),
-          ),
-          const AllPosts(),
-        ],
+    return BlocProvider(
+      create: (BuildContext context)=>sl<FeedsBloc>(),
+      child: const SingleChildScrollView(
+        child: Column(
+          children: [
+            FriendsStatus(),
+            AllPosts(),
+          ],
+        ),
       ),
     );
   }

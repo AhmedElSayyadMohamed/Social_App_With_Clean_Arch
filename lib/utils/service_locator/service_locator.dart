@@ -8,6 +8,7 @@ import 'package:social_app/feature/profile/presentation/business_logic/profile_b
 import '../../feature/auth/data/repository/auth_repository.dart';
 import '../../feature/auth/domain/base_repository/base_auth_repository.dart';
 import '../../feature/auth/domain/use_cases/login_use_case.dart';
+import '../../feature/feeds/presentation/bussiness_logic/feeds_bloc.dart';
 import '../../feature/layout/presentation/bussiness_logic/social_bloc.dart';
 import '../../feature/profile/data/data_source/base_data_source.dart';
 import '../../feature/profile/data/data_source/data_source.dart';
@@ -24,7 +25,8 @@ class ServiceLocator{
     sl.registerLazySingleton(() => SocialBloc());
     sl.registerLazySingleton(() => LoginBloc(sl()));
     sl.registerLazySingleton(() => RegisterBloc(sl()));
-    sl.registerLazySingleton(() => ProfileBloc(sl()));
+    sl.registerFactory(() => ProfileBloc(sl()));
+    sl.registerFactory(() => FeedsBloc());
 
     //use cases
     sl.registerLazySingleton(() => LoginWithEmailAndPasswordUseCase(sl()));

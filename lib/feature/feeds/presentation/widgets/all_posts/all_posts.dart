@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../bussiness_logic/feeds_bloc.dart';
 import '../post_item.dart';
+
 
 class AllPosts extends StatelessWidget {
   const AllPosts({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return  ListView.builder(
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) => const PostWidget(),
-      itemCount: 8,
+    return BlocBuilder<FeedsBloc, FeedsStates>(
+      builder: (context, state) {
+        return ListView.builder(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (context, index) => const PostWidget(),
+          itemCount: 8,
+        );
+      },
     );
   }
 }

@@ -6,6 +6,7 @@ import 'package:social_app/feature/auth/presentation/screens/login_screen/login_
 import 'package:social_app/feature/auth/presentation/screens/register_screen/register_screen.dart';
 import 'package:social_app/feature/layout/presentation/screen/layout_screen.dart';
 
+import '../../feature/feeds/presentation/screens/add_post.dart';
 import '../../feature/profile/presentation/screen/user_profile_screen.dart';
 
 class RoutGenerator {
@@ -35,6 +36,10 @@ class RoutGenerator {
       case Routes.profileRoute:
         return MaterialPageRoute(
           builder: (_) => const ProfileScreen(),
+        );
+        case Routes.createPost:
+        return MaterialPageRoute(
+          builder: (_) => CreatePostScreen(),
         );
 
       default:
