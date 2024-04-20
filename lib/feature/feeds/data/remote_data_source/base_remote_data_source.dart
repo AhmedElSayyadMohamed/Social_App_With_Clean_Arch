@@ -1,3 +1,6 @@
+import '../../domain/entities/post.dart';
+
 abstract class BaseFeedRemoteDataSource{
-  Future<void> createPostWithImage();
+  Future<String?> uploadPostImageToFireStorage(String imageFile);
+  Future<void> createPostWithImage(Post post);
 }

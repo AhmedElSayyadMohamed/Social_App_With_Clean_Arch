@@ -2,11 +2,11 @@ part of 'feeds_bloc.dart';
 
 abstract class FeedsEvent {}
 class PickPostImageFromGalleryEvent extends FeedsEvent{}
+class UploadPostImageToFireStorageEvent extends FeedsEvent{}
+
 class CreatePostWithImageEvent extends FeedsEvent{
   final String text;
-  final String postImage;
-
-  CreatePostWithImageEvent(this.text, this.postImage);
+  CreatePostWithImageEvent(this.text);
 }
 class CreatePostWithoutImageEvent extends FeedsEvent{
   final String text;

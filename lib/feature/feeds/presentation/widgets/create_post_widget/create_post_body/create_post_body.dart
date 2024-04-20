@@ -5,34 +5,33 @@ import '../../../bussiness_logic/feeds_bloc.dart';
 
 class CreatePostScreenBody extends StatelessWidget {
   CreatePostScreenBody({super.key});
-  final postController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 5,
-            ),
-            TextFormField(
-              controller: postController,
-              keyboardType: TextInputType.text,
-              maxLines: null,
-              decoration: InputDecoration(
-                hintText: "What is in your mind ?",
-                hintStyle: Theme.of(context)
-                    .textTheme
-                    .bodyLarge!
-                    .copyWith(color: Colors.grey),
-                border: InputBorder.none,
-              ),
-            ),
-            BlocBuilder<FeedsBloc, FeedsStates>(
-              builder: (context, state) {
-                var bloc = FeedsBloc.get(context);
-                return Visibility(
+        child: BlocBuilder<FeedsBloc, FeedsStates>(
+          builder: (context, state) {
+            var bloc = FeedsBloc.get(context);
+            return Column(
+              children: [
+                const SizedBox(
+                  height: 5,
+                ),
+                TextFormField(
+                  controller: bloc.postController,
+                  keyboardType: TextInputType.text,
+                  maxLines: null,
+                  decoration: InputDecoration(
+                    hintText: "What is in your mind ?",
+                    hintStyle: Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .copyWith(color: Colors.grey),
+                    border: InputBorder.none,
+                  ),
+                ),
+                Visibility(
                   visible: bloc.imageFile != '',
                   child: Stack(
                     children: [
@@ -59,10 +58,10 @@ class CreatePostScreenBody extends StatelessWidget {
                       )
                     ],
                   ),
-                );
-              },
-            ),
-          ],
+                )
+              ],
+            );
+          },
         ),
       ),
     );

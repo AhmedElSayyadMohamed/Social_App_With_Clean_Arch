@@ -10,6 +10,17 @@ class CreatePostWithImageLoadingState extends FeedsStates {}
 class CreatePostWithImageSuccessState extends FeedsStates {}
 class CreatePostWithImageErrorState extends FeedsStates {}
 
+class UploadPostImageLoadingState extends FeedsStates {}
+class UploadPostImageSuccessState extends FeedsStates {
+  final String? imageUrl;
+  get getImageUrl => imageUrl;
+  UploadPostImageSuccessState({this.imageUrl});
+}
+class UploadPostImageErrorState extends FeedsStates {
+  final String msg;
+  UploadPostImageErrorState(this.msg);
+}
+
 class CreatePostWithoutImageLoadingState extends FeedsStates {}
 class CreatePostWithoutImageSuccessState extends FeedsStates {}
 class CreatePostWithoutImageErrorState extends FeedsStates {}

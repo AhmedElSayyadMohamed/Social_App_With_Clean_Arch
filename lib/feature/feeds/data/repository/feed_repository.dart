@@ -1,8 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
-import 'package:social_app/core/network/failure/failure.dart';
 import 'package:social_app/feature/feeds/data/remote_data_source/base_remote_data_source.dart';
 import 'package:social_app/feature/feeds/domain/base_repository/base_feed_repository.dart';
+import 'package:social_app/feature/feeds/domain/entities/post.dart';
+import '../../../../core/network/failure/failure.dart';
 
 class FeedRepository extends BaseFeedRepository {
   final BaseFeedRemoteDataSource feedRemoteDataSource;
@@ -10,8 +10,19 @@ class FeedRepository extends BaseFeedRepository {
   FeedRepository(this.feedRemoteDataSource);
 
   @override
-  Future<Either<Failure, void>> createPostWithImage() async {
-    final result = await feedRemoteDataSource.createPostWithImage();
+  Future<Either<Failure, String?>> uploadPostImageToFireStorage(String imageFile) async {
+    final result = await feedRemoteDataSource.uploadPostImageToFireStorage(imageFile);
+    try {
+      print('feeeeeed post image : $result');
+      return Right(result);
+    } catch (error) {
+      return Left(ServerErrorException(msg: error.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> createPostWithImage(Post post) async{
+    final result = await feedRemoteDataSource.createPostWithImage(post);
     try {
       return Right(result);
     } catch (error) {

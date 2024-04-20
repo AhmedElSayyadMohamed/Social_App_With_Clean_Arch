@@ -7,7 +7,9 @@ abstract class BaseFeedUseCases<T, Parameter> {
 }
 
 class Parameters{
+ final String imageFile;
 
+ Parameters(this.imageFile);
 }
 
 class NoParameters {}

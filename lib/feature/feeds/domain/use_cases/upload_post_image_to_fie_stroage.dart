@@ -4,14 +4,13 @@ import 'package:social_app/feature/feeds/domain/use_cases/base_feeds_use_cases.d
 
 import '../base_repository/base_feed_repository.dart';
 
-class CreatePostWithImageUseCase extends BaseFeedUseCases<void,NoParameters>{
+class UploadImageToFireStorageUseCase extends BaseFeedUseCases<String?,Parameters>{
  final BaseFeedRepository feedRepository;
 
- CreatePostWithImageUseCase(this.feedRepository);
+ UploadImageToFireStorageUseCase(this.feedRepository);
 
   @override
-  Future<Either<Failure, dynamic>> call(parameter) {
-     return feedRepository.createPostWithImage();
+  Future<Either<Failure, String?>> call(Parameters parameter) async{
+     return await feedRepository.uploadPostImageToFireStorage(parameter.imageFile);
   }
-
 }
