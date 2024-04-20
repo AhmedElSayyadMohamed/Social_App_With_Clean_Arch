@@ -10,10 +10,9 @@ class FeedRepository extends BaseFeedRepository {
   FeedRepository(this.feedRemoteDataSource);
 
   @override
-  Future<Either<Failure, String?>> uploadPostImageToFireStorage(String imageFile) async {
+  Future<Either<Failure, String>> uploadPostImageToFireStorage(String imageFile) async {
     final result = await feedRemoteDataSource.uploadPostImageToFireStorage(imageFile);
     try {
-      print('feeeeeed post image : $result');
       return Right(result);
     } catch (error) {
       return Left(ServerErrorException(msg: error.toString()));

@@ -9,7 +9,7 @@ import '../../domain/entities/post.dart';
 
 class FeedsRemoteDataSource extends BaseFeedRemoteDataSource {
   @override
-  Future<String?> uploadPostImageToFireStorage(String imageFile) async {
+  Future<String> uploadPostImageToFireStorage(String imageFile) async {
     // get instance from fireStorage
     FirebaseStorage storage = FirebaseStorage.instance;
 
@@ -37,7 +37,7 @@ class FeedsRemoteDataSource extends BaseFeedRemoteDataSource {
       likes: post.likes,
       tags: post.tags,
     );
-
+print(post);
     await FirebaseFirestore.instance
         .collection('UsersPosts')
         .doc(currentUserId)

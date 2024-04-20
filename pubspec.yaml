@@ -31,7 +31,6 @@ dependencies:
   firebase_storage:
   firebase_messaging: ^14.8.0
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter

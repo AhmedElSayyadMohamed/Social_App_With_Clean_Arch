@@ -24,14 +24,12 @@ class FeedsBloc extends Bloc<FeedsEvent, FeedsStates> {
   final UploadImageToFireStorageUseCase uploadImageToFireStorageUseCase;
   final CreatePostWithImageUseCase createPostWithImageUseCase;
 
-
   FeedsBloc(
-      this.uploadImageToFireStorageUseCase,
-      this.createPostWithImageUseCase,
-      )
-      : super(FeedsInitial()) {
+    this.uploadImageToFireStorageUseCase,
+    this.createPostWithImageUseCase,
+  ) : super(FeedsInitial()) {
     on<PickPostImageFromGalleryEvent>(_pickImageFromGallery);
-    on<UploadPostImageToFireStorageEvent>(_uploadPostImageToFireStorage);
+    // on<UploadPostImageToFireStorageEvent>(_uploadPostImageToFireStorage);
     on<CreatePostWithImageEvent>(_createPostWithImage);
     on<CreatePostWithoutImageEvent>(_createPost);
   }
@@ -95,43 +93,42 @@ class FeedsBloc extends Bloc<FeedsEvent, FeedsStates> {
     Emitter<FeedsStates> emit,
   ) async {
     emit(CreatePostWithImageLoadingState());
-    add(UploadPostImageToFireStorageEvent());
-    if (FeedsStates is UploadPostImageSuccessState) {
-      final result = await createPostWithImageUseCase(
-        Post(
-          uId: currentUserId,
-          date: DateTime.now().toString(),
-          image: UploadPostImageSuccessState().getImageUrl,
-          containText: event.text,
-          comments: const [],
-          likes: const [],
-          tags: const [],
-        ),
-      );
-      result.fold(
-        (l) {
-          print(l.msg);
-          emit(CreatePostWithImageErrorState());
-        },
-        (r) {
-          print(r);
-          emit(CreatePostWithImageSuccessState());
-        },
-      );
-    }
+    await _uploadPostImageToFireStorage().then((imageUrl) async{
+        final result = await createPostWithImageUseCase(
+          Post(
+            uId: currentUserId,
+            date: DateTime.now().toString(),
+            image: imageUrl,
+            containText: event.text,
+            comments: const [],
+            likes: const [],
+            tags: const [],
+          ),
+        );
+        result.fold(
+              (l) {
+            emit(CreatePostWithImageErrorState());
+          },
+              (r) {
+            emit(CreatePostWithImageSuccessState());
+          },
+        );
+
+
+    });
   }
 
-  FutureOr<void> _uploadPostImageToFireStorage(
-    UploadPostImageToFireStorageEvent event,
-    Emitter<FeedsStates> emit,
-  ) async {
+  Future<String> _uploadPostImageToFireStorage() async {
+    late String imageUrl;
     emit(UploadPostImageLoadingState());
+
     final result = await uploadImageToFireStorageUseCase(Parameters(imageFile));
     result.fold((l) {
       emit(UploadPostImageErrorState(l.msg));
-      throw ServerErrorException(msg: l.msg);
-    }, (imageUrl) {
+    }, (image) {
+      imageUrl = image;
       emit(UploadPostImageSuccessState(imageUrl: imageUrl));
     });
+    return imageUrl;
   }
 }
