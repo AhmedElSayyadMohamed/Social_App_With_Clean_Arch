@@ -11,15 +11,18 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[100],
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(5.0),
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ProfileImageWithCover(user: user,),//rebuild
-                const UserProfileInformation(), //rebuild
+                ProfileImageWithCover(user: user,),
+                const UserProfileInformation(), //r
+
                 MyPosts(uId: user.uId,), // rebuild
               ],
             ),

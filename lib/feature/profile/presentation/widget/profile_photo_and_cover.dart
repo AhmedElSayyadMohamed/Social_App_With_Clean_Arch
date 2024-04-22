@@ -9,10 +9,10 @@ import '../../../../utils/app_size/app_size.dart';
 class ProfileImageWithCover extends StatelessWidget {
   final UserEntity user;
   const ProfileImageWithCover({super.key, required this.user});
-
-  get _onTapProfilePic => null;
-
-  get _onTapToPickAnewProfilePic => null;
+  //
+  // get _onTapProfilePic => null;
+  //
+  // get _onTapToPickAnewProfilePic => null;
 
   @override
   Widget build(BuildContext context) {
@@ -92,8 +92,10 @@ class ProfileImageWithCover extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, Routes.followersScreen,
-                          arguments: user.followers);
+                      Navigator.pushNamed(
+                          context, Routes.followersScreen,
+                          arguments: user.followers,
+                      );
                     },
                     child: Column(
                       children: [

@@ -19,13 +19,14 @@ class PostWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 1,
-      margin: EdgeInsets.zero,
       shape: const RoundedRectangleBorder(),
-      child: Column(
+      child:Padding(
+      padding: const EdgeInsetsDirectional.all(5),
+      child:  Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppPadding.p8),
+            padding: const EdgeInsets.all(AppPadding.p8),
             child: BlocProvider.value(
               value: sl<ProfileBloc>()..add(GetUserDataEvent(post.uId)),
               child: BlocBuilder<ProfileBloc, ProfileStates>(
@@ -38,6 +39,8 @@ class PostWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           CustomCachedNetworkImage(
+                            width: 45,
+                            height: 45,
                             imageUrl: state.user.photo,
                           ),
                           SizedBox(
@@ -109,9 +112,9 @@ class PostWidget extends StatelessWidget {
               ),
             ),
           ),
-          const Divider(),
           Padding(
-            padding: const EdgeInsets.all(AppPadding.p12),
+            padding: const EdgeInsets.symmetric(
+              horizontal:AppPadding.p8,),
             child: Text(
               post.containText,
               style: Theme.of(context).textTheme.bodyMedium,
@@ -144,6 +147,7 @@ class PostWidget extends StatelessWidget {
             onSharePressed: () {},
           ),
         ],
+      ),
       ),
     );
   }
