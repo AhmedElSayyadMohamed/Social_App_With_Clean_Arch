@@ -10,15 +10,16 @@ class Parameters extends Equatable {
   final String? uId;
   final String? email;
   final String? password;
-
-  const Parameters({
+  final List<dynamic>? followersId;
+  const Parameters( {
+    this.followersId,
     this.uId,
     this.email,
     this.password,
   });
 
   @override
-  List<Object?> get props => [uId, email, password];
+  List<Object?> get props => [uId, email, password,followersId];
 }
 
 class NoParameters {}

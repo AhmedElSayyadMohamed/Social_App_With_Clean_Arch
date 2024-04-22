@@ -28,4 +28,14 @@ class FeedRepository extends BaseFeedRepository {
       return Left(ServerErrorException(msg: error.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure,List<Post>>> getMyPostsById(String uId) async{
+    final result = await feedRemoteDataSource.getMyPostsById(uId);
+    try {
+      return Right(result);
+    } catch (error) {
+      return Left(ServerErrorException(msg: error.toString()));
+    }
+  }
 }

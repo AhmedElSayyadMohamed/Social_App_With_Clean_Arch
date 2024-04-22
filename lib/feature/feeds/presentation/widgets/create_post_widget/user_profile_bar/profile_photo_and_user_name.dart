@@ -16,7 +16,8 @@ class UserProfile extends StatelessWidget {
         return Row(
           children: [
              CustomCachedNetworkImage(
-              radius: 40,
+              width: 40,
+              height: 40,
               imageUrl:bloc.user.photo,
             ),
             SizedBox(

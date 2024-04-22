@@ -10,6 +10,8 @@ class UserModel extends UserEntity {
     required super.email,
     required super.profileCover,
     required super.bio,
+    required super.followers,
+    required super.following,
   });
 
   factory UserModel.fromJson(user) => UserModel(
@@ -20,6 +22,8 @@ class UserModel extends UserEntity {
         phone:  user['phone'],
         profileCover:user['profileCover'],
         bio: user['bio'],
+        followers: user['followers'],
+        following: user ['following'],
       );
 
   Map<String, dynamic> toJson() => {

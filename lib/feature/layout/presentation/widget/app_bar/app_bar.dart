@@ -5,6 +5,7 @@ import 'package:social_app/feature/profile/presentation/business_logic/profile_b
 import 'package:social_app/feature/profile/presentation/business_logic/profile_state.dart';
 import 'package:social_app/utils/app_padding/app_padding.dart';
 import 'package:social_app/utils/app_size/app_size.dart';
+import '../../../../../core/basics_shared_widgets/custom_cached_network_image/custom_cached_network_image.dart';
 import '../../../../../core/icon_broken/icon_broken.dart';
 import '../../../../../core/router/routing_name.dart';
 
@@ -36,10 +37,8 @@ class CustomLayoutAppBar extends StatelessWidget
               padding: const EdgeInsetsDirectional.only(end: AppPadding.p16),
               child: GestureDetector(
                 onTap: () => Navigator.pushNamed(context, Routes.profileRoute),
-                child: CircleAvatar(
-                  radius: AppSize.s2,
-                  backgroundImage: CachedNetworkImageProvider(state.user.photo),
-                ),
+                child: CustomCachedNetworkImage(imageUrl: state.user.photo,),
+
               ),
             ):const SizedBox(),
           ],

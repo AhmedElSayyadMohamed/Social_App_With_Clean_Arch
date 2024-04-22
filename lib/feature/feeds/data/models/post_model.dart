@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:social_app/feature/feeds/domain/entities/post.dart';
 
 class PostModel extends Post {
@@ -10,6 +11,18 @@ class PostModel extends Post {
     required super.image,
     required super.tags,
   });
+
+  factory PostModel.fromJson(QueryDocumentSnapshot post){
+      return PostModel(
+        uId: post['uid'],
+        containText:post['containingOfPost'],
+        image: post['postImage'],
+        date: post['postDate'],
+        likes: post['likes'],
+        tags: post['tags'],
+        comments:const[],
+      );
+  }
   toJson()=>{
     'uid':uId,
     'postImage':image,

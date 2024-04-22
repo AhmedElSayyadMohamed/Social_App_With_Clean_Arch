@@ -23,7 +23,7 @@ dependencies:
   permission_handler:
   equatable:
   dartz:
-
+  intl:
 #firebase
   firebase_core:
   firebase_auth:

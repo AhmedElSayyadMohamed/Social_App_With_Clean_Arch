@@ -8,13 +8,14 @@ import '../../../../core/constants.dart';
 import '../../domain/entities/post.dart';
 
 class FeedsRemoteDataSource extends BaseFeedRemoteDataSource {
+  final _fireStoreInstance = FirebaseFirestore.instance;
   @override
   Future<String> uploadPostImageToFireStorage(String imageFile) async {
     // get instance from fireStorage
     FirebaseStorage storage = FirebaseStorage.instance;
-
     Reference ref = storage.ref();
-    final imageRef = ref.child('UserPostsImage/Users/$currentUserId/${DateTime.now()}.jpg');
+    final imageRef =
+        ref.child('UserPostsImage/Users/$currentUserId/${DateTime.now()}.jpg');
     UploadTask uploadTask = imageRef.putFile(File(imageFile));
 
     try {
@@ -37,8 +38,7 @@ class FeedsRemoteDataSource extends BaseFeedRemoteDataSource {
       likes: post.likes,
       tags: post.tags,
     );
-print(post);
-    await FirebaseFirestore.instance
+    await _fireStoreInstance
         .collection('UsersPosts')
         .doc(currentUserId)
         .collection('MyPosts')
@@ -48,5 +48,26 @@ print(post);
         throw ServerErrorException(msg: error.toString());
       },
     );
+  }
+
+  @override
+  Future<List<PostModel>> getMyPostsById(String uId) async {
+    final List<PostModel> posts = await _fireStoreInstance
+        .collection('UsersPosts')
+        .doc(currentUserId)
+        .collection('MyPosts')
+        .orderBy('postDate',descending: true)
+        .get()
+        .then(
+          (posts) {
+            return posts.docs.map((e) =>PostModel.fromJson(e)).toList();
+          },
+        )
+        .catchError(
+      (error) {
+        throw ServerErrorException(msg: error.toString());
+      },
+    );
+    return posts;
   }
 }

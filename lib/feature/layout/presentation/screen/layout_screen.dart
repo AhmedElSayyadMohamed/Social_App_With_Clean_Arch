@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/feature/layout/presentation/bussiness_logic/social_bloc.dart';
 import 'package:social_app/feature/layout/presentation/widget/constants.dart';
-
 import '../widget/app_bar/app_bar.dart';
 import '../widget/bottom_nav_bar/bottom_nav_bar.dart';
 
@@ -20,10 +19,9 @@ class LayoutScreen extends StatelessWidget {
             appBar: CustomLayoutAppBar(
               title: screensTitles[bloc.navBarIndex],
             ),
-            body: Stack(
-              alignment: Alignment.bottomCenter,
+            body: Column(
               children: [
-                screens(bloc.navBarIndex),
+                Expanded(child:  screens(bloc.navBarIndex)),
                 const CustomBottomNavBar(),
               ],
             ),

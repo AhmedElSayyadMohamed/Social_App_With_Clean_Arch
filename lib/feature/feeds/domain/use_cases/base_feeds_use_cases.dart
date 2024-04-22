@@ -8,8 +8,8 @@ abstract class BaseFeedUseCases<T, Parameter> {
 
 class Parameters{
  final String imageFile;
-
- Parameters(this.imageFile);
+ final String uId;
+ Parameters({this.imageFile = '', this.uId = ''});
 }
 
 class NoParameters {}

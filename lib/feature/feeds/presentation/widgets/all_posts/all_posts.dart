@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bussiness_logic/feeds_bloc.dart';
-import '../post_item.dart';
 
 
 class AllPosts extends StatelessWidget {
@@ -16,7 +15,7 @@ class AllPosts extends StatelessWidget {
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (context, index) => const PostWidget(),
+          itemBuilder: (context, index) => Container(),
           itemCount: 8,
         );
       },

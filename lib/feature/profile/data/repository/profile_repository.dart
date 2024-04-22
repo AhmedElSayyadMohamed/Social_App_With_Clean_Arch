@@ -18,4 +18,14 @@ class ProfileRepository extends BaseProfileRepository {
       return Left(ServerErrorException(msg:error.message.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, List<UserEntity>>> getFollowersDataUseCase({required List<dynamic> followersId}) async {
+    final result = await _profileRemoteDataSource.getFollowersData(followersId);
+    try{
+      return Right(result);
+    }on FirebaseException catch(error){
+      return Left(ServerErrorException(msg:error.message.toString()));
+    }
+  }
 }

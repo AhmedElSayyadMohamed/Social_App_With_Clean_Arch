@@ -8,8 +8,8 @@ class Post extends Equatable {
   final String containText;
   final String image;
   final List<Comment> comments;
-  final List<String> likes;
-  final List<String> tags;
+  final List<dynamic> likes;
+  final List<dynamic> tags;
 
   const Post( {
     required this.uId,

@@ -8,6 +8,8 @@ class UserEntity extends Equatable {
   final String bio;
   final String phone;
   final String email;
+  final List<dynamic> followers;
+  final List<dynamic> following;
 
   const UserEntity({
     required this.uId,
@@ -17,16 +19,21 @@ class UserEntity extends Equatable {
     required this.name,
     required this.phone,
     required this.email,
+    required this.followers,
+    required this.following,
   });
 
   @override
-  List<Object> get props => [
+  List<Object> get props =>
+      [
         uId,
+        profileCover,
         photo,
         name,
         bio,
         phone,
         email,
-        profileCover,
+        followers,
+        following,
       ];
 }

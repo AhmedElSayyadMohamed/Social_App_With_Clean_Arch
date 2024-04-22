@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_app/core/router/routing_name.dart';
 import 'package:social_app/feature/feeds/presentation/bussiness_logic/feeds_bloc.dart';
 import '../../../../utils/app_padding/app_padding.dart';
 import '../../../../utils/service_locator/service_locator.dart';
@@ -20,8 +21,23 @@ class CreatePostScreen extends StatelessWidget {
           padding: const EdgeInsetsDirectional.all(AppPadding.p16),
           child: Column(
             children: [
+              BlocConsumer<FeedsBloc, FeedsStates>(
+                listener: (BuildContext context, FeedsStates state) {
+                  if(state is CreatePostWithImageSuccessState){
+                    Navigator.pushNamed(context, Routes.layoutRoute);
+                  }
+                },
+                builder: (BuildContext context, state) {
+                  if (state is UploadPostImageLoadingState ||
+                      state is CreatePostWithImageLoadingState) {
+                    return const LinearProgressIndicator();
+                  } else {
+                    return const SizedBox.shrink();
+                  }
+                },
+              ),
               const UserProfile(),
-              CreatePostScreenBody(),
+              const CreatePostScreenBody(),
               const PickImageAndAddTags(),
             ],
           ),

@@ -39,3 +39,12 @@ PickImagePermissionDeniedState(this.msg);
 }
 class CloseImageState extends FeedsStates {}
 
+class GetMyPostsByUidLoadingState extends FeedsStates {}
+class GetMyPostsByUidSuccessState extends FeedsStates {
+  final List<Post> posts;
+  GetMyPostsByUidSuccessState(this.posts);
+}
+class GetMyPostsByUidErrorState extends FeedsStates {
+  final String msg;
+  GetMyPostsByUidErrorState(this.msg);
+}

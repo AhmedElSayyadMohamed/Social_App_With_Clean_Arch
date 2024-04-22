@@ -11,7 +11,7 @@ void main() async {
 
   // Set up ServiceLocator and initialize Firebase asynchronously
   await Future.wait([
-    ServiceLocator.setUp,
+    ServiceLocator().setUp,
     Firebase.initializeApp(),
   ]);
 

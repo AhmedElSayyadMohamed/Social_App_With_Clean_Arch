@@ -19,4 +19,19 @@ class ProfileRemoteDataSource extends BaseProfileRemoteDataSource {
       rethrow;
     }
   }
+
+  @override
+  Future<List<UserModel>> getFollowersData(List<dynamic> followersId) async {
+    List<UserModel> followers = [];
+    try {
+      for (var followerId in followersId) {
+        final doc = await _firebaseFirestore.collection("users").doc(followerId).get();
+        followers.add(UserModel.fromJson(doc.data())) ;
+      }} catch (error) {
+      // Handle specific errors if needed
+      rethrow;
+    }
+    print(followers);
+    return followers;
+  }
 }

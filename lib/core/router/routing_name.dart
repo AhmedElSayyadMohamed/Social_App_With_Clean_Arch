@@ -17,4 +17,5 @@ class Routes {
   static const String discussionForums = "/DiscussionForums";
   static const String postsSearchScreen = "/PostsSearchScreen";
   static const String createPost = "/createPost";
+  static const String followersScreen = "/FollowersScreen";
 }

@@ -6,4 +6,5 @@ abstract class BaseFeedRepository{
 
 Future<Either<Failure,String>> uploadPostImageToFireStorage(String imageFile);
 Future<Either<Failure,void>> createPostWithImage(Post post);
+Future<Either<Failure,List<Post>>> getMyPostsById(String uId);
 }

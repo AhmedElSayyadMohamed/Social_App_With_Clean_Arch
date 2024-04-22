@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_app/core/router/routing_name.dart';
 import 'package:social_app/feature/profile/presentation/business_logic/profile_bloc.dart';
 import 'package:social_app/feature/profile/presentation/business_logic/profile_state.dart';
 import 'package:social_app/feature/profile/presentation/widget/profile_image/profile_image.dart';
@@ -54,22 +55,79 @@ class ProfileImageWithCover extends StatelessWidget {
                     height: AppSize.s05,
                   ),
                   Padding(
-                    padding: const EdgeInsetsDirectional.symmetric(horizontal:AppPadding.p24),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    padding: const EdgeInsetsDirectional.symmetric(
+                      horizontal: AppPadding.p24,
+                    ),
+                    child: Row(
                       children: [
-                        Text(
-                          state.user.name,
-                          style: Theme.of(context).textTheme.titleMedium,
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                state.user.name,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              const SizedBox(
+                                height: AppSize.s05,
+                              ),
+                              Text(
+                                state.user.bio,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
+                            ],
+                          ),
                         ),
-                        const SizedBox(
-                          height: AppSize.s05,
-                        ),
-                        Text(
-                          state.user.bio,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.bodySmall,
+                        Row(
+                          children: [
+                            InkWell(
+                              onTap: () {},
+                              child: Column(
+                                children: [
+                                  Text(
+                                    state.user.following.length.toString(),
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    "Following",
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  )
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 3,
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(context, Routes.followersScreen,arguments:state.user.followers);
+                              },
+                              child: Column(
+                                children: [
+                                  Text(
+                                    state.user.followers.length.toString(),
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    "Followers",
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),

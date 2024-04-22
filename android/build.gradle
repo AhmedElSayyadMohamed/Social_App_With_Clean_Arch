@@ -1,5 +1,4 @@
 
-implementation 'com.google.firebase:firebase-appcheck:latest_version'
 
 buildscript {
     ext.kotlin_version = '1.9.0'

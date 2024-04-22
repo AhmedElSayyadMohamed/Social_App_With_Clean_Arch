@@ -9,6 +9,8 @@ import 'package:social_app/feature/feeds/data/remote_data_source/remote_data_sou
 import 'package:social_app/feature/feeds/data/repository/feed_repository.dart';
 import 'package:social_app/feature/feeds/domain/base_repository/base_feed_repository.dart';
 import 'package:social_app/feature/feeds/domain/use_cases/create_post_with_image.dart';
+import 'package:social_app/feature/feeds/domain/use_cases/get_my_posts_by_id_usecase.dart';
+import 'package:social_app/feature/profile/domain/use_cases/get_followers_data.dart';
 import 'package:social_app/feature/profile/presentation/business_logic/profile_bloc.dart';
 import '../../feature/auth/data/repository/auth_repository.dart';
 import '../../feature/auth/domain/base_repository/base_auth_repository.dart';
@@ -24,29 +26,43 @@ import '../../feature/profile/domain/use_cases/get_user_data.dart';
 
 final sl = GetIt.instance;
 class ServiceLocator{
+  factory ServiceLocator() => singletonInstance;
+  static ServiceLocator singletonInstance =  ServiceLocator._internal();
+  ServiceLocator._internal();
 
-  static Future<void> get setUp async {
 
-    // bloc
+  Future<void> get setUp async {
+    _setUpBlocs;
+    _useCases;
+    _repositories;
+    _dataSources;
+  }
+
+  get _setUpBlocs{
+
     sl.registerLazySingleton(() => SocialBloc());
     sl.registerLazySingleton(() => LoginBloc(sl()));
     sl.registerLazySingleton(() => RegisterBloc(sl()));
-    sl.registerFactory(() => ProfileBloc(sl()));
-    sl.registerFactory(() => FeedsBloc(sl(),sl()));
+    sl.registerFactory(() => ProfileBloc(sl(),sl()));
+    sl.registerFactory(() => FeedsBloc(sl(),sl(),sl()));
 
-    //use cases
+  }
+  get _useCases{
     sl.registerLazySingleton(() => LoginWithEmailAndPasswordUseCase(sl()));
     sl.registerLazySingleton(() => SignUpUseCase(sl()));
     sl.registerLazySingleton(() => GetUserDataUseCase(sl()));
+    sl.registerLazySingleton(() => GetFollowersDataUseCase(sl()));
     sl.registerLazySingleton(() => UploadImageToFireStorageUseCase(sl()));
     sl.registerLazySingleton(() => CreatePostWithImageUseCase(sl()));
+    sl.registerLazySingleton(() => GetMyPostsByIdUseCase(sl()));
 
-    // auth repository
+  }
+  get _repositories{
     sl.registerLazySingleton<BaseAuthRepository>(() => AuthRepository(sl()));
     sl.registerLazySingleton<BaseProfileRepository>(() => ProfileRepository(sl()));
     sl.registerLazySingleton<BaseFeedRepository>(() => FeedRepository(sl()));
-
-    // auth datasource
+  }
+  get _dataSources{
     sl.registerLazySingleton<BaseAuthDataSource>(() => AuthDataSource());
     sl.registerLazySingleton<BaseProfileRemoteDataSource>(() => ProfileRemoteDataSource());
     sl.registerLazySingleton<BaseFeedRemoteDataSource>(() => FeedsRemoteDataSource());

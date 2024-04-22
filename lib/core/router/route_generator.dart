@@ -7,6 +7,7 @@ import 'package:social_app/feature/auth/presentation/screens/register_screen/reg
 import 'package:social_app/feature/layout/presentation/screen/layout_screen.dart';
 
 import '../../feature/feeds/presentation/screens/add_post.dart';
+import '../../feature/profile/presentation/screen/followers.dart';
 import '../../feature/profile/presentation/screen/user_profile_screen.dart';
 
 class RoutGenerator {
@@ -39,7 +40,11 @@ class RoutGenerator {
         );
         case Routes.createPost:
         return MaterialPageRoute(
-          builder: (_) => CreatePostScreen(),
+          builder: (_) => const CreatePostScreen(),
+        );
+        case Routes.followersScreen:
+        return MaterialPageRoute(
+          builder: (_) => FollowersScreen(followers:setting.arguments as List,),
         );
 
       default:

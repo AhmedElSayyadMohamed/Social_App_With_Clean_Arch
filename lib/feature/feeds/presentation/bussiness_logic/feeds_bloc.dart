@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:social_app/core/network/failure/failure.dart';
 import 'package:social_app/feature/feeds/domain/entities/post.dart';
 import 'package:social_app/feature/feeds/domain/use_cases/base_feeds_use_cases.dart';
+import 'package:social_app/feature/feeds/domain/use_cases/get_my_posts_by_id_usecase.dart';
 import 'package:social_app/feature/feeds/domain/use_cases/upload_post_image_to_fie_stroage.dart';
-
 import '../../../../core/constants.dart';
 import '../../domain/use_cases/create_post_with_image.dart';
 
@@ -23,14 +22,16 @@ class FeedsBloc extends Bloc<FeedsEvent, FeedsStates> {
 
   final UploadImageToFireStorageUseCase uploadImageToFireStorageUseCase;
   final CreatePostWithImageUseCase createPostWithImageUseCase;
+  final GetMyPostsByIdUseCase getMyPostsByIdUseCase;
 
   FeedsBloc(
     this.uploadImageToFireStorageUseCase,
     this.createPostWithImageUseCase,
+    this.getMyPostsByIdUseCase,
   ) : super(FeedsInitial()) {
     on<PickPostImageFromGalleryEvent>(_pickImageFromGallery);
-    // on<UploadPostImageToFireStorageEvent>(_uploadPostImageToFireStorage);
     on<CreatePostWithImageEvent>(_createPostWithImage);
+    on<GetMyPostsByIdEvent>(_getMyPostsByUid);
     on<CreatePostWithoutImageEvent>(_createPost);
   }
 
@@ -75,15 +76,11 @@ class FeedsBloc extends Bloc<FeedsEvent, FeedsStates> {
 
   Future<bool> get requestPermissionForPickImage async {
     var status = await Permission.storage.request();
-    print('status is $status');
-    if (status.isGranted) {
-      return true;
-    } else {
-      return false;
-    }
+
+    return status.isGranted ? true : false;
   }
 
-  void closeImage() {
+  void closeSelectedImage() {
     imageFile = '';
     emit(CloseImageState());
   }
@@ -93,28 +90,26 @@ class FeedsBloc extends Bloc<FeedsEvent, FeedsStates> {
     Emitter<FeedsStates> emit,
   ) async {
     emit(CreatePostWithImageLoadingState());
-    await _uploadPostImageToFireStorage().then((imageUrl) async{
-        final result = await createPostWithImageUseCase(
-          Post(
-            uId: currentUserId,
-            date: DateTime.now().toString(),
-            image: imageUrl,
-            containText: event.text,
-            comments: const [],
-            likes: const [],
-            tags: const [],
-          ),
-        );
-        result.fold(
-              (l) {
-            emit(CreatePostWithImageErrorState());
-          },
-              (r) {
-            emit(CreatePostWithImageSuccessState());
-          },
-        );
-
-
+    await _uploadPostImageToFireStorage().then((imageUrl) async {
+      final result = await createPostWithImageUseCase(
+        Post(
+          uId: currentUserId,
+          date: DateTime.now().toString(),
+          image: imageUrl,
+          containText: event.text,
+          comments: const [],
+          likes: const [],
+          tags: const [],
+        ),
+      );
+      result.fold(
+        (l) {
+          emit(CreatePostWithImageErrorState());
+        },
+        (r) {
+          emit(CreatePostWithImageSuccessState());
+        },
+      );
     });
   }
 
@@ -122,7 +117,8 @@ class FeedsBloc extends Bloc<FeedsEvent, FeedsStates> {
     late String imageUrl;
     emit(UploadPostImageLoadingState());
 
-    final result = await uploadImageToFireStorageUseCase(Parameters(imageFile));
+    final result =
+        await uploadImageToFireStorageUseCase(Parameters(imageFile: imageFile));
     result.fold((l) {
       emit(UploadPostImageErrorState(l.msg));
     }, (image) {
@@ -130,5 +126,22 @@ class FeedsBloc extends Bloc<FeedsEvent, FeedsStates> {
       emit(UploadPostImageSuccessState(imageUrl: imageUrl));
     });
     return imageUrl;
+  }
+
+  FutureOr<void> _getMyPostsByUid(
+      GetMyPostsByIdEvent event,
+    Emitter<FeedsStates> emit,
+  ) async {
+    emit(GetMyPostsByUidLoadingState());
+
+    final result = await getMyPostsByIdUseCase(Parameters(uId: event.uId));
+    result.fold(
+          (l) {
+        emit(GetMyPostsByUidErrorState(l.msg));
+      },
+          (posts) {
+        emit(GetMyPostsByUidSuccessState(posts));
+      },
+    );
   }
 }

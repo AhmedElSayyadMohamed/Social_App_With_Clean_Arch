@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../bussiness_logic/feeds_bloc.dart';
 
 class CreatePostScreenBody extends StatelessWidget {
-  CreatePostScreenBody({super.key});
+  const CreatePostScreenBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +48,7 @@ class CreatePostScreenBody extends StatelessWidget {
                         ),
                       ),
                       IconButton(
-                        onPressed: () {
-                          bloc.closeImage();
-                        },
+                        onPressed: ()=> bloc.closeSelectedImage(),
                         icon: const Icon(
                           Icons.close,
                           color: Colors.redAccent,
