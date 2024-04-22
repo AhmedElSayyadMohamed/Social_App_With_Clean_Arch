@@ -33,7 +33,7 @@ class CustomBottomNavBar extends StatelessWidget {
                   IconButton(
                     onPressed: () =>sl<SocialBloc>().add(ToggleNavBarIndexEvent(0)),
                     icon: Icon(
-                      IconBroken.Home,
+                      IconBroken.home,
                       color:bloc.selectedIconColor(0),
                       size: bloc.selectedIconSize(0),
                     ),
@@ -41,7 +41,7 @@ class CustomBottomNavBar extends StatelessWidget {
                   IconButton(
                     onPressed: () =>sl<SocialBloc>().add(ToggleNavBarIndexEvent(1)),
                     icon: Icon(
-                      IconBroken.Search,
+                      IconBroken.search,
                       color:bloc.selectedIconColor(1),
                       size: bloc.selectedIconSize(1),
                     ),
@@ -65,7 +65,7 @@ class CustomBottomNavBar extends StatelessWidget {
                   IconButton(
                     onPressed: () =>sl<SocialBloc>().add(ToggleNavBarIndexEvent(2)),
                     icon: Icon(
-                      IconBroken.Notification,
+                      IconBroken.notification,
                       color:bloc.selectedIconColor(2),
                       size: bloc.selectedIconSize(2),
                     ),
@@ -73,7 +73,7 @@ class CustomBottomNavBar extends StatelessWidget {
                   IconButton(
                     onPressed: () => sl<SocialBloc>().add(ToggleNavBarIndexEvent(3)),
                     icon: Icon(
-                      IconBroken.Setting,
+                      IconBroken.setting,
                       color:bloc.selectedIconColor(3),
                       size: bloc.selectedIconSize(3),
                     ),

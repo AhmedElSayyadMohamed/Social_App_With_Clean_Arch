@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:social_app/core/constants.dart';
 import 'package:social_app/feature/feeds/presentation/bussiness_logic/feeds_bloc.dart';
 import 'package:social_app/feature/feeds/presentation/widgets/post_widget.dart';
 import '../../../../core/basics_shared_widgets/shimmer/shimmer.dart';
 import '../../../../utils/service_locator/service_locator.dart';
 
 class MyPosts extends StatelessWidget {
-  const MyPosts({super.key});
+  final String uId;
+  const MyPosts({super.key, required this.uId});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
-      value: sl<FeedsBloc>()..add(GetMyPostsByIdEvent(currentUserId)),
+      value: sl<FeedsBloc>()..add(GetMyPostsByIdEvent(uId)),
       child: BlocBuilder<FeedsBloc, FeedsStates>(
-        buildWhen: (prev,current)=>FeedsStates != GetMyPostsByUidSuccessState,
+        // buildWhen: (prev,current)=>FeedsStates != GetMyPostsByUidSuccessState,
         builder: (BuildContext context, state) {
           switch (state) {
             case GetMyPostsByUidLoadingState _:

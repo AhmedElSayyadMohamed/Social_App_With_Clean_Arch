@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppBlocObserver extends BlocObserver {
@@ -8,7 +9,9 @@ class AppBlocObserver extends BlocObserver {
   void onChange(BlocBase<dynamic> bloc, Change<dynamic> change) {
     super.onChange(bloc, change);
     if (bloc is Cubit) {
-        print(change);
+        if (kDebugMode) {
+          print(change);
+        }
     }
   }
 
@@ -18,6 +21,8 @@ class AppBlocObserver extends BlocObserver {
       Transition<dynamic, dynamic> transition,
       ) {
     super.onTransition(bloc, transition);
-      print(transition);
+      if (kDebugMode) {
+        print(transition);
+      }
   }
 }

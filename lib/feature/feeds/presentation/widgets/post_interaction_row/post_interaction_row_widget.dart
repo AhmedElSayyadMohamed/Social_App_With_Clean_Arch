@@ -25,17 +25,17 @@ class PostInteractionRow extends StatelessWidget {
         children: [
           BuildInteractionButton(
             onPressed: onLikePressed,
-            icon: IconBroken.Heart,
+            icon: IconBroken.heart,
             label: post.likes.length.toString(),
           ),
           BuildInteractionButton(
             onPressed: onCommentPressed,
-            icon: IconBroken.Chat,
+            icon: IconBroken.chat,
             label: post.comments.length.toString(),
           ),
           BuildInteractionButton(
             onPressed: onSharePressed,
-            icon: IconBroken.Send,
+            icon: IconBroken.send,
             label: '0',
           ),
         ],

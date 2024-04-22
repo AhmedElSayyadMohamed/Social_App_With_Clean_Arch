@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/feature/profile/presentation/business_logic/profile_bloc.dart';
@@ -25,7 +24,7 @@ class CustomLayoutAppBar extends StatelessWidget
             padding: const EdgeInsetsDirectional.all(8),
             onPressed: () {},
             icon: const Icon(
-              IconBroken.Category,
+              IconBroken.category,
               size: AppSize.s3,
             ),
           ),
@@ -36,9 +35,8 @@ class CustomLayoutAppBar extends StatelessWidget
             Padding(
               padding: const EdgeInsetsDirectional.only(end: AppPadding.p16),
               child: GestureDetector(
-                onTap: () => Navigator.pushNamed(context, Routes.profileRoute),
+                onTap: () => Navigator.pushNamed(context, Routes.profileRoute,arguments:state.user ),
                 child: CustomCachedNetworkImage(imageUrl: state.user.photo,),
-
               ),
             ):const SizedBox(),
           ],

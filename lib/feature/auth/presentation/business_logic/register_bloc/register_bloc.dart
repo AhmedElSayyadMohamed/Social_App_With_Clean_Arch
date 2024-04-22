@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../data/models/user_model.dart';
 import '../../../domain/use_cases/base_auth_use_cases.dart';
@@ -55,12 +56,16 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterStates> {
         .then(
       (value) {
         emit(UploadNewUserDataToFireStoreSuccessState());
-        print('User data saved successfully!');
+        if (kDebugMode) {
+          print('User data saved successfully!');
+        }
       },
     ).catchError(
       (error) {
         emit(UploadNewUserDataToFireStoreErrorState(error.toString()));
-        print('Error saving user data: $error');
+        if (kDebugMode) {
+          print('Error saving user data: $error');
+        }
       },
     );
   }

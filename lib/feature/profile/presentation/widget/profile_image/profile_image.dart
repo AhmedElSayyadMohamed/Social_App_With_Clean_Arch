@@ -29,7 +29,7 @@ class ProfilePhoto extends StatelessWidget {
           child: IconButton(
             onPressed: () => _onTapToPickAnewProfilePic,
             icon: const Icon(
-              IconBroken.Camera,
+              IconBroken.camera,
               size: 25,
             ),
           ),

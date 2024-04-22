@@ -54,7 +54,7 @@ class FeedsRemoteDataSource extends BaseFeedRemoteDataSource {
   Future<List<PostModel>> getMyPostsById(String uId) async {
     final List<PostModel> posts = await _fireStoreInstance
         .collection('UsersPosts')
-        .doc(currentUserId)
+        .doc(uId)
         .collection('MyPosts')
         .orderBy('postDate',descending: true)
         .get()

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../domain/use_cases/base_auth_use_cases.dart';
 import '../../../domain/use_cases/login_use_case.dart';
@@ -32,7 +33,9 @@ class LoginBloc extends Bloc<LoginEvents, LoginStates> {
         emit(LoginErrorState(l.msg));
       },
       (r) {
-        print(r.uId);
+        if (kDebugMode) {
+          print(r.uId);
+        }
         emit(LoginSuccessState());
       },
     );

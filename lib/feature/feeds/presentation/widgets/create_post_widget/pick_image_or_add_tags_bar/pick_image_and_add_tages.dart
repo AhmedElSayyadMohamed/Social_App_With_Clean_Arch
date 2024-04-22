@@ -21,7 +21,7 @@ class PickImageAndAddTags extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Icon(
-                      IconBroken.Image,
+                      IconBroken.image,
                     ),
                     const SizedBox(
                       width: 5,

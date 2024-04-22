@@ -46,10 +46,10 @@ class CustomTextFormField extends StatelessWidget {
         isCollapsed: true,
         label: Text(
           textFormLabel!,
-          style: Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.grey),
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.grey),
         ),
         hintText: hint,
-        hintStyle: Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.grey),
+        hintStyle: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.grey),
         border: isBorder
             ? OutlineInputBorder(
                 borderRadius: BorderRadius.circular(formBorderRadius),

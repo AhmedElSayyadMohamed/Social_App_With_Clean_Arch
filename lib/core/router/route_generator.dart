@@ -5,6 +5,7 @@ import 'package:social_app/core/router/undefine_route.dart';
 import 'package:social_app/feature/auth/presentation/screens/login_screen/login_screen.dart';
 import 'package:social_app/feature/auth/presentation/screens/register_screen/register_screen.dart';
 import 'package:social_app/feature/layout/presentation/screen/layout_screen.dart';
+import 'package:social_app/feature/profile/domain/entities/user.dart';
 
 import '../../feature/feeds/presentation/screens/add_post.dart';
 import '../../feature/profile/presentation/screen/followers.dart';
@@ -36,7 +37,7 @@ class RoutGenerator {
 
       case Routes.profileRoute:
         return MaterialPageRoute(
-          builder: (_) => const ProfileScreen(),
+          builder: (_) => ProfileScreen(user:setting.arguments as UserEntity,),
         );
         case Routes.createPost:
         return MaterialPageRoute(

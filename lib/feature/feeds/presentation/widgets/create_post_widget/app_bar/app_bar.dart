@@ -9,7 +9,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    var Bloc = FeedsBloc.get(context);
+    var bloc = FeedsBloc.get(context);
 
     return AppBar(
       leading: const BackButton(),
@@ -17,7 +17,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         CustomTextButton(
           onTap: () {
-            Bloc.add(CreatePostWithImageEvent(Bloc.postController.text));
+            bloc.add(CreatePostWithImageEvent(bloc.postController.text));
           },
           buttonLabel: StringsManager.post,
           textColor: Theme.of(context).primaryColor,

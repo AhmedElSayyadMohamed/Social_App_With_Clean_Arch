@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:social_app/feature/profile/domain/entities/user.dart';
 import '../widget/my_posts_widget.dart';
 import '../widget/profile_photo_and_cover.dart';
 import '../widget/user_profile_info.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+  final UserEntity user;
+  const ProfileScreen({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(5.0),
+          padding: const EdgeInsets.all(5.0),
           child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
-                ProfileImageWithCover(),//rebuild
-                UserProfileInformation(), //rebuild
-                MyPosts(), // rebuild
+                ProfileImageWithCover(user: user,),//rebuild
+                const UserProfileInformation(), //rebuild
+                MyPosts(uId: user.uId,), // rebuild
               ],
             ),
           ),

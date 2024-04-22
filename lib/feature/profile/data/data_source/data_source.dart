@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:social_app/feature/profile/data/models/user_model.dart';
 import 'base_data_source.dart';
 
@@ -31,7 +32,9 @@ class ProfileRemoteDataSource extends BaseProfileRemoteDataSource {
       // Handle specific errors if needed
       rethrow;
     }
-    print(followers);
+    if (kDebugMode) {
+      print(followers);
+    }
     return followers;
   }
 }

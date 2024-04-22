@@ -4,7 +4,6 @@ import 'package:social_app/core/basics_shared_widgets/custom_cached_network_imag
 import 'package:social_app/core/router/routing_name.dart';
 import 'package:social_app/feature/profile/presentation/business_logic/profile_bloc.dart';
 import 'package:social_app/feature/profile/presentation/business_logic/profile_state.dart';
-import 'package:social_app/feature/profile/presentation/screen/user_profile_screen.dart';
 import 'package:social_app/utils/app_padding/app_padding.dart';
 
 import '../../../../utils/service_locator/service_locator.dart';
@@ -36,11 +35,13 @@ class FollowersScreen extends StatelessWidget {
                       );
                     case GetFollowersDataSuccessState _:
                       return InkWell(
-                        onTap: (){
-                          Navigator.pushNamed(context,Routes.profileRoute,arguments:state.followers[index] );
+                        onTap: () {
+                          Navigator.pushNamed(context, Routes.profileRoute,
+                              arguments: state.followers[index]);
                         },
-                        child:  ListTile(
-                          contentPadding: const EdgeInsetsDirectional.all(AppPadding.p8),
+                        child: ListTile(
+                          contentPadding:
+                              const EdgeInsetsDirectional.all(AppPadding.p8),
                           leading: CustomCachedNetworkImage(
                             imageUrl: state.followers[index].photo,
                           ),
