@@ -53,7 +53,7 @@ class ServiceLocator{
     sl.registerLazySingleton(() => GetUserDataUseCase(sl()));
     sl.registerLazySingleton(() => GetFollowersDataUseCase(sl()));
     sl.registerLazySingleton(() => UploadImageToFireStorageUseCase(sl()));
-    sl.registerLazySingleton(() => CreatePostWithImageUseCase(sl()));
+    sl.registerLazySingleton(() => AddPostUseCase(sl()));
     sl.registerLazySingleton(() => GetMyPostsByIdUseCase(sl()));
 
   }

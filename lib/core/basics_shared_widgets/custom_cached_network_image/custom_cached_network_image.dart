@@ -27,7 +27,7 @@ class CustomCachedNetworkImage extends StatelessWidget {
       child: CachedNetworkImage(
         imageUrl: imageUrl,
         fit: BoxFit.cover,
-        placeholder: (context, url) => Image.asset('assets/images/loading.gif'),
+        placeholder: (context, url) => Image.asset('assets/images/image_loading.gif'),
         errorWidget: (context, url, error) => const Icon(
           Icons.error,
           size: 16,

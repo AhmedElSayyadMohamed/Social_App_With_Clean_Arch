@@ -28,26 +28,45 @@ class FeedsRemoteDataSource extends BaseFeedRemoteDataSource {
   }
 
   @override
-  Future<void> createPostWithImage(Post post) async {
-    PostModel postModel = PostModel(
-      uId: post.uId,
-      date: post.date,
-      image: post.image,
-      containText: post.containText,
-      comments: post.comments,
-      likes: post.likes,
-      tags: post.tags,
-    );
-    await _fireStoreInstance
-        .collection('UsersPosts')
-        .doc(currentUserId)
-        .collection('MyPosts')
-        .add(postModel.toJson())
-        .catchError(
-      (error) {
-        throw ServerErrorException(msg: error.toString());
-      },
-    );
+  Future<void> addPost(Post post) async {
+
+    PostModel postModel ;
+    if(post.image !=''){
+      postModel = await uploadPostImageToFireStorage(post.image).then(
+              (imageUrl)=> PostModel(
+                uId: post.uId,
+                date: post.date,
+                image: imageUrl,
+                containText: post.containText,
+                comments: post.comments,
+                likes: post.likes,
+                tags: post.tags,
+              )
+      );
+
+    } else{
+      postModel = PostModel(
+        uId: post.uId,
+        date: post.date,
+        image: post.image,
+        containText: post.containText,
+        comments: post.comments,
+        likes: post.likes,
+        tags: post.tags,
+      );
+    }
+
+      await _fireStoreInstance
+          .collection('UsersPosts')
+          .doc(currentUserId)
+          .collection('MyPosts')
+          .add(postModel.toJson())
+          .catchError(
+            (error) {
+          throw ServerErrorException(msg: error.toString());
+        },
+      );
+
   }
 
   @override
@@ -56,14 +75,13 @@ class FeedsRemoteDataSource extends BaseFeedRemoteDataSource {
         .collection('UsersPosts')
         .doc(uId)
         .collection('MyPosts')
-        .orderBy('postDate',descending: true)
+        .orderBy('postDate', descending: true)
         .get()
         .then(
-          (posts) {
-            return posts.docs.map((e) =>PostModel.fromJson(e)).toList();
-          },
-        )
-        .catchError(
+      (posts) {
+        return posts.docs.map((e) => PostModel.fromJson(e)).toList();
+      },
+    ).catchError(
       (error) {
         throw ServerErrorException(msg: error.toString());
       },

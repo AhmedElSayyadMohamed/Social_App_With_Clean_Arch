@@ -23,13 +23,12 @@ class CreatePostScreen extends StatelessWidget {
             children: [
               BlocConsumer<FeedsBloc, FeedsStates>(
                 listener: (BuildContext context, FeedsStates state) {
-                  if(state is CreatePostWithImageSuccessState){
+                  if(state is AddPostSuccessState){
                     Navigator.pushNamed(context, Routes.layoutRoute);
                   }
                 },
                 builder: (BuildContext context, state) {
-                  if (state is UploadPostImageLoadingState ||
-                      state is CreatePostWithImageLoadingState) {
+                  if (state is AddPostLoadingState) {
                     return const LinearProgressIndicator();
                   } else {
                     return const SizedBox.shrink();

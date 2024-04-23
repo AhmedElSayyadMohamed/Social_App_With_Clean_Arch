@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:social_app/core/basics_shared_widgets/custom_cached_network_image/custom_cached_network_image.dart';
 import 'package:social_app/core/icon_broken/icon_broken.dart';
 import 'package:flutter/material.dart';
 
@@ -12,33 +12,32 @@ class ProfilePhoto extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: _onTapProfilePic,
-          child: Container(
-            width: 100,
-            height: 100,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(50),
-              image: DecorationImage(
-                image: CachedNetworkImageProvider(profilePhoto), // Replace with your image asset path
-              ),
-            ),
+          child:CustomCachedNetworkImage(
+              width: 100,
+              height: 100,
+              imageUrl:profilePhoto,
           ),
         ),
         PositionedDirectional(
-          bottom: -5,
-          end: -5,
-          child: IconButton(
-            onPressed: () => _onTapToPickAnewProfilePic,
-            icon: const Icon(
-              IconBroken.camera,
-              size: 25,
+            bottom: 0,
+            end: 0,
+            child: GestureDetector(
+            onTap: _onTapToPickANewProfilePic,
+            child:  CircleAvatar(
+              backgroundColor: Colors.grey[200],
+              radius: 15,
+              child:  const Icon(
+                IconBroken.camera,
+                size: 25,
+              ),
             ),
-          ),
+            )
         )
       ],
     );
   }
 
-  get _onTapToPickAnewProfilePic {}
+  get _onTapToPickANewProfilePic {}
 
   get _onTapProfilePic {}
 }

@@ -21,35 +21,18 @@ class FeedsBloc extends Bloc<FeedsEvent, FeedsStates> {
   /////////////////////////////////////////////////////////////////////
 
   final UploadImageToFireStorageUseCase uploadImageToFireStorageUseCase;
-  final CreatePostWithImageUseCase createPostWithImageUseCase;
+  final AddPostUseCase addPostUseCase;
   final GetMyPostsByIdUseCase getMyPostsByIdUseCase;
 
   FeedsBloc(
     this.uploadImageToFireStorageUseCase,
-    this.createPostWithImageUseCase,
+    this.addPostUseCase,
     this.getMyPostsByIdUseCase,
   ) : super(FeedsInitial()) {
     on<PickPostImageFromGalleryEvent>(_pickImageFromGallery);
-    on<CreatePostWithImageEvent>(_createPostWithImage);
+    on<AddPostEvent>(_addPost);
     on<GetMyPostsByIdEvent>(_getMyPostsByUid);
-    on<CreatePostWithoutImageEvent>(_createPost);
-  }
-
-  FutureOr<void> _createPost(
-    CreatePostWithoutImageEvent event,
-    Emitter<FeedsStates> emit,
-  ) {
-    // PostModel model = PostModel();
-    // FirebaseFirestore.instance
-    //     .collection('UsersPosts')
-    //     .doc(FirebaseAuth.instance.currentUser!.uid)
-    //     .collection('MyPosts')
-    //     .add(model)
-    //     .then((value) {
-    //
-    // }).catchError((error){
-    //
-    // });
+    on<LikePostEvent>(_likePost);
   }
 
   FutureOr<void> _pickImageFromGallery(
@@ -85,63 +68,51 @@ class FeedsBloc extends Bloc<FeedsEvent, FeedsStates> {
     emit(CloseImageState());
   }
 
-  FutureOr<void> _createPostWithImage(
-    CreatePostWithImageEvent event,
+  FutureOr<void> _addPost(
+    AddPostEvent event,
     Emitter<FeedsStates> emit,
   ) async {
-    emit(CreatePostWithImageLoadingState());
-    await _uploadPostImageToFireStorage().then((imageUrl) async {
-      final result = await createPostWithImageUseCase(
-        Post(
-          uId: currentUserId,
-          date: DateTime.now().toString(),
-          image: imageUrl,
-          containText: event.text,
-          comments: const [],
-          likes: const [],
-          tags: const [],
-        ),
-      );
-      result.fold(
-        (l) {
-          emit(CreatePostWithImageErrorState());
-        },
-        (r) {
-          emit(CreatePostWithImageSuccessState());
-        },
-      );
-    });
-  }
-
-  Future<String> _uploadPostImageToFireStorage() async {
-    late String imageUrl;
-    emit(UploadPostImageLoadingState());
-
-    final result =
-        await uploadImageToFireStorageUseCase(Parameters(imageFile: imageFile));
-    result.fold((l) {
-      emit(UploadPostImageErrorState(l.msg));
-    }, (image) {
-      imageUrl = image;
-      emit(UploadPostImageSuccessState(imageUrl: imageUrl));
-    });
-    return imageUrl;
+    emit(AddPostLoadingState());
+    final result = await addPostUseCase(
+      Post(
+        uId: currentUserId,
+        date: DateTime.now().toString(),
+        image: imageFile,
+        containText: event.text,
+        comments: const [],
+        likes: const [],
+        tags: const [],
+      ),
+    );
+    result.fold(
+      (l) {
+        emit(AddPostErrorState());
+      },
+      (r) {
+        emit(AddPostSuccessState());
+      },
+    );
   }
 
   FutureOr<void> _getMyPostsByUid(
-      GetMyPostsByIdEvent event,
+    GetMyPostsByIdEvent event,
     Emitter<FeedsStates> emit,
   ) async {
     emit(GetMyPostsByUidLoadingState());
 
     final result = await getMyPostsByIdUseCase(Parameters(uId: event.uId));
     result.fold(
-          (l) {
+      (l) {
         emit(GetMyPostsByUidErrorState(l.msg));
       },
-          (posts) {
+      (posts) {
         emit(GetMyPostsByUidSuccessState(posts));
       },
     );
   }
+
+  FutureOr<void> _likePost(
+    LikePostEvent event,
+    Emitter<FeedsStates> emit,
+  ) {}
 }

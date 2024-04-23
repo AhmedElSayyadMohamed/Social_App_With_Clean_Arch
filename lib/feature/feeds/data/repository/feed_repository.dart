@@ -20,8 +20,8 @@ class FeedRepository extends BaseFeedRepository {
   }
 
   @override
-  Future<Either<Failure, void>> createPostWithImage(Post post) async{
-    final result = await feedRemoteDataSource.createPostWithImage(post);
+  Future<Either<Failure, void>> addPost(Post post) async{
+    final result = await feedRemoteDataSource.addPost(post);
     try {
       return Right(result);
     } catch (error) {
@@ -38,4 +38,6 @@ class FeedRepository extends BaseFeedRepository {
       return Left(ServerErrorException(msg: error.toString()));
     }
   }
+
+
 }

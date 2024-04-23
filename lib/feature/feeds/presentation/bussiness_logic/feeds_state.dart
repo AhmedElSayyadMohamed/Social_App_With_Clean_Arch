@@ -6,20 +6,9 @@ abstract class FeedsStates {}
 final class FeedsInitial extends FeedsStates {}
 class PostsInitial extends FeedsStates {}
 
-class CreatePostWithImageLoadingState extends FeedsStates {}
-class CreatePostWithImageSuccessState extends FeedsStates {}
-class CreatePostWithImageErrorState extends FeedsStates {}
-
-class UploadPostImageLoadingState extends FeedsStates {}
-class UploadPostImageSuccessState extends FeedsStates {
-  final String? imageUrl;
-  get getImageUrl => imageUrl;
-  UploadPostImageSuccessState({this.imageUrl});
-}
-class UploadPostImageErrorState extends FeedsStates {
-  final String msg;
-  UploadPostImageErrorState(this.msg);
-}
+class AddPostLoadingState extends FeedsStates {}
+class AddPostSuccessState extends FeedsStates {}
+class AddPostErrorState extends FeedsStates {}
 
 class CreatePostWithoutImageLoadingState extends FeedsStates {}
 class CreatePostWithoutImageSuccessState extends FeedsStates {}
@@ -48,3 +37,6 @@ class GetMyPostsByUidErrorState extends FeedsStates {
   final String msg;
   GetMyPostsByUidErrorState(this.msg);
 }
+
+class LikePostState extends FeedsStates {}
+class UnLikePostState extends FeedsStates {}

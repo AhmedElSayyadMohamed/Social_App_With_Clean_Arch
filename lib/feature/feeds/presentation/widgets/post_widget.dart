@@ -120,14 +120,18 @@ class PostWidget extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
-          CustomCachedNetworkImage(
+          Visibility(
+            visible: post.image.isNotEmpty,
+            replacement: const SizedBox.shrink(),
+            child: CustomCachedNetworkImage(
             borderRadius: 2,
             width: double.infinity,
             height: 300,
             imageUrl: post.image,
           ),
+          ),
           const SizedBox(
-            height: 7,
+            height: 10,
           ),
           Align(
             alignment: AlignmentDirectional.bottomEnd,

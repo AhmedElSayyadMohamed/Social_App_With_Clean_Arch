@@ -17,7 +17,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         CustomTextButton(
           onTap: () {
-            bloc.add(CreatePostWithImageEvent(bloc.postController.text));
+            bloc.add(AddPostEvent(bloc.postController.text));
           },
           buttonLabel: StringsManager.post,
           textColor: Theme.of(context).primaryColor,
