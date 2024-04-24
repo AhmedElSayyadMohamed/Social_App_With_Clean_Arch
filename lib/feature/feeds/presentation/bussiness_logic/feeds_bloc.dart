@@ -84,6 +84,8 @@ class FeedsBloc extends Bloc<FeedsEvent, FeedsStates> {
         image: imageFile,
         containText: event.text,
         tags: const [],
+        likesCounts: 0,
+        commentsCounts: 0,
       ),
     );
     result.fold(
