@@ -11,24 +11,6 @@ class FeedsRemoteDataSource extends BaseFeedRemoteDataSource {
   final _fireStoreInstance = FirebaseFirestore.instance;
 
   @override
-  Future<String> uploadPostImageToFireStorage(String imageFile) async {
-    // get instance from fireStorage
-    FirebaseStorage storage = FirebaseStorage.instance;
-    Reference ref = storage.ref();
-    final imageRef =
-        ref.child('UserPostsImage/Users/$currentUserId/${DateTime.now()}.jpg');
-    UploadTask uploadTask = imageRef.putFile(File(imageFile));
-
-    try {
-      final image = await uploadTask;
-      final imageUrl = await image.ref.getDownloadURL();
-      return imageUrl;
-    } catch (error) {
-      throw ServerErrorException(msg: error.toString());
-    }
-  }
-
-  @override
   Future<void> addPost(Post post) async {
     PostModel postModel;
     if (post.image != '') {
@@ -56,11 +38,23 @@ class FeedsRemoteDataSource extends BaseFeedRemoteDataSource {
     }
 
     await _fireStoreInstance
-        .collection('UsersPosts')
+        .collection('users')
         .doc(currentUserId)
-        .collection('MyPosts')
+        .collection('myPosts')
         .add(postModel.toJson())
-        .catchError(
+        .then((value) async {
+      await _fireStoreInstance
+          .collection('usersPosts')
+          .doc()
+          .set(postModel.toJson())
+          .catchError((error) {
+        throw ServerErrorException(msg: error.toString());
+      }).catchError(
+        (error) {
+          throw ServerErrorException(msg: error.toString());
+        },
+      );
+    }).catchError(
       (error) {
         throw ServerErrorException(msg: error.toString());
       },
@@ -68,11 +62,29 @@ class FeedsRemoteDataSource extends BaseFeedRemoteDataSource {
   }
 
   @override
+  Future<String> uploadPostImageToFireStorage(String imageFile) async {
+    // get instance from fireStorage
+    FirebaseStorage storage = FirebaseStorage.instance;
+    Reference ref = storage.ref();
+    final imageRef =
+        ref.child('UserPostsImage/Users/$currentUserId/${DateTime.now()}.jpg');
+    UploadTask uploadTask = imageRef.putFile(File(imageFile));
+
+    try {
+      final image = await uploadTask;
+      final imageUrl = await image.ref.getDownloadURL();
+      return imageUrl;
+    } catch (error) {
+      throw ServerErrorException(msg: error.toString());
+    }
+  }
+
+  @override
   Future<List<PostModel>> getMyPostsById(String uId) async {
     final List<PostModel> posts = await _fireStoreInstance
-        .collection('UsersPosts')
+        .collection('users')
         .doc(uId)
-        .collection('MyPosts')
+        .collection('myPosts')
         .orderBy('postDate', descending: true)
         .get()
         .then(
@@ -87,47 +99,45 @@ class FeedsRemoteDataSource extends BaseFeedRemoteDataSource {
     return posts;
   }
 
-  Future<List<String>> getPostLikes(String postId) async {
-    List<String> documentIds = [];
-    QuerySnapshot<Map<String, dynamic>> querySnapshot;
-
-    querySnapshot = await _fireStoreInstance
-        .collection('UsersPosts')
-        .doc('likes')
-        .collection('posts')
-        .doc(postId)
-        .collection('usersId')
-        .get();
-
-    for (var doc in querySnapshot.docs) {
-      documentIds.add(doc.id);
-    }
-    return documentIds;
-  }
-
   @override
-  Future<List<String>> toggleLikePostAndGetPostLikes(String postId) async {
-    var usersId = await getPostLikes(postId);
+  Future<void> likePost(Post post) async {
+    var likesId = await getPostLikes(post);
 
-    if (!usersId.contains(currentUserId)) {
+    if (!likesId.contains(currentUserId)) {
       _fireStoreInstance
-          .collection('UsersPosts')
-          .doc('likes')
-          .collection('posts')
-          .doc(postId)
-          .collection('usersId')
+          .collection('users')
+          .doc(post.uId)
+          .collection('likes')
+          .doc('posts')
+          .collection(post.id)
           .doc(currentUserId)
           .set({});
     } else {
       await _fireStoreInstance
-          .collection('UsersPosts')
-          .doc('likes')
-          .collection('posts')
-          .doc(postId)
-          .collection('usersId')
+          .collection('users')
+          .doc(post.uId)
+          .collection('likes')
+          .doc('posts')
+          .collection(post.id)
           .doc(currentUserId)
           .delete();
     }
-    return usersId ;
+  }
+
+  Future<List<String>> getPostLikes(Post post) async {
+    List<String> documentIds = [];
+
+
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(post.uId)
+        .collection('likes')
+        .doc('posts')
+        .collection(post.id)
+        .get();
+    for (var element in querySnapshot.docs) {
+      documentIds.add(element.id);
+    }
+    return documentIds;
   }
 }

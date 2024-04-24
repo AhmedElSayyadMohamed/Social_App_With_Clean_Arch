@@ -6,7 +6,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:social_app/feature/feeds/domain/entities/post.dart';
 import 'package:social_app/feature/feeds/domain/use_cases/base_feeds_use_cases.dart';
 import 'package:social_app/feature/feeds/domain/use_cases/get_my_posts_by_id_usecase.dart';
-import 'package:social_app/feature/feeds/domain/use_cases/toggle_like_post_usecase.dart';
+import 'package:social_app/feature/feeds/domain/use_cases/like_post_usecase.dart';
 import '../../../../core/constants.dart';
 import '../../domain/use_cases/add_post_usecase.dart';
 
@@ -22,7 +22,7 @@ class FeedsBloc extends Bloc<FeedsEvent, FeedsStates> {
 
   final AddPostUseCase addPostUseCase;
   final GetMyPostsByIdUseCase getMyPostsByIdUseCase;
-  final ToggleLikePostAndGetPostLikesUseCase toggleLikePostAndGetPostLikesUseCase;
+  final LikePostUseCase toggleLikePostAndGetPostLikesUseCase;
 
   FeedsBloc(
     this.addPostUseCase,
@@ -32,7 +32,7 @@ class FeedsBloc extends Bloc<FeedsEvent, FeedsStates> {
     on<AddPostEvent>(_addPost);
     on<GetMyPostsByIdEvent>(_getMyPostsByUid);
     on<PickPostImageFromGalleryEvent>(_pickImageFromGallery);
-    on<ToggleLikePostAndGetPostLikesEvent>(_toggleLikePost);
+    on<LikePostEvent>(_likePost);
 
   }
 
@@ -115,14 +115,14 @@ class FeedsBloc extends Bloc<FeedsEvent, FeedsStates> {
     );
   }
 
-  FutureOr<void> _toggleLikePost(
-   ToggleLikePostAndGetPostLikesEvent event,
+  FutureOr<void> _likePost(
+    LikePostEvent event,
     Emitter<FeedsStates> emit,
   ) async {
-    final result = await toggleLikePostAndGetPostLikesUseCase(Parameters(postId: event.postId),);
+    final result = await toggleLikePostAndGetPostLikesUseCase(Parameters(post: event.post),);
     result.fold(
       (l) => emit(ToggleLikePostErrorState(l.msg)),
-      (r) =>emit(ToggleLikePostSuccessState(r)),
+      (r) => emit(ToggleLikePostSuccessState()),
     );
   }
 }

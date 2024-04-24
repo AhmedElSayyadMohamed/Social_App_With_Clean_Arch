@@ -30,8 +30,8 @@ class FeedRepository extends BaseFeedRepository {
   }
 
   @override
-  Future<Either<Failure, List<String>>> toggleLikePostAndGetPostLikes(String postId) async{
-    final result = await feedRemoteDataSource.toggleLikePostAndGetPostLikes(postId);
+  Future<Either<Failure, void>> likePost(Post post) async{
+    final result = await feedRemoteDataSource.likePost(post);
     try {
       return Right(result);
     } catch (error) {

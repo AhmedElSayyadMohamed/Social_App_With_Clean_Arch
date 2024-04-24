@@ -10,7 +10,7 @@ import 'package:social_app/feature/feeds/data/repository/feed_repository.dart';
 import 'package:social_app/feature/feeds/domain/base_repository/base_feed_repository.dart';
 import 'package:social_app/feature/feeds/domain/use_cases/add_post_usecase.dart';
 import 'package:social_app/feature/feeds/domain/use_cases/get_my_posts_by_id_usecase.dart';
-import 'package:social_app/feature/feeds/domain/use_cases/toggle_like_post_usecase.dart';
+import 'package:social_app/feature/feeds/domain/use_cases/like_post_usecase.dart';
 import 'package:social_app/feature/profile/domain/use_cases/get_followers_data.dart';
 import 'package:social_app/feature/profile/presentation/business_logic/profile_bloc.dart';
 import '../../feature/auth/data/repository/auth_repository.dart';
@@ -53,7 +53,7 @@ class ServiceLocator{
     sl.registerLazySingleton(() => GetUserDataUseCase(sl()));
     sl.registerLazySingleton(() => GetFollowersDataUseCase(sl()));
     sl.registerLazySingleton(() => AddPostUseCase(sl()));
-    sl.registerLazySingleton(() => ToggleLikePostAndGetPostLikesUseCase(sl()));
+    sl.registerLazySingleton(() => LikePostUseCase(sl()));
     sl.registerLazySingleton(() => GetMyPostsByIdUseCase(sl()));
 
   }

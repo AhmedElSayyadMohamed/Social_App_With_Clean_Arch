@@ -27,22 +27,17 @@ class PostInteractionRow extends StatelessWidget {
             return Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                (state is ToggleLikePostSuccessState)?
                 BuildInteractionButton(
-                  onPressed: () {
-                    bloc.add(
-                      ToggleLikePostAndGetPostLikesEvent(
-                        postId: post.id,
-                      ),
-                    );
-                  },
+                  onPressed: () => bloc.add(LikePostEvent(
+                        post: post,
+                      )),
                   icon: IconBroken.heart,
-                  label: state.usersId.length.toString(),
-                ):const SizedBox.shrink(),
+                  label: post.likesCounts.toString(),
+                ),
                 BuildInteractionButton(
                   onPressed: () {},
                   icon: IconBroken.chat,
-                  label: '0',
+                  label: post.commentsCounts.toString(),
                 ),
                 BuildInteractionButton(
                   onPressed: () {},

@@ -12,8 +12,8 @@ class GetMyPostsByIdEvent extends FeedsEvent{
   GetMyPostsByIdEvent(this.uId);
 }
 
-class ToggleLikePostAndGetPostLikesEvent extends FeedsEvent{
-  final String postId;
+class LikePostEvent extends FeedsEvent{
+  final Post post;
 
-  ToggleLikePostAndGetPostLikesEvent({required this.postId});
+  LikePostEvent({required this.post});
 }
