@@ -14,7 +14,6 @@ class MyPosts extends StatelessWidget {
     return BlocProvider.value(
       value: sl<FeedsBloc>()..add(GetMyPostsByIdEvent(uId)),
       child: BlocBuilder<FeedsBloc, FeedsStates>(
-        // buildWhen: (prev,current)=>FeedsStates != GetMyPostsByUidSuccessState,
         builder: (BuildContext context, state) {
           switch (state) {
             case GetMyPostsByUidLoadingState _:

@@ -6,9 +6,9 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:social_app/feature/feeds/domain/entities/post.dart';
 import 'package:social_app/feature/feeds/domain/use_cases/base_feeds_use_cases.dart';
 import 'package:social_app/feature/feeds/domain/use_cases/get_my_posts_by_id_usecase.dart';
-import 'package:social_app/feature/feeds/domain/use_cases/upload_post_image_to_fie_stroage.dart';
+import 'package:social_app/feature/feeds/domain/use_cases/toggle_like_post_usecase.dart';
 import '../../../../core/constants.dart';
-import '../../domain/use_cases/create_post_with_image.dart';
+import '../../domain/use_cases/add_post_usecase.dart';
 
 part 'feeds_event.dart';
 part 'feeds_state.dart';
@@ -20,19 +20,20 @@ class FeedsBloc extends Bloc<FeedsEvent, FeedsStates> {
   final postController = TextEditingController();
   /////////////////////////////////////////////////////////////////////
 
-  final UploadImageToFireStorageUseCase uploadImageToFireStorageUseCase;
   final AddPostUseCase addPostUseCase;
   final GetMyPostsByIdUseCase getMyPostsByIdUseCase;
+  final ToggleLikePostAndGetPostLikesUseCase toggleLikePostAndGetPostLikesUseCase;
 
   FeedsBloc(
-    this.uploadImageToFireStorageUseCase,
     this.addPostUseCase,
     this.getMyPostsByIdUseCase,
+    this.toggleLikePostAndGetPostLikesUseCase,
   ) : super(FeedsInitial()) {
-    on<PickPostImageFromGalleryEvent>(_pickImageFromGallery);
     on<AddPostEvent>(_addPost);
     on<GetMyPostsByIdEvent>(_getMyPostsByUid);
-    on<LikePostEvent>(_likePost);
+    on<PickPostImageFromGalleryEvent>(_pickImageFromGallery);
+    on<ToggleLikePostAndGetPostLikesEvent>(_toggleLikePost);
+
   }
 
   FutureOr<void> _pickImageFromGallery(
@@ -52,8 +53,11 @@ class FeedsBloc extends Bloc<FeedsEvent, FeedsStates> {
         emit(PickImageErrorState('No image selected'));
       }
     } else {
-      emit(PickImagePermissionDeniedState(
-          'Permission denied to access photo gallery.'));
+      emit(
+          PickImagePermissionDeniedState(
+          'Permission denied to access photo gallery.',
+      ),
+      );
     }
   }
 
@@ -79,8 +83,6 @@ class FeedsBloc extends Bloc<FeedsEvent, FeedsStates> {
         date: DateTime.now().toString(),
         image: imageFile,
         containText: event.text,
-        comments: const [],
-        likes: const [],
         tags: const [],
       ),
     );
@@ -111,8 +113,14 @@ class FeedsBloc extends Bloc<FeedsEvent, FeedsStates> {
     );
   }
 
-  FutureOr<void> _likePost(
-    LikePostEvent event,
+  FutureOr<void> _toggleLikePost(
+   ToggleLikePostAndGetPostLikesEvent event,
     Emitter<FeedsStates> emit,
-  ) {}
+  ) async {
+    final result = await toggleLikePostAndGetPostLikesUseCase(Parameters(postId: event.postId),);
+    result.fold(
+      (l) => emit(ToggleLikePostErrorState(l.msg)),
+      (r) =>emit(ToggleLikePostSuccessState(r)),
+    );
+  }
 }

@@ -28,7 +28,8 @@ class CustomTextFormField extends StatelessWidget {
     this.hint,
     this.onFieldSubmitted,
     this.expand = false,
-    this.isBorder = true, this.borderColor,
+    this.isBorder = true,
+    this.borderColor,
   });
 
   @override
@@ -46,10 +47,10 @@ class CustomTextFormField extends StatelessWidget {
         isCollapsed: true,
         label: Text(
           textFormLabel!,
-          style: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.grey),
+          style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.grey),
         ),
         hintText: hint,
-        hintStyle: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.grey),
+        hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.grey),
         border: isBorder
             ? OutlineInputBorder(
                 borderRadius: BorderRadius.circular(formBorderRadius),

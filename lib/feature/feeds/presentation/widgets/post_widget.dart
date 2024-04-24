@@ -146,9 +146,6 @@ class PostWidget extends StatelessWidget {
           ),
           PostInteractionRow(
             post: post,
-            onLikePressed: () {},
-            onCommentPressed: () {},
-            onSharePressed: () {},
           ),
         ],
       ),

@@ -77,7 +77,7 @@ class UserProfileInformation extends StatelessWidget {
                     width: 7,
                   ),
                   Flexible(
-                    child:Text(
+                    child: Text(
                         'Studied at Faculty of Computer & Information kafr Sheikh university'), //rebuild
                   )
                 ],
@@ -93,7 +93,7 @@ class UserProfileInformation extends StatelessWidget {
                     width: 7,
                   ),
                   Flexible(
-                    child: const Text('Lives in Alexandria, Egypt'), //rebuild
+                    child: Text('Lives in Alexandria, Egypt'), //rebuild
                   )
                 ],
               ),
@@ -108,7 +108,7 @@ class UserProfileInformation extends StatelessWidget {
                     width: 7,
                   ),
                   Flexible(
-                    child:               const Text('From Alexandria, Egypt'), //rebuild
+                    child: Text('From Alexandria, Egypt'), //rebuild
                   )
                 ],
               ),

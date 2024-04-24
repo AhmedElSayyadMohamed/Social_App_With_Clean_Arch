@@ -4,7 +4,7 @@ import 'package:social_app/feature/feeds/domain/entities/post.dart';
 
 abstract class BaseFeedRepository{
 
-Future<Either<Failure,String>> uploadPostImageToFireStorage(String imageFile);
 Future<Either<Failure,void>> addPost(Post post);
+Future<Either<Failure,List<String>>> toggleLikePostAndGetPostLikes(String postId);
 Future<Either<Failure,List<Post>>> getMyPostsById(String uId);
 }

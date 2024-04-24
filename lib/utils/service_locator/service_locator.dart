@@ -8,14 +8,14 @@ import 'package:social_app/feature/feeds/data/remote_data_source/base_remote_dat
 import 'package:social_app/feature/feeds/data/remote_data_source/remote_data_source.dart';
 import 'package:social_app/feature/feeds/data/repository/feed_repository.dart';
 import 'package:social_app/feature/feeds/domain/base_repository/base_feed_repository.dart';
-import 'package:social_app/feature/feeds/domain/use_cases/create_post_with_image.dart';
+import 'package:social_app/feature/feeds/domain/use_cases/add_post_usecase.dart';
 import 'package:social_app/feature/feeds/domain/use_cases/get_my_posts_by_id_usecase.dart';
+import 'package:social_app/feature/feeds/domain/use_cases/toggle_like_post_usecase.dart';
 import 'package:social_app/feature/profile/domain/use_cases/get_followers_data.dart';
 import 'package:social_app/feature/profile/presentation/business_logic/profile_bloc.dart';
 import '../../feature/auth/data/repository/auth_repository.dart';
 import '../../feature/auth/domain/base_repository/base_auth_repository.dart';
 import '../../feature/auth/domain/use_cases/login_use_case.dart';
-import '../../feature/feeds/domain/use_cases/upload_post_image_to_fie_stroage.dart';
 import '../../feature/feeds/presentation/bussiness_logic/feeds_bloc.dart';
 import '../../feature/layout/presentation/bussiness_logic/social_bloc.dart';
 import '../../feature/profile/data/data_source/base_data_source.dart';
@@ -52,8 +52,8 @@ class ServiceLocator{
     sl.registerLazySingleton(() => SignUpUseCase(sl()));
     sl.registerLazySingleton(() => GetUserDataUseCase(sl()));
     sl.registerLazySingleton(() => GetFollowersDataUseCase(sl()));
-    sl.registerLazySingleton(() => UploadImageToFireStorageUseCase(sl()));
     sl.registerLazySingleton(() => AddPostUseCase(sl()));
+    sl.registerLazySingleton(() => ToggleLikePostAndGetPostLikesUseCase(sl()));
     sl.registerLazySingleton(() => GetMyPostsByIdUseCase(sl()));
 
   }

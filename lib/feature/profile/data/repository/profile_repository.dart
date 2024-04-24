@@ -15,7 +15,7 @@ class ProfileRepository extends BaseProfileRepository {
     try{
       return Right(result);
     }on FirebaseException catch(error){
-      return Left(ServerErrorException(msg:error.message.toString()));
+      return Left(ServerFailure(msg:error.message.toString()));
     }
   }
 
@@ -25,7 +25,7 @@ class ProfileRepository extends BaseProfileRepository {
     try{
       return Right(result);
     }on FirebaseException catch(error){
-      return Left(ServerErrorException(msg:error.message.toString()));
+      return Left(ServerFailure(msg:error.message.toString()));
     }
   }
 }

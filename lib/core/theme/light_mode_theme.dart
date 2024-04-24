@@ -25,6 +25,8 @@ ThemeData lightMode = ThemeData(
   textTheme: TextTheme(
     titleLarge: TextStyleManager.boldTextStyle,
     titleMedium: TextStyleManager.semiTextStyle,
-
+    bodyMedium: TextStyleManager.semiTextStyle,
+    bodySmall: TextStyleManager.lightTextStyle,
   ),
+
 );

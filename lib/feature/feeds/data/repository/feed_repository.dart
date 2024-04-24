@@ -10,22 +10,12 @@ class FeedRepository extends BaseFeedRepository {
   FeedRepository(this.feedRemoteDataSource);
 
   @override
-  Future<Either<Failure, String>> uploadPostImageToFireStorage(String imageFile) async {
-    final result = await feedRemoteDataSource.uploadPostImageToFireStorage(imageFile);
-    try {
-      return Right(result);
-    } catch (error) {
-      return Left(ServerErrorException(msg: error.toString()));
-    }
-  }
-
-  @override
   Future<Either<Failure, void>> addPost(Post post) async{
     final result = await feedRemoteDataSource.addPost(post);
     try {
       return Right(result);
     } catch (error) {
-      return Left(ServerErrorException(msg: error.toString()));
+      return Left(ServerFailure(msg: error.toString()));
     }
   }
 
@@ -34,8 +24,18 @@ class FeedRepository extends BaseFeedRepository {
     final result = await feedRemoteDataSource.getMyPostsById(uId);
     try {
       return Right(result);
+    } on ServerErrorException catch (error) {
+      return Left(ServerFailure(msg: error.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<String>>> toggleLikePostAndGetPostLikes(String postId) async{
+    final result = await feedRemoteDataSource.toggleLikePostAndGetPostLikes(postId);
+    try {
+      return Right(result);
     } catch (error) {
-      return Left(ServerErrorException(msg: error.toString()));
+      return Left(ServerFailure(msg: error.toString()));
     }
   }
 

@@ -9,10 +9,16 @@ class Failure extends Equatable {
   List<Object> get props => [msg];
 }
 
-class ServerErrorException extends Failure {
-  const ServerErrorException({required super.msg});
+class ServerFailure extends Failure {
+  const ServerFailure({required super.msg});
 }
 
 class CacheErrorException extends Failure {
   const CacheErrorException({required super.msg});
+}
+
+class ServerErrorException implements Exception {
+  final String? msg;
+
+  ServerErrorException({this.msg});
 }

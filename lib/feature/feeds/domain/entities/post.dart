@@ -4,19 +4,20 @@ import 'comment.dart';
 
 class Post extends Equatable {
   final String uId;
+  final String id;
   final String date;
   final String containText;
   final String image;
-  final List<Comment> comments;
-  final List<dynamic> likes;
   final List<dynamic> tags;
-
+  final int likesCounts;
+  final int commentsCounts;
   const Post( {
+    required this.likesCounts,
+    required this.commentsCounts,
     required this.uId,
+    this.id ='',
     required this.date,
     required this.containText,
-    required this.comments,
-    required this.likes,
     required this.image,
     required this.tags,
   });
@@ -24,12 +25,13 @@ class Post extends Equatable {
   @override
   List<Object> get props => [
         uId,
+        id,
         date,
         containText,
-        comments,
-        likes,
         tags,
         image,
+        likesCounts,
+        commentsCounts,
       ];
 }
 

@@ -25,7 +25,7 @@ class AuthRepository extends BaseAuthRepository {
       return Right(userModel);
     } on FirebaseAuthException catch (exception) {
       return Left(
-        ServerErrorException(
+        ServerFailure(
           msg: FirebaseAuthExceptionHandler.handleException(exception),
         ),
       );
@@ -44,7 +44,7 @@ class AuthRepository extends BaseAuthRepository {
       return Right(result);
     } on FirebaseAuthException catch (exception) {
       return Left(
-        ServerErrorException(
+        ServerFailure(
           msg: FirebaseAuthExceptionHandler.handleException(exception),
         ),
       );

@@ -4,23 +4,25 @@ import 'package:social_app/feature/feeds/domain/entities/post.dart';
 class PostModel extends Post {
   const PostModel({
     required super.uId,
+    super.id,
     required super.date,
     required super.containText,
-    required super.comments,
-    required super.likes,
     required super.image,
     required super.tags,
+    required super.likesCounts,
+    required super.commentsCounts,
   });
 
   factory PostModel.fromJson(QueryDocumentSnapshot post){
       return PostModel(
         uId: post['uid'],
+        id: post.id,
         containText:post['containingOfPost'],
         image: post['postImage'],
         date: post['postDate'],
-        likes: post['likes'],
         tags: post['tags'],
-        comments:const[],
+        likesCounts: post['likes_count'],
+        commentsCounts: post['comments_count'],
       );
   }
   toJson()=>{
@@ -28,8 +30,8 @@ class PostModel extends Post {
     'postImage':image,
     'containingOfPost':containText,
     'postDate':date,
-    'likes':likes,
-    'comments':comments,
     'tags':tags,
+    'likes_count':likesCounts,
+    'comments_count':commentsCounts,
   };
 }

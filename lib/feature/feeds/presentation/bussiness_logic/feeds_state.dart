@@ -38,5 +38,11 @@ class GetMyPostsByUidErrorState extends FeedsStates {
   GetMyPostsByUidErrorState(this.msg);
 }
 
-class LikePostState extends FeedsStates {}
-class UnLikePostState extends FeedsStates {}
+class ToggleLikePostSuccessState extends FeedsStates {
+  final List<String> usersId;
+  ToggleLikePostSuccessState(this.usersId);
+}
+class ToggleLikePostErrorState extends FeedsStates {
+final String msg;
+ToggleLikePostErrorState(this.msg);
+}
