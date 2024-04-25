@@ -7,4 +7,5 @@ abstract class BaseFeedRepository{
 Future<Either<Failure,void>> addPost(Post post);
 Future<Either<Failure,void>> likePost(Post post);
 Future<Either<Failure,List<Post>>> getMyPostsById(String uId);
+Future<Either<Failure,List<Post>>> getTimeLinePosts(List<dynamic> followingUsersId);
 }

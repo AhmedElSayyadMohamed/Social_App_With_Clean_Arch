@@ -18,6 +18,9 @@ class FollowersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Followers'),
+      ),
       body: BlocProvider.value(
         value: sl<ProfileBloc>()..add(GetFollowersDataEvent(followers)),
         child: Padding(

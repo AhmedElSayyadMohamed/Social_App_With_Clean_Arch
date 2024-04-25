@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../core/constants.dart';
 import '../core/router/route_generator.dart';
 import '../core/router/routing_name.dart';
 import '../core/theme/light_mode_theme.dart';
@@ -24,7 +25,7 @@ class SocialApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => sl<ProfileBloc>()
-            ..add(GetUserDataEvent(FirebaseAuth.instance.currentUser!.uid)),
+            ..add(GetUserDataEvent(currentUserId)),
         ),
       ],
       child: MaterialApp(

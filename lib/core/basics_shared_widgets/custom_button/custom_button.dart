@@ -34,36 +34,37 @@ class CustomButton extends StatelessWidget {
           border: Border.all(width: 1, color: borderColor)),
       clipBehavior: Clip.antiAliasWithSaveLayer,
       child: MaterialButton(
-        onPressed: onTap,
-        child: addGoogleLogo
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    "assets/images/google_logo.png",
-                    width: 25,
-                    height: 25,
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Text(
+          onPressed: onTap,
+          child: addGoogleLogo
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      "assets/images/google_logo.png",
+                      width: 25,
+                      height: 25,
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      buttonLabel,
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: textColor,
+                      ),
+                    )
+                  ],
+                )
+              : FittedBox(
+                  child: Text(
                     buttonLabel,
                     style: TextStyle(
                       fontSize: 18,
                       color: textColor,
                     ),
-                  )
-                ],
-              )
-            : Text(
-                buttonLabel,
-                style: TextStyle(
-                  fontSize: 18,
-                  color: textColor,
-                ),
-              ),
-      ),
+                  ),
+                )),
     );
   }
 }

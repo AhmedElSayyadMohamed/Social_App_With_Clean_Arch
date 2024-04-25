@@ -39,5 +39,15 @@ class FeedRepository extends BaseFeedRepository {
     }
   }
 
+  @override
+  Future<Either<Failure, List<Post>>> getTimeLinePosts(List<dynamic> followingUsersId) async{
+    final result = await feedRemoteDataSource.getTimeLinePosts(followingUsersId);
+    try {
+      return Right(result);
+    } on ServerErrorException catch (error) {
+      return Left(ServerFailure(msg: error.toString()));
+    }
+  }
+
 
 }

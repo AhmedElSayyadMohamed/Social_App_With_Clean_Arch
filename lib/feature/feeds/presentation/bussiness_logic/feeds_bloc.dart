@@ -9,6 +9,7 @@ import 'package:social_app/feature/feeds/domain/use_cases/get_my_posts_by_id_use
 import 'package:social_app/feature/feeds/domain/use_cases/like_post_usecase.dart';
 import '../../../../core/constants.dart';
 import '../../domain/use_cases/add_post_usecase.dart';
+import '../../domain/use_cases/get_all_posts.dart';
 
 part 'feeds_event.dart';
 part 'feeds_state.dart';
@@ -23,17 +24,18 @@ class FeedsBloc extends Bloc<FeedsEvent, FeedsStates> {
   final AddPostUseCase addPostUseCase;
   final GetMyPostsByIdUseCase getMyPostsByIdUseCase;
   final LikePostUseCase toggleLikePostAndGetPostLikesUseCase;
-
+  final GetTimeLinePostsUseCase getTimeLinePostsUseCase;
   FeedsBloc(
     this.addPostUseCase,
     this.getMyPostsByIdUseCase,
     this.toggleLikePostAndGetPostLikesUseCase,
+    this.getTimeLinePostsUseCase,
   ) : super(FeedsInitial()) {
     on<AddPostEvent>(_addPost);
     on<GetMyPostsByIdEvent>(_getMyPostsByUid);
     on<PickPostImageFromGalleryEvent>(_pickImageFromGallery);
     on<LikePostEvent>(_likePost);
-
+    on<GetTimeLinePostsEvent>(_geTimeLinePosts);
   }
 
   FutureOr<void> _pickImageFromGallery(
@@ -54,9 +56,9 @@ class FeedsBloc extends Bloc<FeedsEvent, FeedsStates> {
       }
     } else {
       emit(
-          PickImagePermissionDeniedState(
+        PickImagePermissionDeniedState(
           'Permission denied to access photo gallery.',
-      ),
+        ),
       );
     }
   }
@@ -119,10 +121,30 @@ class FeedsBloc extends Bloc<FeedsEvent, FeedsStates> {
     LikePostEvent event,
     Emitter<FeedsStates> emit,
   ) async {
-    final result = await toggleLikePostAndGetPostLikesUseCase(Parameters(post: event.post),);
+    final result = await toggleLikePostAndGetPostLikesUseCase(
+      Parameters(post: event.post),
+    );
     result.fold(
       (l) => emit(ToggleLikePostErrorState(l.msg)),
       (r) => emit(ToggleLikePostSuccessState()),
+    );
+  }
+
+  FutureOr<void> _geTimeLinePosts(
+    GetTimeLinePostsEvent event,
+    Emitter<FeedsStates> emit,
+  ) async {
+    emit(GetTimeLinePostsLoadingState());
+
+    final result = await getTimeLinePostsUseCase(
+        Parameters(followingId: event.followingUsersId));
+    result.fold(
+      (l) {
+        emit(GetTimeLinePostsErrorState(l.msg));
+      },
+      (posts) {
+        emit(GetTimeLinePostsSuccessState(posts));
+      },
     );
   }
 }

@@ -114,10 +114,12 @@ class PostWidget extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal:AppPadding.p8,),
+              horizontal:AppPadding.p4,
+              vertical: AppPadding.p4,
+            ),
             child: Text(
               post.containText,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.bodySmall,
             ),
           ),
           Visibility(

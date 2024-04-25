@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../domain/use_cases/base_auth_use_cases.dart';
+import '../../../../../core/constants.dart';
 import '../../../domain/use_cases/login_use_case.dart';
 import 'login_events.dart';
 import 'login_states.dart';

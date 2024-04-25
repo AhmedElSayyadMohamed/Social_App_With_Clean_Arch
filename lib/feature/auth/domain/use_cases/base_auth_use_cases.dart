@@ -6,20 +6,3 @@ abstract class BaseAuthUseCases<T, Parameters> {
   Future<Either<Failure, T>> call(Parameters parameter);
 }
 
-class Parameters extends Equatable {
-  final String? uId;
-  final String? email;
-  final String? password;
-  final List<dynamic>? followersId;
-  const Parameters( {
-    this.followersId,
-    this.uId,
-    this.email,
-    this.password,
-  });
-
-  @override
-  List<Object?> get props => [uId, email, password,followersId];
-}
-
-class NoParameters {}

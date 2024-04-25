@@ -17,3 +17,8 @@ class LikePostEvent extends FeedsEvent{
 
   LikePostEvent({required this.post});
 }
+class GetTimeLinePostsEvent extends FeedsEvent{
+  final List<dynamic> followingUsersId;
+
+  GetTimeLinePostsEvent({required this.followingUsersId});
+}

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_app/core/constants.dart';
 import 'package:social_app/core/extension/responsive_context.dart';
 import 'package:social_app/core/icon_broken/icon_broken.dart';
+import 'package:social_app/feature/profile/domain/entities/user.dart';
 import 'package:social_app/feature/profile/presentation/business_logic/profile_bloc.dart';
 import 'package:social_app/feature/profile/presentation/business_logic/profile_state.dart';
 import 'package:social_app/utils/app_padding/app_padding.dart';
@@ -10,7 +12,8 @@ import '../../../../utils/app_size/app_size.dart';
 import '../../../../utils/strings_manager/strings_manager.dart';
 
 class UserProfileInformation extends StatelessWidget {
-  const UserProfileInformation({super.key});
+  final UserEntity user;
+  const UserProfileInformation({super.key, required this.user});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -19,9 +22,11 @@ class UserProfileInformation extends StatelessWidget {
       ),
       child: BlocBuilder<ProfileBloc, ProfileStates>(
         builder: (context, state) {
+          var bloc = ProfileBloc.get(context);
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              user.uId != currentUserId ?
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -43,7 +48,34 @@ class UserProfileInformation extends StatelessWidget {
                     height: 40,
                     width: context.widthPercent(AppSize.s3),
                     borderRadius: AppPadding.p4,
-                    buttonLabel: StringsManager.edit,
+                    buttonLabel: StringsManager.messageFriend,
+                    buttonColor: Theme.of(context).scaffoldBackgroundColor,
+                    borderColor: Theme.of(context).primaryColor,
+                    textColor: Theme.of(context).primaryColor,
+                  ),
+                ],
+              ): Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomButton(
+                    onTap: () {},
+                    height: 40,
+                    width: context.widthPercent(AppSize.s6),
+                    borderRadius: AppPadding.p4,
+                    buttonLabel: StringsManager.addStory,
+                    buttonColor: Theme.of(context).scaffoldBackgroundColor,
+                    borderColor: Theme.of(context).primaryColor,
+                    textColor: Theme.of(context).primaryColor,
+                  ),
+                  SizedBox(
+                    width: context.widthPercent(1.5),
+                  ),
+                  CustomButton(
+                    onTap: () {},
+                    height: 40,
+                    width: context.widthPercent(AppSize.s3),
+                    borderRadius: AppPadding.p4,
+                    buttonLabel: StringsManager.editProfile,
                     buttonColor: Theme.of(context).scaffoldBackgroundColor,
                     borderColor: Theme.of(context).primaryColor,
                     textColor: Theme.of(context).primaryColor,
@@ -62,7 +94,8 @@ class UserProfileInformation extends StatelessWidget {
                   ),
                   Flexible(
                     child: Text(
-                        'Software Engineer at Adwat Information Technology'), //rebuild
+                        'Software Engineer at Adwat Information Technology',
+                    ), //rebuild
                   )
                 ],
               ),

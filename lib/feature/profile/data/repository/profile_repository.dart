@@ -14,18 +14,28 @@ class ProfileRepository extends BaseProfileRepository {
     final result = await _profileRemoteDataSource.getUserData(uId);
     try{
       return Right(result);
-    }on FirebaseException catch(error){
-      return Left(ServerFailure(msg:error.message.toString()));
+    }on ServerErrorException catch(error){
+      return Left(ServerFailure(msg:error.msg.toString()));
     }
   }
 
   @override
-  Future<Either<Failure, List<UserEntity>>> getFollowersDataUseCase({required List<dynamic> followersId}) async {
+  Future<Either<Failure, List<UserEntity>>> getFollowersData({required List<dynamic> followersId}) async {
     final result = await _profileRemoteDataSource.getFollowersData(followersId);
     try{
       return Right(result);
-    }on FirebaseException catch(error){
-      return Left(ServerFailure(msg:error.message.toString()));
+    }on ServerErrorException catch(error){
+      return Left(ServerFailure(msg:error.msg.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<UserEntity>>> getFollowingData({required List<dynamic> followingId}) async {
+    final result = await _profileRemoteDataSource.getFollowingData(followingId);
+    try{
+      return Right(result);
+    }on ServerErrorException catch(error){
+      return Left(ServerFailure(msg:error.msg.toString()));
     }
   }
 }

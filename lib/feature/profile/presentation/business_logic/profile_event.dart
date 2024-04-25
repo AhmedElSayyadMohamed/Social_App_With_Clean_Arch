@@ -10,3 +10,7 @@ class GetFollowersDataEvent extends ProfileEvent {
   final List<dynamic> followersId;
   GetFollowersDataEvent(this.followersId);
 }
+class GetFollowingDataEvent extends ProfileEvent {
+  final List<dynamic> followingId;
+  GetFollowingDataEvent(this.followingId);
+}

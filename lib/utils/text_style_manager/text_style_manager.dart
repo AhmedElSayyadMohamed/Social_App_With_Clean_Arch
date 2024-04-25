@@ -4,8 +4,8 @@ class TextStyleManager {
 
  static get lightTextStyle => const TextStyle(
   color: Colors.black,
-  fontWeight: FontWeight.w300,
-  fontSize: 14,
+  fontWeight: FontWeight.normal,
+  fontSize: 16,
   );
  static get semiTextStyle => const TextStyle(
   color: Colors.black,

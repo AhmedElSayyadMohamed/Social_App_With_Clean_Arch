@@ -21,9 +21,9 @@ class ProfileScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ProfileImageWithCover(user: user,),
-                const UserProfileInformation(), //r
-                MyPosts(uId: user.uId,), // rebuild
+                ProfileImageWithCover(user: user),
+                UserProfileInformation(user: user,),
+                MyPosts(uId: user.uId,),
               ],
             ),
           ),

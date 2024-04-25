@@ -73,7 +73,7 @@ class CustomBottomNavBar extends StatelessWidget {
                   IconButton(
                     onPressed: () => sl<SocialBloc>().add(ToggleNavBarIndexEvent(3)),
                     icon: Icon(
-                      IconBroken.setting,
+                      IconBroken.chat,
                       color:bloc.selectedIconColor(3),
                       size: bloc.selectedIconSize(3),
                     ),

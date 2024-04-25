@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/feature/layout/presentation/bussiness_logic/social_bloc.dart';
@@ -6,9 +7,7 @@ import '../widget/app_bar/app_bar.dart';
 import '../widget/bottom_nav_bar/bottom_nav_bar.dart';
 
 class LayoutScreen extends StatelessWidget {
-  const LayoutScreen({
-    super.key,
-  });
+  const LayoutScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +18,14 @@ class LayoutScreen extends StatelessWidget {
             appBar: CustomLayoutAppBar(
               title: screensTitles[bloc.navBarIndex],
             ),
-            body: Column(
+            body: Stack(
+              fit: StackFit.passthrough,
               children: [
-                Expanded(child:  screens(bloc.navBarIndex)),
-                const CustomBottomNavBar(),
+                 screens(bloc.navBarIndex),
+                const Align(
+                  alignment: AlignmentDirectional.bottomEnd,
+                  child:  CustomBottomNavBar(),
+                )
               ],
             ),
           );

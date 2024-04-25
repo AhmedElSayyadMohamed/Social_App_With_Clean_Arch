@@ -14,17 +14,21 @@ class UserModel extends UserEntity {
     required super.following,
   });
 
-  factory UserModel.fromJson(user) => UserModel(
-        uId: user['uid'],
-        email: user['email'],
-        photo: user['image'],
-        name:user['name'],
-        phone:  user['phone'],
-        profileCover:user['profileCover'],
-        bio: user['bio'],
-        followers: user['followers'],
-        following: user ['following'],
-      );
+  factory UserModel.fromJson(user) {
+    print("followers : ${user['followers']}");
+    print("following : ${user['following']}");
+    return UserModel(
+      uId: user['uid'],
+      email: user['email'],
+      photo: user['image'],
+      name:user['name'],
+      phone:  user['phone'],
+      profileCover:user['profileCover'],
+      bio: user['bio'],
+      followers: user['followers'],
+      following: user['following'],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         'uid':uId,

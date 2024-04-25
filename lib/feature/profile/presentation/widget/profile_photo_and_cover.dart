@@ -37,16 +37,16 @@ class ProfileImageWithCover extends StatelessWidget {
                   top: 0,
                   end: 0,
                   child: GestureDetector(
-                    onTap: (){},
-                    child:  CircleAvatar(
+                    onTap: () {},
+                    child: CircleAvatar(
                       backgroundColor: Colors.grey[200],
                       radius: 15,
-                      child:  const Icon(
+                      child: const Icon(
                         IconBroken.camera,
                         size: 25,
                       ),
                     ),
-                  )
+                  ),
               )
             ],
           ),
@@ -69,7 +69,7 @@ class ProfileImageWithCover extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleMedium,
                       maxLines: 1,
                     ),
-                     SizedBox(
+                    SizedBox(
                       height: context.heightPercent(0.05),
                     ),
                     Text(
@@ -87,7 +87,13 @@ class ProfileImageWithCover extends StatelessWidget {
               Row(
                 children: [
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        Routes.followingScreen,
+                        arguments: user.following,
+                      );
+                    },
                     child: Column(
                       children: [
                         Text(
@@ -109,9 +115,10 @@ class ProfileImageWithCover extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () => Navigator.pushNamed(
-                          context, Routes.followersScreen,
-                          arguments: user.followers,
-                      ),
+                      context,
+                      Routes.followersScreen,
+                      arguments: user.followers,
+                    ),
                     child: Column(
                       children: [
                         Text(

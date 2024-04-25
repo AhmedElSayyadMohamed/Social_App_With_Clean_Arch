@@ -17,6 +17,9 @@ class StringsManager{
   static const String welcome = 'Welcome in Our ';
   static const String layoutTitle = 'Feeds';
   static const String follow = "Follow";
+  static const String editProfile = "Edit Profile";
+  static const String addStory = "Add Story";
+  static const String messageFriend = "Send Me";
   static const String edit = "Edit";
   static const String post = "post";
   static const String addPost = "Add Post";

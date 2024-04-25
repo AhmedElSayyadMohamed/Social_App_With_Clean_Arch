@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
+import 'package:social_app/core/network/failure/failure.dart';
 import 'package:social_app/feature/profile/data/models/user_model.dart';
 import 'base_data_source.dart';
 
@@ -13,10 +13,9 @@ class ProfileRemoteDataSource extends BaseProfileRemoteDataSource {
       if (doc.exists) {
         return UserModel.fromJson(doc.data());
       } else {
-        throw Exception("User data not found");
+        throw ServerErrorException(msg: "User data not found");
       }
     } catch (error) {
-      // Handle specific errors if needed
       rethrow;
     }
   }
@@ -26,15 +25,29 @@ class ProfileRemoteDataSource extends BaseProfileRemoteDataSource {
     List<UserModel> followers = [];
     try {
       for (var followerId in followersId) {
-        final doc = await _firebaseFirestore.collection("users").doc(followerId).get();
-        followers.add(UserModel.fromJson(doc.data())) ;
-      }} catch (error) {
-      // Handle specific errors if needed
+        final doc =
+            await _firebaseFirestore.collection("users").doc(followerId).get();
+        followers.add(UserModel.fromJson(doc.data()));
+      }
+    } catch (error) {
       rethrow;
     }
-    if (kDebugMode) {
-      print(followers);
-    }
+
     return followers;
+  }
+
+  @override
+  Future<List<UserModel>> getFollowingData(List<dynamic> followingId) async {
+    List<UserModel> following = [];
+    try {
+      for (var followingId in followingId) {
+        final doc =
+            await _firebaseFirestore.collection("users").doc(followingId).get();
+        following.add(UserModel.fromJson(doc.data()));
+      }
+    } catch (error) {
+      rethrow;
+    }
+    return following;
   }
 }

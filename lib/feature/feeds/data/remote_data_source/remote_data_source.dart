@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dartz/dartz.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:social_app/feature/feeds/data/models/post_model.dart';
 import 'package:social_app/feature/feeds/data/remote_data_source/base_remote_data_source.dart';
@@ -101,7 +103,8 @@ class FeedsRemoteDataSource extends BaseFeedRemoteDataSource {
 
   @override
   Future<void> likePost(Post post) async {
-    var likesId = await getPostLikes(post);
+    var likesId;
+    print(likesId);
 
     if (!likesId.contains(currentUserId)) {
       _fireStoreInstance
@@ -124,11 +127,34 @@ class FeedsRemoteDataSource extends BaseFeedRemoteDataSource {
     }
   }
 
-  Future<List<String>> getPostLikes(Post post) async {
+  // Stream<List<String>> getPostLikesCountStream(Post post) {
+  //   StreamController<List<String>> controller = StreamController<List<String>>();
+  //
+  //   FirebaseFirestore.instance
+  //       .collection('users')
+  //       .doc(post.uId)
+  //       .collection('likes')
+  //       .doc('posts')
+  //       .collection(post.id)
+  //       .snapshots()
+  //       .listen((QuerySnapshot<Map<String, dynamic>> querySnapshot) {
+  //     List<String> documentIds = [];
+  //     for (var element in querySnapshot.docs) {
+  //       documentIds.add(element.id);
+  //     }
+  //     controller.add(documentIds);
+  //   }, onError: (error) {
+  //     controller.addError(error);
+  //   });
+  //
+  //   return controller.stream;
+  // }
+
+Future<List<String>> getPostLikesCount(Post post) async {
     List<String> documentIds = [];
 
-
-    QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore.instance
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore
+        .instance
         .collection('users')
         .doc(post.uId)
         .collection('likes')
@@ -139,5 +165,41 @@ class FeedsRemoteDataSource extends BaseFeedRemoteDataSource {
       documentIds.add(element.id);
     }
     return documentIds;
+  }
+
+  @override
+  Future<List<PostModel>> getTimeLinePosts(List<dynamic> followingUsersId) async{
+    List<PostModel> timelinePosts = [];
+    List<PostModel> userPosts =[];
+    followingUsersId.insert(0, currentUserId);
+    try {
+      for (String followingId in followingUsersId) {
+        final QuerySnapshot userPostsSnapshot = await _fireStoreInstance
+            .collection('users')
+            .doc(followingId)
+            .collection('myPosts')
+            .orderBy('postDate', descending: true)
+            .get();
+
+        userPosts = userPostsSnapshot.docs.map((doc) => PostModel.fromJson(doc)).toList();
+       for (var element in userPosts) {
+         if(isDateToday(element.date)){
+           timelinePosts.add(element);
+         }
+       }
+      }
+
+      timelinePosts.sort((a, b) => b.date.compareTo(a.date));
+
+      return timelinePosts;
+    } catch (error) {
+      throw ServerErrorException(msg: error.toString());
+    }
+
+  }
+  bool isDateToday(String dateTime) {
+    var date = DateTime.parse(dateTime);
+    DateTime now = DateTime.now();
+    return date.year == now.year && date.month == now.month && date.day == now.day;
   }
 }

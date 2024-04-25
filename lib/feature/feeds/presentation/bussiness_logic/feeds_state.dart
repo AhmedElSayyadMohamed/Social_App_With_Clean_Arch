@@ -37,6 +37,15 @@ class GetMyPostsByUidErrorState extends FeedsStates {
   final String msg;
   GetMyPostsByUidErrorState(this.msg);
 }
+class GetTimeLinePostsLoadingState extends FeedsStates {}
+class GetTimeLinePostsSuccessState extends FeedsStates {
+  final List<Post> posts;
+  GetTimeLinePostsSuccessState(this.posts);
+}
+class GetTimeLinePostsErrorState extends FeedsStates {
+  final String msg;
+  GetTimeLinePostsErrorState(this.msg);
+}
 
 class ToggleLikePostSuccessState extends FeedsStates {}
 class ToggleLikePostErrorState extends FeedsStates {

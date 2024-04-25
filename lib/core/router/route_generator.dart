@@ -6,9 +6,10 @@ import 'package:social_app/feature/auth/presentation/screens/login_screen/login_
 import 'package:social_app/feature/auth/presentation/screens/register_screen/register_screen.dart';
 import 'package:social_app/feature/layout/presentation/screen/layout_screen.dart';
 import 'package:social_app/feature/profile/domain/entities/user.dart';
+import 'package:social_app/feature/profile/presentation/screen/following_screen.dart';
 
 import '../../feature/feeds/presentation/screens/add_post.dart';
-import '../../feature/profile/presentation/screen/followers.dart';
+import '../../feature/profile/presentation/screen/followers_screen.dart';
 import '../../feature/profile/presentation/screen/user_profile_screen.dart';
 
 class RoutGenerator {
@@ -46,6 +47,10 @@ class RoutGenerator {
         case Routes.followersScreen:
         return MaterialPageRoute(
           builder: (_) => FollowersScreen(followers:setting.arguments as List,),
+        );
+        case Routes.followingScreen:
+        return MaterialPageRoute(
+          builder: (_) => FollowingScreen(following:setting.arguments as List,),
         );
 
       default:

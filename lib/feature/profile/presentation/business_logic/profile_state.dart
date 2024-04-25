@@ -25,3 +25,13 @@ class GetFollowersDataErrorState extends ProfileStates {
   final String msg;
   GetFollowersDataErrorState(this.msg);
 }
+class GetFollowingDataLoadingState extends ProfileStates {}
+class GetFollowingDataSuccessState extends ProfileStates {
+  final List<UserEntity> following;
+
+  GetFollowingDataSuccessState(this.following);
+}
+class GetFollowingDataErrorState extends ProfileStates {
+  final String msg;
+  GetFollowingDataErrorState(this.msg);
+}

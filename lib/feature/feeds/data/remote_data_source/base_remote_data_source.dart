@@ -7,4 +7,6 @@ abstract class BaseFeedRemoteDataSource{
   Future<void> addPost(Post post);
   Future<void> likePost(Post post);
   Future<List<PostModel>> getMyPostsById(String uId);
+  Future<List<PostModel>> getTimeLinePosts(List<dynamic> followingUsersId);
+
 }

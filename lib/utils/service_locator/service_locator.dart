@@ -9,6 +9,7 @@ import 'package:social_app/feature/feeds/data/remote_data_source/remote_data_sou
 import 'package:social_app/feature/feeds/data/repository/feed_repository.dart';
 import 'package:social_app/feature/feeds/domain/base_repository/base_feed_repository.dart';
 import 'package:social_app/feature/feeds/domain/use_cases/add_post_usecase.dart';
+import 'package:social_app/feature/feeds/domain/use_cases/get_all_posts.dart';
 import 'package:social_app/feature/feeds/domain/use_cases/get_my_posts_by_id_usecase.dart';
 import 'package:social_app/feature/feeds/domain/use_cases/like_post_usecase.dart';
 import 'package:social_app/feature/profile/domain/use_cases/get_followers_data.dart';
@@ -22,6 +23,7 @@ import '../../feature/profile/data/data_source/base_data_source.dart';
 import '../../feature/profile/data/data_source/data_source.dart';
 import '../../feature/profile/data/repository/profile_repository.dart';
 import '../../feature/profile/domain/base_repository/base_profile_repository.dart';
+import '../../feature/profile/domain/use_cases/get_following_data.dart';
 import '../../feature/profile/domain/use_cases/get_user_data.dart';
 
 final sl = GetIt.instance;
@@ -43,8 +45,8 @@ class ServiceLocator{
     sl.registerLazySingleton(() => SocialBloc());
     sl.registerLazySingleton(() => LoginBloc(sl()));
     sl.registerLazySingleton(() => RegisterBloc(sl()));
-    sl.registerFactory(() => ProfileBloc(sl(),sl()));
-    sl.registerFactory(() => FeedsBloc(sl(),sl(),sl()));
+    sl.registerFactory(() => ProfileBloc(sl(),sl(),sl()));
+    sl.registerFactory(() => FeedsBloc(sl(),sl(),sl(),sl()));
 
   }
   get _useCases{
@@ -52,9 +54,11 @@ class ServiceLocator{
     sl.registerLazySingleton(() => SignUpUseCase(sl()));
     sl.registerLazySingleton(() => GetUserDataUseCase(sl()));
     sl.registerLazySingleton(() => GetFollowersDataUseCase(sl()));
+    sl.registerLazySingleton(() => GetFollowingDataUseCase(sl()));
     sl.registerLazySingleton(() => AddPostUseCase(sl()));
     sl.registerLazySingleton(() => LikePostUseCase(sl()));
     sl.registerLazySingleton(() => GetMyPostsByIdUseCase(sl()));
+    sl.registerLazySingleton(() => GetTimeLinePostsUseCase(sl()));
 
   }
   get _repositories{
