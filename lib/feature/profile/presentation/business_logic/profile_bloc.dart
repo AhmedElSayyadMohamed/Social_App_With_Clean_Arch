@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/feature/profile/domain/entities/user.dart';
+import 'package:social_app/feature/profile/domain/use_cases/follow_user_use_case.dart';
 import 'package:social_app/feature/profile/domain/use_cases/get_followers_data.dart';
 import 'package:social_app/feature/profile/presentation/business_logic/profile_state.dart';
 import '../../../../core/constants.dart';
@@ -13,16 +15,19 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileStates> {
   final GetUserDataUseCase _getUserDataUseCase;
   final GetFollowersDataUseCase _getFollowersDataUseCase;
   final GetFollowingDataUseCase _getFollowingDataUseCase;
-  late final UserEntity user;
+  final FollowUserUseCase _followUserUseCase;
 
   ProfileBloc(
     this._getUserDataUseCase,
     this._getFollowersDataUseCase,
-      this._getFollowingDataUseCase,
+    this._getFollowingDataUseCase,
+    this._followUserUseCase,
   ) : super(ProfileInitial()) {
     on<GetUserDataEvent>(_getUserData);
     on<GetFollowersDataEvent>(_getFollowersData);
     on<GetFollowingDataEvent>(_getFollowingData);
+    on<ToggleFollowingUserEvent>(_toggleFollowUser);
+    on<LogOutEvent>(_userLogOut);
   }
 
   FutureOr<void> _getUserData(
@@ -36,8 +41,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileStates> {
         emit(GetUserDataErrorState(left.msg));
       },
       (user) {
-        this.user = user;
-        emit(GetUserDataSuccessState(user));
+        emit(GetUserDataSuccessState( user));
       },
     );
   }
@@ -47,7 +51,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileStates> {
     Emitter<ProfileStates> emit,
   ) async {
     emit(GetFollowersDataLoadingState());
-    var result = await _getFollowersDataUseCase(Parameters(followersId: event.followersId));
+    var result = await _getFollowersDataUseCase(
+        Parameters(followersId: event.followersId));
     result.fold(
       (left) {
         emit(GetFollowersDataErrorState(left.msg));
@@ -59,18 +64,49 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileStates> {
   }
 
   FutureOr<void> _getFollowingData(
-      GetFollowingDataEvent event,
-      Emitter<ProfileStates> emit,
-      ) async{
+    GetFollowingDataEvent event,
+    Emitter<ProfileStates> emit,
+  ) async {
     emit(GetFollowingDataLoadingState());
-    var result = await _getFollowingDataUseCase(Parameters(followingId: event.followingId));
+    var result = await _getFollowingDataUseCase(
+        Parameters(followingId: event.followingId));
     result.fold(
-          (left) {
+      (left) {
         emit(GetFollowingDataErrorState(left.msg));
       },
-          (following) {
+      (following) {
         emit(GetFollowingDataSuccessState(following));
       },
     );
+  }
+
+  FutureOr<void> _toggleFollowUser(
+    ToggleFollowingUserEvent event,
+    Emitter<ProfileStates> emit,
+  ) async {
+    emit(ToggleFollowingUserLoadingState());
+    var result = await _followUserUseCase(
+      Parameters(
+        uId: event.followingUserId,
+      ),
+    );
+    result.fold(
+      (left) {
+        emit(ToggleFollowingUserErrorState(left.msg));
+      },
+      (right) {
+        emit(ToggleFollowingUserSuccessState());
+      },
+    );
+  }
+
+  FutureOr<void> _userLogOut(
+    LogOutEvent event,
+    Emitter<ProfileStates> emit,
+  ) async {
+    await FirebaseAuth.instance.signOut().then((value) {
+      currentUserId ='';
+    });
+    emit(UserLogOutState());
   }
 }

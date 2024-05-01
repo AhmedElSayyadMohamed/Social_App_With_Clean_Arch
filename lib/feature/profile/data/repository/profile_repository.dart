@@ -38,4 +38,14 @@ class ProfileRepository extends BaseProfileRepository {
       return Left(ServerFailure(msg:error.msg.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> followUser({required String followUserId}) async{
+    final result = await _profileRemoteDataSource.followUser(followUserId: followUserId);
+    try{
+      return Right(result);
+    }on ServerErrorException catch(error){
+      return Left(ServerFailure(msg:error.msg.toString()));
+    }
+  }
 }

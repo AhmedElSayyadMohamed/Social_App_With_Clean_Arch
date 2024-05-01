@@ -12,6 +12,7 @@ import 'package:social_app/feature/feeds/domain/use_cases/add_post_usecase.dart'
 import 'package:social_app/feature/feeds/domain/use_cases/get_all_posts.dart';
 import 'package:social_app/feature/feeds/domain/use_cases/get_my_posts_by_id_usecase.dart';
 import 'package:social_app/feature/feeds/domain/use_cases/like_post_usecase.dart';
+import 'package:social_app/feature/profile/domain/use_cases/follow_user_use_case.dart';
 import 'package:social_app/feature/profile/domain/use_cases/get_followers_data.dart';
 import 'package:social_app/feature/profile/presentation/business_logic/profile_bloc.dart';
 import '../../feature/auth/data/repository/auth_repository.dart';
@@ -43,9 +44,9 @@ class ServiceLocator{
   get _setUpBlocs{
 
     sl.registerLazySingleton(() => SocialBloc());
-    sl.registerLazySingleton(() => LoginBloc(sl()));
+    sl.registerFactory(() => LoginBloc(sl()));
     sl.registerLazySingleton(() => RegisterBloc(sl()));
-    sl.registerFactory(() => ProfileBloc(sl(),sl(),sl()));
+    sl.registerFactory(() => ProfileBloc(sl(),sl(),sl(),sl()));
     sl.registerFactory(() => FeedsBloc(sl(),sl(),sl(),sl()));
 
   }
@@ -55,6 +56,7 @@ class ServiceLocator{
     sl.registerLazySingleton(() => GetUserDataUseCase(sl()));
     sl.registerLazySingleton(() => GetFollowersDataUseCase(sl()));
     sl.registerLazySingleton(() => GetFollowingDataUseCase(sl()));
+    sl.registerLazySingleton(() => FollowUserUseCase(sl()));
     sl.registerLazySingleton(() => AddPostUseCase(sl()));
     sl.registerLazySingleton(() => LikePostUseCase(sl()));
     sl.registerLazySingleton(() => GetMyPostsByIdUseCase(sl()));

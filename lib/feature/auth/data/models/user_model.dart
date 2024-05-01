@@ -31,5 +31,7 @@ class UserModel extends UserEntity {
         'bio': bio,
         'email': email,
         'phone': phone,
+        'followers': [],
+        'following': [],
       };
 }

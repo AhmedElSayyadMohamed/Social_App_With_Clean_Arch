@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dartz/dartz.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:social_app/feature/feeds/data/models/post_model.dart';
 import 'package:social_app/feature/feeds/data/remote_data_source/base_remote_data_source.dart';
@@ -104,7 +103,6 @@ class FeedsRemoteDataSource extends BaseFeedRemoteDataSource {
   @override
   Future<void> likePost(Post post) async {
     var likesId;
-    print(likesId);
 
     if (!likesId.contains(currentUserId)) {
       _fireStoreInstance
@@ -127,30 +125,7 @@ class FeedsRemoteDataSource extends BaseFeedRemoteDataSource {
     }
   }
 
-  // Stream<List<String>> getPostLikesCountStream(Post post) {
-  //   StreamController<List<String>> controller = StreamController<List<String>>();
-  //
-  //   FirebaseFirestore.instance
-  //       .collection('users')
-  //       .doc(post.uId)
-  //       .collection('likes')
-  //       .doc('posts')
-  //       .collection(post.id)
-  //       .snapshots()
-  //       .listen((QuerySnapshot<Map<String, dynamic>> querySnapshot) {
-  //     List<String> documentIds = [];
-  //     for (var element in querySnapshot.docs) {
-  //       documentIds.add(element.id);
-  //     }
-  //     controller.add(documentIds);
-  //   }, onError: (error) {
-  //     controller.addError(error);
-  //   });
-  //
-  //   return controller.stream;
-  // }
-
-Future<List<String>> getPostLikesCount(Post post) async {
+  Future<List<String>> getPostLikesCount(Post post) async {
     List<String> documentIds = [];
 
     QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore
@@ -168,38 +143,56 @@ Future<List<String>> getPostLikesCount(Post post) async {
   }
 
   @override
-  Future<List<PostModel>> getTimeLinePosts(List<dynamic> followingUsersId) async{
+  Future<List<PostModel>> getTimeLinePosts(
+      List<dynamic> followingUsersId) async {
     List<PostModel> timelinePosts = [];
-    List<PostModel> userPosts =[];
-    followingUsersId.insert(0, currentUserId);
+    List<PostModel> userPosts = [];
+    if (!followingUsersId.contains(currentUserId)) {
+      followingUsersId.add(currentUserId);
+    }
+
     try {
       for (String followingId in followingUsersId) {
-        final QuerySnapshot userPostsSnapshot = await _fireStoreInstance
-            .collection('users')
-            .doc(followingId)
-            .collection('myPosts')
-            .orderBy('postDate', descending: true)
-            .get();
+        final DocumentReference userDocRef =
+            _fireStoreInstance.collection('users').doc(followingId);
 
-        userPosts = userPostsSnapshot.docs.map((doc) => PostModel.fromJson(doc)).toList();
-       for (var element in userPosts) {
-         if(isDateToday(element.date)){
-           timelinePosts.add(element);
-         }
-       }
+        // Check if the collection 'myPosts' exists
+        final bool myPostsCollectionExists = await userDocRef
+            .collection('myPosts')
+            .get()
+            .then((querySnapshot) => querySnapshot.docs.isNotEmpty);
+
+        if (myPostsCollectionExists) {
+          final QuerySnapshot userPostsSnapshot = await userDocRef
+              .collection('myPosts')
+              .orderBy('postDate', descending: true)
+              .get();
+
+          userPosts = userPostsSnapshot.docs
+              .map((doc) => PostModel.fromJson(doc))
+              .toList();
+          for (var element in userPosts) {
+            if (isDateToday(element.date)) {
+              timelinePosts.add(element);
+            }
+          }
+        }
       }
 
       timelinePosts.sort((a, b) => b.date.compareTo(a.date));
 
       return timelinePosts;
     } catch (error) {
+      print('error all posts$error');
       throw ServerErrorException(msg: error.toString());
     }
-
   }
+
   bool isDateToday(String dateTime) {
     var date = DateTime.parse(dateTime);
     DateTime now = DateTime.now();
-    return date.year == now.year && date.month == now.month && date.day == now.day;
+    return date.year == now.year &&
+        date.month == now.month &&
+        date.day == now.day;
   }
 }

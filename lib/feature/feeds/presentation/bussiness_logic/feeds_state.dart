@@ -39,7 +39,7 @@ class GetMyPostsByUidErrorState extends FeedsStates {
 }
 class GetTimeLinePostsLoadingState extends FeedsStates {}
 class GetTimeLinePostsSuccessState extends FeedsStates {
-  final List<Post> posts;
+  List<Post> posts = [];
   GetTimeLinePostsSuccessState(this.posts);
 }
 class GetTimeLinePostsErrorState extends FeedsStates {

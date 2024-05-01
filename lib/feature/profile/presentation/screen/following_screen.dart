@@ -38,8 +38,8 @@ class FollowingScreen extends StatelessWidget {
                     case GetFollowingDataSuccessState _:
                     return InkWell(
                       onTap: () {
-                        Navigator.pushNamed(context, Routes.profileRoute,
-                            arguments: state.following[index]);
+                        Navigator.pushNamed(context, Routes.followUserScreen,
+                            arguments:following[index]);
                       },
                       child: ListTile(
                         contentPadding:

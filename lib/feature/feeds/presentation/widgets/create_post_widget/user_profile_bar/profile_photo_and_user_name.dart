@@ -11,29 +11,35 @@ class UserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileBloc, ProfileStates>(
+
       builder: (context, state) {
-        var bloc = ProfileBloc.get(context);
-        return Row(
-          children: [
-             CustomCachedNetworkImage(
-              width: 40,
-              height: 40,
-              imageUrl:bloc.user.photo,
-            ),
-            SizedBox(
-              width: context.widthPercent(2),
-            ),
-            Text(
-              bloc.user.name,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .titleSmall,
-            ),
-          ],
-        );
+        switch(state){
+          case GetUserDataLoadingState _:return const SizedBox.shrink();
+          case GetUserDataSuccessState _ : return Row(
+            children: [
+              CustomCachedNetworkImage(
+                width: 40,
+                height: 40,
+                imageUrl:state.user.photo,
+              ),
+              SizedBox(
+                width: context.widthPercent(2),
+              ),
+              Text(
+                state.user.name,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .titleSmall,
+              ),
+            ],
+          );
+          case GetUserDataErrorState _ :return Text(state.msg) ;
+          default:return const SizedBox.shrink();
+        }
+
       },
     );
   }

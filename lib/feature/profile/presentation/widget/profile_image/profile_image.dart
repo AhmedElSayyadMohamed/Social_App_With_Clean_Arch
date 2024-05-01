@@ -2,10 +2,12 @@ import 'package:social_app/core/basics_shared_widgets/custom_cached_network_imag
 import 'package:social_app/core/icon_broken/icon_broken.dart';
 import 'package:flutter/material.dart';
 
-class ProfilePhoto extends StatelessWidget {
-  const ProfilePhoto({super.key, required this.profilePhoto});
-  final String profilePhoto;
+import '../../../../../core/constants.dart';
 
+class ProfilePhoto extends StatelessWidget {
+  const ProfilePhoto({super.key, required this.profilePhoto, required this.uId});
+  final String profilePhoto;
+  final String uId;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -18,7 +20,8 @@ class ProfilePhoto extends StatelessWidget {
               imageUrl:profilePhoto,
           ),
         ),
-        PositionedDirectional(
+         uId == currentUserId ?
+          PositionedDirectional(
             bottom: 0,
             end: 0,
             child: GestureDetector(
@@ -32,7 +35,7 @@ class ProfilePhoto extends StatelessWidget {
               ),
             ),
             )
-        )
+        ):const SizedBox.shrink()
       ],
     );
   }

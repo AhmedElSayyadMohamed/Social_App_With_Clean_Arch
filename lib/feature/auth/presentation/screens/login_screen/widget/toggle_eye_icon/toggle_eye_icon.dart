@@ -17,7 +17,7 @@ class ToggleEyeIcon extends StatelessWidget{
         var bloc = LoginBloc.get(context);
         return IconButton(
           padding: const EdgeInsets.all(AppPadding.p8),
-          onPressed: ()=> bloc.add(TogglePasswordSecurityEyeEvent()),
+          onPressed: ()=> bloc.togglePasswordSecurityEyeIcon(),
           icon: bloc.isSecure
               ? const Icon(
             Icons.visibility,

@@ -25,8 +25,8 @@ class UserModel extends UserEntity {
       phone:  user['phone'],
       profileCover:user['profileCover'],
       bio: user['bio'],
-      followers: user['followers'],
-      following: user['following'],
+      followers: user['followers']??[],
+      following: user['following']??[],
     );
   }
 
@@ -38,5 +38,7 @@ class UserModel extends UserEntity {
         'bio': bio,
         'email': email,
         'phone': phone,
+         'followers':<String>[],
+         'following':<String>[],
       };
 }

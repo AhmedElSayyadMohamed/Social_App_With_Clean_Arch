@@ -8,6 +8,7 @@ import '../../../../../../../utils/strings_manager/strings_manager.dart';
 
 class LoginButton extends StatelessWidget {
   final void Function() onTap;
+
   const LoginButton({
     super.key,
     required this.onTap,
@@ -15,25 +16,25 @@ class LoginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LoginBloc, LoginStates>(
-      builder: (BuildContext context, LoginStates state) {
-        if (state is LoginLoadingState) {
-          return const CircleAvatar(
-            radius: 20,
-            backgroundColor: Colors.white,
-            child: CircularProgressIndicator(
-              strokeWidth: 3,
-            ),
-          );
-        }
-        else {
-          return CustomButton(
-            onTap: onTap,
-            buttonLabel: StringsManager.signIn,
-            borderRadius: AppBorder.b12,
-          );
-        }
-      },
-    );
+    return  BlocBuilder<LoginBloc, LoginStates>(
+        builder: (BuildContext context, LoginStates state) {
+          if (state is LoginLoadingState) {
+            return const CircleAvatar(
+              radius: 20,
+              backgroundColor: Colors.white,
+              child: CircularProgressIndicator(
+                strokeWidth: 3,
+              ),
+            );
+          }
+          else {
+            return CustomButton(
+              onTap: onTap,
+              buttonLabel: StringsManager.signIn,
+              borderRadius: AppBorder.b12,
+            );
+          }
+        },
+      );
   }
 }

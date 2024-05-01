@@ -44,7 +44,7 @@ class CreatePostScreenBody extends StatelessWidget {
                         ),
                         child: Image.file(
                           File(bloc.imageFile),
-                          fit: BoxFit.cover,
+                          // fit: BoxFit.contain,
                         ),
                       ),
                       IconButton(

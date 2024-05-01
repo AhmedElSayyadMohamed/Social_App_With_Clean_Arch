@@ -35,3 +35,11 @@ class GetFollowingDataErrorState extends ProfileStates {
   final String msg;
   GetFollowingDataErrorState(this.msg);
 }
+
+class ToggleFollowingUserLoadingState extends ProfileStates {}
+class ToggleFollowingUserSuccessState extends ProfileStates {}
+class ToggleFollowingUserErrorState extends ProfileStates {
+  final String msg;
+  ToggleFollowingUserErrorState(this.msg);
+}
+class UserLogOutState extends ProfileStates {}

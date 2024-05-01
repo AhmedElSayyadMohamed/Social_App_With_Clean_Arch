@@ -39,8 +39,11 @@ class FollowersScreen extends StatelessWidget {
                     case GetFollowersDataSuccessState _:
                       return InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, Routes.profileRoute,
-                              arguments: state.followers[index]);
+                          Navigator.pushNamed(
+                            context,
+                            Routes.followUserScreen,
+                              arguments: followers[index],
+                          );
                         },
                         child: ListTile(
                           contentPadding:

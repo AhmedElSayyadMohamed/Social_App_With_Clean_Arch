@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../../core/basics_shared_widgets/custom_text_form_field/custom_text_form_field.dart';
 import '../../../../../../../core/basics_shared_widgets/flutter_toast/flutter_toast.dart';
+import '../../../../../../../core/constants.dart';
 import '../../../../../../../core/router/routing_name.dart';
 import '../../../../../../../core/validation/email_validation/email_validation.dart';
 import '../../../../../../../core/validation/password_validation/password_validation.dart';
@@ -159,6 +161,7 @@ class RegisterScreenBodyState extends State<RegisterScreenBody> {
           confirmPassword: confirmPasswordController.text,
         ),
       );
+
       FocusScope.of(context).requestFocus(FocusNode());
     }
   }

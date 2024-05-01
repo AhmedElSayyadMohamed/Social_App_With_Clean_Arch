@@ -20,137 +20,143 @@ class PostWidget extends StatelessWidget {
     return Card(
       elevation: 1,
       shape: const RoundedRectangleBorder(),
-      child:Padding(
-      padding: const EdgeInsetsDirectional.all(5),
-      child:  Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(AppPadding.p8),
-            child: BlocProvider.value(
-              value: sl<ProfileBloc>()..add(GetUserDataEvent(post.uId)),
-              child: BlocBuilder<ProfileBloc, ProfileStates>(
-                builder: (context, state) {
-                  switch (state) {
-                    case GetUserDataLoadingState _:
-                      return const SizedBox.shrink();
-                    case GetUserDataSuccessState _:
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          CustomCachedNetworkImage(
-                            width: 45,
-                            height: 45,
-                            imageUrl: state.user.photo,
-                          ),
-                          SizedBox(
-                            width: context.widthPercent(AppSize.s03),
-                          ),
-                          Expanded(
-                            flex: 3,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: AppPadding.p4,
+      child: Padding(
+        padding: const EdgeInsetsDirectional.all(5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(AppPadding.p8),
+              child: BlocProvider<ProfileBloc>.value(
+                value: sl<ProfileBloc>()..add(GetUserDataEvent(post.uId)),
+                child: BlocBuilder<ProfileBloc, ProfileStates>(
+                  builder: (context, state) {
+                    switch (state) {
+                      case GetUserDataLoadingState _:
+                        return const SizedBox.shrink();
+                      case GetUserDataSuccessState _:
+                        {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              CustomCachedNetworkImage(
+                                width: 45,
+                                height: 45,
+                                imageUrl: state.user.photo,
                               ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
+                              SizedBox(
+                                width: context.widthPercent(AppSize.s03),
+                              ),
+                              Expanded(
+                                flex: 3,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: AppPadding.p4,
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Flexible(
-                                        child: Text(
-                                          state.user.name,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: context.widthPercent(2),
-                                      ),
-                                      const Icon(
-                                        Icons.check_circle,
-                                        size: AppSize.s2,
-                                        color: Colors.blueAccent,
-                                      ),
-                                      SizedBox(
-                                        width: context.widthPercent(2),
-                                      ),
-                                      Text(
-                                        dateFormattingAndDifferenceFromNow(
-                                            post.date),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall,
+                                      Row(
+                                        children: [
+                                          Flexible(
+                                            child: Text(
+                                              state.user.name,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: context.widthPercent(2),
+                                          ),
+                                          const Icon(
+                                            Icons.check_circle,
+                                            size: AppSize.s2,
+                                            color: Colors.blueAccent,
+                                          ),
+                                          SizedBox(
+                                            width: context.widthPercent(2),
+                                          ),
+                                          Text(
+                                            dateFormattingAndDifferenceFromNow(
+                                                post.date),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodySmall,
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),
-                                ],
+                                ),
                               ),
-                            ),
-                          ),
-                          const Spacer(),
-                          InkWell(
-                            onTap: () {},
-                            child: const Icon(
-                              Icons.more_horiz,
-                              size: 25,
-                            ),
-                          ),
-                        ],
-                      );
-                    case GetUserDataErrorState _:
-                      return SizedBox(
-                        child: Text(state.msg),
-                      );
-                    default:
-                      return const SizedBox.shrink();
-                  }
-                },
+                              const Spacer(),
+                              InkWell(
+                                onTap: () {},
+                                child: const Icon(
+                                  Icons.more_horiz,
+                                  size: 25,
+                                ),
+                              ),
+                            ],
+                          );
+                        }
+
+                      case GetUserDataErrorState _:
+                        return SizedBox(
+                          child: Text(state.msg),
+                        );
+                      default:
+                        return const SizedBox.shrink();
+                    }
+                  },
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal:AppPadding.p4,
-              vertical: AppPadding.p4,
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppPadding.p4,
+                vertical: AppPadding.p4,
+              ),
+              child: Text(
+                post.containText,
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
             ),
-            child: Text(
-              post.containText,
-              style: Theme.of(context).textTheme.bodySmall,
+            Visibility(
+              visible: post.image.isNotEmpty,
+              replacement: const SizedBox.shrink(),
+              child: CustomCachedNetworkImage(
+                borderRadius: 2,
+                width: double.infinity,
+                height: 300,
+                imageUrl: post.image,
+              ),
             ),
-          ),
-          Visibility(
-            visible: post.image.isNotEmpty,
-            replacement: const SizedBox.shrink(),
-            child: CustomCachedNetworkImage(
-            borderRadius: 2,
-            width: double.infinity,
-            height: 300,
-            imageUrl: post.image,
-          ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Align(
-            alignment: AlignmentDirectional.bottomEnd,
-            child: Text(
-              'Created at ${dateFormatting(post.date)}',
-              style:
-                  Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 10),
+            const SizedBox(
+              height: 10,
             ),
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          PostInteractionRow(
-            post: post,
-          ),
-        ],
-      ),
+            Align(
+              alignment: AlignmentDirectional.bottomEnd,
+              child: Text(
+                'Created at ${dateFormatting(post.date)}',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall!
+                    .copyWith(fontSize: 10),
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            PostInteractionRow(
+              post: post,
+            ),
+          ],
+        ),
       ),
     );
   }

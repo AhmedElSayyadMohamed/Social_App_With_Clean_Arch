@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:social_app/core/constants.dart';
 import 'package:social_app/core/network/failure/failure.dart';
 import 'package:social_app/feature/profile/data/models/user_model.dart';
+import 'package:social_app/feature/profile/domain/entities/user.dart';
 import 'base_data_source.dart';
 
 class ProfileRemoteDataSource extends BaseProfileRemoteDataSource {
@@ -49,5 +51,42 @@ class ProfileRemoteDataSource extends BaseProfileRemoteDataSource {
       rethrow;
     }
     return following;
+  }
+
+  @override
+  Future<void> followUser({required String followUserId}) async {
+    try {
+      UserModel followerUser = await getUserData(followUserId);
+      UserModel currentUser = await getUserData(currentUserId);
+
+      if (followerUser.followers.contains(currentUser.uId)) {
+        followerUser.followers.remove(currentUser.uId);
+        currentUser.following.remove(followerUser.uId);
+      } else {
+        followerUser.followers.add(currentUser.uId);
+        currentUser.following.add(followerUser.uId);
+      }
+      await updateFollowingData(user: followerUser, followerOrFollowing: 'followers');
+      await updateFollowingData(user: currentUser, followerOrFollowing: 'following');
+    } catch (error) {
+      throw ServerErrorException(msg: error.toString());
+    }
+  }
+
+  Future<void> updateFollowingData({
+    required UserEntity user,
+    required String followerOrFollowing,
+  }) async {
+    await _firebaseFirestore.collection("users").doc(user.uId).update(
+      {
+        followerOrFollowing: followerOrFollowing == 'following'
+            ? user.following
+            : user.followers,
+      },
+    ).catchError(
+      (error) {
+        throw ServerErrorException(msg: error.toString());
+      },
+    );
   }
 }

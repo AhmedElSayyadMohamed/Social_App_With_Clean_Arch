@@ -23,10 +23,6 @@ class AllPosts extends StatelessWidget {
                   PostWidget(post: state.posts[index]),
               itemCount: state.posts.length,
             );
-          case GetTimeLinePostsErrorState _:
-            return SizedBox(
-              child: Text(state.msg),
-            );
         }
         return const SizedBox.shrink();
       },

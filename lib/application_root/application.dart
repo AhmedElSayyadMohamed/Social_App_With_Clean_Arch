@@ -5,6 +5,7 @@ import '../core/constants.dart';
 import '../core/router/route_generator.dart';
 import '../core/router/routing_name.dart';
 import '../core/theme/light_mode_theme.dart';
+import '../feature/feeds/presentation/bussiness_logic/feeds_bloc.dart';
 import '../feature/layout/presentation/bussiness_logic/social_bloc.dart';
 import '../feature/profile/presentation/business_logic/profile_bloc.dart';
 import '../utils/service_locator/service_locator.dart';
@@ -24,8 +25,8 @@ class SocialApp extends StatelessWidget {
           create: (BuildContext context) => sl<SocialBloc>(),
         ),
         BlocProvider(
-          create: (context) => sl<ProfileBloc>()
-            ..add(GetUserDataEvent(currentUserId)),
+          create: (context) =>
+              sl<ProfileBloc>()..add(GetUserDataEvent(currentUserId)),
         ),
       ],
       child: MaterialApp(

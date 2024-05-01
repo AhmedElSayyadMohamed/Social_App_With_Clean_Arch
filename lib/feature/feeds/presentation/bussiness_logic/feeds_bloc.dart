@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:social_app/feature/feeds/domain/entities/post.dart';
-import 'package:social_app/feature/feeds/domain/use_cases/base_feeds_use_cases.dart';
 import 'package:social_app/feature/feeds/domain/use_cases/get_my_posts_by_id_usecase.dart';
 import 'package:social_app/feature/feeds/domain/use_cases/like_post_usecase.dart';
 import '../../../../core/constants.dart';
@@ -105,7 +104,6 @@ class FeedsBloc extends Bloc<FeedsEvent, FeedsStates> {
     Emitter<FeedsStates> emit,
   ) async {
     emit(GetMyPostsByUidLoadingState());
-
     final result = await getMyPostsByIdUseCase(Parameters(uId: event.uId));
     result.fold(
       (l) {
@@ -135,14 +133,15 @@ class FeedsBloc extends Bloc<FeedsEvent, FeedsStates> {
     Emitter<FeedsStates> emit,
   ) async {
     emit(GetTimeLinePostsLoadingState());
-
     final result = await getTimeLinePostsUseCase(
-        Parameters(followingId: event.followingUsersId));
+        Parameters(followingId:event.followingUsersId),
+    );
     result.fold(
       (l) {
         emit(GetTimeLinePostsErrorState(l.msg));
       },
       (posts) {
+
         emit(GetTimeLinePostsSuccessState(posts));
       },
     );

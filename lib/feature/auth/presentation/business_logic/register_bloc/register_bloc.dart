@@ -39,6 +39,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterStates> {
       (right) {
 
         add(UploadNewUserDataToFireStore(right));
+        currentUserId =right.uId;
         emit(RegisterSuccessState());
       },
     );
@@ -56,16 +57,11 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterStates> {
         .then(
       (value) {
         emit(UploadNewUserDataToFireStoreSuccessState());
-        if (kDebugMode) {
-          print('User data saved successfully!');
-        }
       },
     ).catchError(
       (error) {
         emit(UploadNewUserDataToFireStoreErrorState(error.toString()));
-        if (kDebugMode) {
-          print('Error saving user data: $error');
-        }
+
       },
     );
   }

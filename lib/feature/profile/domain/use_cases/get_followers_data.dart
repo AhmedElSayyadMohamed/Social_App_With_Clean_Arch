@@ -14,6 +14,4 @@ class GetFollowersDataUseCase extends BaseProfileUseCases<List<UserEntity>,Param
   Future<Either<Failure, List<UserEntity>>> call(Parameters parameters) {
    return _profileRepository.getFollowersData(followersId: parameters.followersId);
   }
-
-
 }
