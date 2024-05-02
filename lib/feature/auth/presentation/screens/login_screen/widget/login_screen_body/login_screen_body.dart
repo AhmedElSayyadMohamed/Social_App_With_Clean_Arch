@@ -1,8 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:social_app/core/constants.dart';
-import 'package:social_app/feature/profile/presentation/business_logic/profile_bloc.dart';
 import '../../../../../../../core/basics_shared_widgets/custom_text_form_field/custom_text_form_field.dart';
 import '../../../../../../../core/basics_shared_widgets/flutter_toast/flutter_toast.dart';
 import '../../../../../../../core/router/routing_name.dart';
@@ -14,7 +11,6 @@ import '../../../../../../../utils/app_size/app_size.dart';
 import '../../../../../../../utils/service_locator/service_locator.dart';
 import '../../../../../../../utils/strings_manager/strings_manager.dart';
 import '../../../../business_logic/login_bloc/login_bloc.dart';
-import '../../../../business_logic/login_bloc/login_events.dart';
 import '../../../../business_logic/login_bloc/login_states.dart';
 import '../../../../widget/auth_title_widget/auth_title_widget.dart';
 import '../dont_have_account_text_widget/dont_have_account_text_widget.dart';
@@ -29,6 +25,7 @@ class LoginScreenBody extends StatefulWidget {
 }
 
 class _LoginScreenBodyState extends State<LoginScreenBody> {
+
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
@@ -37,7 +34,6 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
   Widget build(BuildContext context) {
     return BlocConsumer<LoginBloc, LoginStates>(
       builder: (context, state) {
-        var cubit = LoginBloc.get(context);
         return Container(
           padding: const EdgeInsets.all(AppPadding.p20),
           decoration: BoxDecoration(
@@ -51,6 +47,7 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
             physics: const BouncingScrollPhysics(),
             child: Form(
               key: formKey,
+              autovalidateMode:AutovalidateMode.onUserInteraction,
               child: Column(
                 children: [
                   const AuthenticationTitleWidget(
@@ -64,8 +61,7 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
                     textFormLabel: StringsManager.email,
                     keyboardType: TextInputType.emailAddress,
                     formBorderRadius: AppPadding.p12,
-                    validator: (email) =>
-                        EmailValidator.checkEmailValidation(email),
+                    validator: (email) =>EmailValidator.checkEmailValidation(email),
                   ),
                   const SizedBox(
                     height: AppSize.s1,
@@ -75,7 +71,7 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
                     textFormLabel: StringsManager.password,
                     keyboardType: TextInputType.emailAddress,
                     formBorderRadius: AppPadding.p12,
-                    obSecureText: cubit.isSecure,
+                    obSecureText: LoginBloc.get(context).isSecure,
                     suffixIcon: const ToggleEyeIcon(),
                     onFieldSubmitted: (value) =>
                         _checkFormValidationAndLoginWithEmailAndPassword,
@@ -97,10 +93,15 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
       listener: (BuildContext context, state) {
         if (state is LoginErrorState) {
           Alarm.flutterToast(
-              massage: state.error, toastState: ToastState.error);
-        } else if (state is LoginSuccessState) {
+              massage: state.error,
+            toastState: ToastState.error,
+          );
+        }
+        else if (state is LoginSuccessState) {
           Navigator.pushNamedAndRemoveUntil(
-              context, Routes.layoutRoute, (_) => false);
+              context,
+              Routes.layoutRoute, (_) => false,
+          );
         }
       },
     );
@@ -108,14 +109,10 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
 
   get _checkFormValidationAndLoginWithEmailAndPassword {
     if (formKey.currentState!.validate()) {
-      sl<LoginBloc>().loginWithEmailAndPassword(
+      LoginBloc.get(context).loginWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,
-      ).then((value) {
-        if(currentUserId!=''){
-          Navigator.pushReplacementNamed(context, Routes.layoutRoute);
-        }
-      });
+      );
       FocusScope.of(context).requestFocus(FocusNode());
     }
   }

@@ -23,7 +23,7 @@ Widget screens(int index) {
     case 0:
       return const FeedsScreen();
     case 1:
-      return const SearchScreen();
+      return SearchScreen();
     case 2:
       return Container();
     case 3:

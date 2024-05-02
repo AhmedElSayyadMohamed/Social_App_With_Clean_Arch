@@ -16,8 +16,8 @@ class LoginBloc extends Cubit<LoginStates> {
   Future<void> loginWithEmailAndPassword({
   required String email,
   required String password,
-
 }) async {
+
     emit(LoginLoadingState());
     final result = await loginUseCase(
       Parameters(
@@ -30,10 +30,7 @@ class LoginBloc extends Cubit<LoginStates> {
         emit(LoginErrorState(l.msg));
       },
       (r) {
-        currentUserId =r.uId;
-        // if (kDebugMode) {
-        //   print(r.uId);
-        // }
+        currentUserId = r.uId;
         emit(LoginSuccessState());
       },
     );

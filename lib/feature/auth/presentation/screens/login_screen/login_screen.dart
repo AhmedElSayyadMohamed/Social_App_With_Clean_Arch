@@ -8,7 +8,9 @@ import '../../../../../utils/service_locator/service_locator.dart';
 import '../../business_logic/login_bloc/login_bloc.dart';
 
 class LoginScreen extends StatelessWidget {
+
   const LoginScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

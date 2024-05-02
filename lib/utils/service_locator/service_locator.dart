@@ -44,7 +44,7 @@ class ServiceLocator{
   get _setUpBlocs{
 
     sl.registerLazySingleton(() => SocialBloc());
-    sl.registerFactory(() => LoginBloc(sl()));
+    sl.registerLazySingleton(() => LoginBloc(sl()));
     sl.registerLazySingleton(() => RegisterBloc(sl()));
     sl.registerFactory(() => ProfileBloc(sl(),sl(),sl(),sl()));
     sl.registerFactory(() => FeedsBloc(sl(),sl(),sl(),sl()));

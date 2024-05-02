@@ -11,7 +11,7 @@ class Alarm {
   }) {
     return Fluttertoast.showToast(
       msg: massage,
-      toastLength: Toast.LENGTH_SHORT,
+      toastLength: Toast.LENGTH_LONG,
       gravity: ToastGravity.BOTTOM,
       timeInSecForIosWeb: 10,
       backgroundColor: toastColor(toastState),

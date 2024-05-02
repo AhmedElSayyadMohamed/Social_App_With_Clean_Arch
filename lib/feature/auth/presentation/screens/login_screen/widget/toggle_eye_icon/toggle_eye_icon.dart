@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:social_app/feature/auth/presentation/business_logic/login_bloc/login_events.dart';
 import 'package:social_app/feature/auth/presentation/business_logic/login_bloc/login_states.dart';
 import 'package:social_app/utils/app_padding/app_padding.dart';
 
