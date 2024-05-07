@@ -26,6 +26,8 @@ class SocialBloc extends Bloc<SocialEvent, SocialStates> {
     Emitter<SocialStates> emit,
   ) {
     navBarIndex = event.index;
+    print(navBarIndex);
+
     emit(ToggleNavBarIndexState());
   }
 
