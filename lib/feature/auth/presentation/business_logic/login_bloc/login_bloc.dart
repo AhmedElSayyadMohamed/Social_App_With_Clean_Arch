@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/constants.dart';
 import '../../../domain/use_cases/login_use_case.dart';
@@ -31,6 +30,7 @@ class LoginBloc extends Cubit<LoginStates> {
       },
       (r) {
         currentUserId = r.uId;
+
         emit(LoginSuccessState());
       },
     );

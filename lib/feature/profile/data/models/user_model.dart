@@ -15,8 +15,6 @@ class UserModel extends UserEntity {
   });
 
   factory UserModel.fromJson(user) {
-    print("followers : ${user['followers']}");
-    print("following : ${user['following']}");
     return UserModel(
       uId: user['uid'],
       email: user['email'],

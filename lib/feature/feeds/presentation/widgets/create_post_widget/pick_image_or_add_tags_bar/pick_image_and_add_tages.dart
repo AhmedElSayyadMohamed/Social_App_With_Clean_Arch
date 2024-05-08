@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:social_app/feature/feeds/presentation/bussiness_logic/feeds_bloc.dart';
 import '../../../../../../core/icon_broken/icon_broken.dart';
 import '../../../../../../utils/strings_manager/strings_manager.dart';
+import '../../../bussiness_logic/feeds_bloc.dart';
 
 class PickImageAndAddTags extends StatelessWidget {
   const PickImageAndAddTags({super.key});

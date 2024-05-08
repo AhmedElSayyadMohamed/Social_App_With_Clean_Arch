@@ -13,8 +13,8 @@ class SignUpUseCase extends BaseAuthUseCases<UserModel, Parameters> {
   @override
   Future<Either<Failure, UserModel>> call(Parameters parameter) {
     return _baseRepository.signUpWithEmailAndPassword(
-      email: parameter.email!,
-      password: parameter.password!,
+      email: parameter.email,
+      password: parameter.password,
     );
   }
 }

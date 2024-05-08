@@ -102,7 +102,7 @@ class FeedsRemoteDataSource extends BaseFeedRemoteDataSource {
 
   @override
   Future<void> likePost(Post post) async {
-    var likesId;
+    var likesId = [];
 
     if (!likesId.contains(currentUserId)) {
       _fireStoreInstance
@@ -183,7 +183,6 @@ class FeedsRemoteDataSource extends BaseFeedRemoteDataSource {
 
       return timelinePosts;
     } catch (error) {
-      print('error all posts$error');
       throw ServerErrorException(msg: error.toString());
     }
   }

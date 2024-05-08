@@ -12,14 +12,16 @@ import 'package:social_app/feature/feeds/domain/use_cases/add_post_usecase.dart'
 import 'package:social_app/feature/feeds/domain/use_cases/get_all_posts.dart';
 import 'package:social_app/feature/feeds/domain/use_cases/get_my_posts_by_id_usecase.dart';
 import 'package:social_app/feature/feeds/domain/use_cases/like_post_usecase.dart';
+import 'package:social_app/feature/onboarding/presentation/business_logic/cubit.dart';
 import 'package:social_app/feature/profile/domain/use_cases/follow_user_use_case.dart';
+import 'package:social_app/feature/profile/domain/use_cases/get_all_users_usecase.dart';
 import 'package:social_app/feature/profile/domain/use_cases/get_followers_data.dart';
 import 'package:social_app/feature/profile/presentation/business_logic/profile_bloc.dart';
 import '../../feature/auth/data/repository/auth_repository.dart';
 import '../../feature/auth/domain/base_repository/base_auth_repository.dart';
 import '../../feature/auth/domain/use_cases/login_use_case.dart';
 import '../../feature/feeds/presentation/bussiness_logic/feeds_bloc.dart';
-import '../../feature/layout/presentation/bussiness_logic/social_bloc.dart';
+import '../../feature/layout/presentation/business_logic/social_bloc.dart';
 import '../../feature/profile/data/data_source/base_data_source.dart';
 import '../../feature/profile/data/data_source/data_source.dart';
 import '../../feature/profile/data/repository/profile_repository.dart';
@@ -44,16 +46,19 @@ class ServiceLocator{
   get _setUpBlocs{
 
     sl.registerLazySingleton(() => SocialBloc());
-    sl.registerLazySingleton(() => LoginBloc(sl()));
-    sl.registerLazySingleton(() => RegisterBloc(sl()));
-    sl.registerFactory(() => ProfileBloc(sl(),sl(),sl(),sl()));
+    sl.registerFactory(() => LoginBloc(sl()));
+    sl.registerFactory(() => RegisterBloc(sl()));
+    sl.registerFactory(() => ProfileBloc(sl(),sl(),sl(),sl(),sl()));
     sl.registerFactory(() => FeedsBloc(sl(),sl(),sl(),sl()));
+    sl.registerFactory(() => OnBoardingCubit());
 
   }
   get _useCases{
     sl.registerLazySingleton(() => LoginWithEmailAndPasswordUseCase(sl()));
     sl.registerLazySingleton(() => SignUpUseCase(sl()));
     sl.registerLazySingleton(() => GetUserDataUseCase(sl()));
+    sl.registerLazySingleton(() => GetAllUsersDataUseCase(sl()));
+
     sl.registerLazySingleton(() => GetFollowersDataUseCase(sl()));
     sl.registerLazySingleton(() => GetFollowingDataUseCase(sl()));
     sl.registerLazySingleton(() => FollowUserUseCase(sl()));

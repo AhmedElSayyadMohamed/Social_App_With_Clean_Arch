@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:social_app/utils/app_padding/app_padding.dart';
 
-import '../../../utils/app_size/app_size.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final String? textFormLabel;

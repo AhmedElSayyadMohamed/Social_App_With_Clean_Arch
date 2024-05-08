@@ -5,6 +5,7 @@ import 'package:social_app/feature/auth/presentation/business_logic/login_bloc/l
 import 'package:social_app/feature/auth/presentation/business_logic/login_bloc/login_states.dart';
 import 'package:social_app/utils/app_border/app_border.dart';
 import '../../../../../../../core/basics_shared_widgets/custom_button/custom_button.dart';
+import '../../../../../../../core/router/routing_name.dart';
 import '../../../../../../../utils/strings_manager/strings_manager.dart';
 
 class LoginButton extends StatelessWidget {
@@ -17,7 +18,21 @@ class LoginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LoginBloc, LoginStates>(
+    return BlocConsumer<LoginBloc, LoginStates>(
+      listener: (BuildContext context, state) {
+        if (state is LoginErrorState) {
+          Alarm.flutterToast(
+            massage: state.error,
+            toastState: ToastState.error,
+          );
+        }
+        else if (state is LoginSuccessState) {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            Routes.layoutRoute, (_) => false,
+          );
+        }
+      },
       builder: (BuildContext context, LoginStates state) {
         if (state is LoginLoadingState) {
           return const CircleAvatar(

@@ -10,10 +10,25 @@ class GetUserDataSuccessState extends ProfileStates {
 
   GetUserDataSuccessState(this.user);
 }
+
+
 class GetUserDataErrorState extends ProfileStates {
   final String msg;
 
   GetUserDataErrorState(this.msg);
+}
+class GetAllUsersDataLoadingState extends ProfileStates {}
+class GetAllUsersDataSuccessState extends ProfileStates {
+  final List<UserEntity> users;
+
+  GetAllUsersDataSuccessState(this.users);
+}
+
+
+class GetAllUsersDataErrorState extends ProfileStates {
+  final String msg;
+
+  GetAllUsersDataErrorState(this.msg);
 }
 class GetFollowersDataLoadingState extends ProfileStates {}
 class GetFollowersDataSuccessState extends ProfileStates {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/core/basics_shared_widgets/shimmer/shimmer.dart';
 import 'package:social_app/feature/feeds/presentation/widgets/post_widget.dart';
+
 import '../../bussiness_logic/feeds_bloc.dart';
 
 class AllPosts extends StatelessWidget {

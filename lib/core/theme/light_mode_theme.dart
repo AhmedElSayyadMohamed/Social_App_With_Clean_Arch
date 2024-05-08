@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../../utils/text_style_manager/text_style_manager.dart';
 
-Color primaryColor = Colors.blue;
+Color? primaryColor =  Colors.indigo[500];
 Color iconColor = Colors.grey;
 
 ThemeData lightMode = ThemeData(
@@ -27,6 +27,7 @@ ThemeData lightMode = ThemeData(
     titleMedium: TextStyleManager.semiTextStyle,
     bodyMedium: TextStyleManager.semiTextStyle,
     bodySmall: TextStyleManager.lightTextStyle,
+    labelMedium: const TextStyle(fontSize: 16,color: Colors.white)
   ),
 
 );

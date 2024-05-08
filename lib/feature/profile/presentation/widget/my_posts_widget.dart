@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:social_app/feature/feeds/presentation/bussiness_logic/feeds_bloc.dart';
 import 'package:social_app/feature/feeds/presentation/widgets/post_widget.dart';
 import '../../../../core/basics_shared_widgets/shimmer/shimmer.dart';
 import '../../../../utils/service_locator/service_locator.dart';
+import '../../../feeds/presentation/bussiness_logic/feeds_bloc.dart';
 
 class MyPosts extends StatelessWidget {
   final String uId;

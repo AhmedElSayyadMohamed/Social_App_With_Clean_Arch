@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../../core/basics_shared_widgets/custom_text_form_field/custom_text_form_field.dart';
-import '../../../../../../../core/basics_shared_widgets/flutter_toast/flutter_toast.dart';
-import '../../../../../../../core/router/routing_name.dart';
 import '../../../../../../../core/validation/email_validation/email_validation.dart';
 import '../../../../../../../core/validation/password_validation/password_validation.dart';
 import '../../../../../../../utils/app_border/app_border.dart';
 import '../../../../../../../utils/app_padding/app_padding.dart';
 import '../../../../../../../utils/app_size/app_size.dart';
-import '../../../../../../../utils/service_locator/service_locator.dart';
 import '../../../../../../../utils/strings_manager/strings_manager.dart';
 import '../../../../business_logic/login_bloc/login_bloc.dart';
 import '../../../../business_logic/login_bloc/login_states.dart';
@@ -32,9 +29,11 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<LoginBloc, LoginStates>(
+    return BlocBuilder<LoginBloc, LoginStates>(
       builder: (context, state) {
-        return Container(
+        return SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Container(
           padding: const EdgeInsets.all(AppPadding.p20),
           decoration: BoxDecoration(
             color: Colors.indigo[50]!.withOpacity(0.6),
@@ -43,9 +42,7 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
               topEnd: Radius.circular(AppBorder.b24),
             ),
           ),
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Form(
+          child: Form(
               key: formKey,
               autovalidateMode:AutovalidateMode.onUserInteraction,
               child: Column(
@@ -79,9 +76,12 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
                         PasswordValidation.checkPasswordValidation(password),
                   ),
                   const ForgetPasswordButton(),
-                  LoginButton(
-                    onTap: () =>
-                        _checkFormValidationAndLoginWithEmailAndPassword,
+                 SizedBox(
+                   width: double.infinity,
+                   height: AppSize.s6,
+                   child:  LoginButton(
+                     onTap: () => _checkFormValidationAndLoginWithEmailAndPassword,
+                   ),
                   ),
                   const DontHaveAccountText(),
                 ],
@@ -89,20 +89,6 @@ class _LoginScreenBodyState extends State<LoginScreenBody> {
             ),
           ),
         );
-      },
-      listener: (BuildContext context, state) {
-        if (state is LoginErrorState) {
-          Alarm.flutterToast(
-              massage: state.error,
-            toastState: ToastState.error,
-          );
-        }
-        else if (state is LoginSuccessState) {
-          Navigator.pushNamedAndRemoveUntil(
-              context,
-              Routes.layoutRoute, (_) => false,
-          );
-        }
       },
     );
   }

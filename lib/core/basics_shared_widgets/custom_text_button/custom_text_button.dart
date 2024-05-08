@@ -19,11 +19,7 @@ class CustomTextButton extends StatelessWidget {
       onPressed: onTap,
       child: Text(
         buttonLabel,
-        style: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w400,
-          color: textColor,
-        ),
+        style: Theme.of(context).textTheme.labelMedium!.copyWith(color: textColor),
       ),
     );
   }

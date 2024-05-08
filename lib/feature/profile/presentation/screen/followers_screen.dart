@@ -5,7 +5,6 @@ import 'package:social_app/core/router/routing_name.dart';
 import 'package:social_app/feature/profile/presentation/business_logic/profile_bloc.dart';
 import 'package:social_app/feature/profile/presentation/business_logic/profile_state.dart';
 import 'package:social_app/utils/app_padding/app_padding.dart';
-
 import '../../../../utils/service_locator/service_locator.dart';
 
 class FollowersScreen extends StatelessWidget {
@@ -27,27 +26,21 @@ class FollowersScreen extends StatelessWidget {
           padding: const EdgeInsetsDirectional.all(AppPadding.p8),
           child: ListView.builder(
             itemBuilder: (BuildContext context, int index) {
-              return BlocBuilder<ProfileBloc, ProfileStates>(
-                builder: (context, state) {
-                  switch (state) {
-                    case GetFollowersDataLoadingState _:
-                      return const SizedBox(
-                        child: Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      );
-                    case GetFollowersDataSuccessState _:
+                return BlocBuilder<ProfileBloc, ProfileStates>(
+                  builder: (context, state) {
+                    switch (state) {
+                      case GetFollowersDataSuccessState _:
                       return InkWell(
                         onTap: () {
                           Navigator.pushNamed(
                             context,
                             Routes.followUserScreen,
-                              arguments: followers[index],
+                            arguments: followers[index],
                           );
                         },
                         child: ListTile(
                           contentPadding:
-                              const EdgeInsetsDirectional.all(AppPadding.p8),
+                          const EdgeInsetsDirectional.all(AppPadding.p8),
                           leading: CustomCachedNetworkImage(
                             imageUrl: state.followers[index].photo,
                           ),
@@ -55,14 +48,18 @@ class FollowersScreen extends StatelessWidget {
                           subtitle: Text(state.followers[index].bio),
                         ),
                       );
-                    case GetFollowersDataErrorState _:
+                      case GetFollowersDataErrorState _:
                       return Text(state.msg);
-                    default:
-                      return const SizedBox.shrink();
-                  }
-                },
-              );
-            },
+                    }
+                    return const SizedBox(
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  },
+                );
+              },
+
             itemCount: followers.length,
           ),
         ),

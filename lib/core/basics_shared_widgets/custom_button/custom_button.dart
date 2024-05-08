@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
-  final double width;
-  final double height;
+
   final VoidCallback onTap;
   final double borderRadius;
   final Color buttonColor;
@@ -12,8 +11,6 @@ class CustomButton extends StatelessWidget {
   final bool addGoogleLogo;
   const CustomButton({
     super.key,
-    this.width = double.infinity,
-    this.height = 55,
     required this.onTap,
     this.borderRadius = 0,
     this.buttonColor = Colors.blue,
@@ -26,12 +23,12 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: width,
-      height: height,
+      height: 45,
       decoration: BoxDecoration(
-          color: buttonColor,
+          color: Theme.of(context).primaryColor,
           borderRadius: BorderRadiusDirectional.circular(borderRadius),
-          border: Border.all(width: 1, color: borderColor)),
+          border: Border.all(width: 1, color: borderColor),
+      ),
       clipBehavior: Clip.antiAliasWithSaveLayer,
       child: MaterialButton(
           onPressed: onTap,
@@ -49,22 +46,16 @@ class CustomButton extends StatelessWidget {
                     ),
                     Text(
                       buttonLabel,
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: textColor,
-                      ),
+                      style: Theme.of(context).textTheme.labelMedium,
                     )
                   ],
                 )
-              : FittedBox(
-                  child: Text(
-                    buttonLabel,
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: textColor,
-                    ),
-                  ),
-                )),
+              :  Text(
+              buttonLabel,
+              style: Theme.of(context).textTheme.labelMedium,
+          )
+
+      ),
     );
   }
 }

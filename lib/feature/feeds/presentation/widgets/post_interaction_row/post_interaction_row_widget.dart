@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:social_app/feature/feeds/presentation/bussiness_logic/feeds_bloc.dart';
 
 import '../../../../../core/icon_broken/icon_broken.dart';
 import '../../../../../utils/service_locator/service_locator.dart';
 import '../../../domain/entities/post.dart';
+import '../../bussiness_logic/feeds_bloc.dart';
 import '../post_interaction_button/post_interaction_button_widget.dart';
 
 class PostInteractionRow extends StatelessWidget {

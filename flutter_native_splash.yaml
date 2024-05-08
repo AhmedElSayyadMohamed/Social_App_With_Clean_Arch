@@ -1,0 +1,7 @@
+flutter_native_splash:
+
+  color: "#ffffff"
+  background_image: "assets\images\social_cover.png"
+
+  android_12:
+  

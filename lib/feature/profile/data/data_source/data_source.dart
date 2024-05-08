@@ -66,8 +66,10 @@ class ProfileRemoteDataSource extends BaseProfileRemoteDataSource {
         followerUser.followers.add(currentUser.uId);
         currentUser.following.add(followerUser.uId);
       }
-      await updateFollowingData(user: followerUser, followerOrFollowing: 'followers');
-      await updateFollowingData(user: currentUser, followerOrFollowing: 'following');
+      await updateFollowingData(
+          user: followerUser, followerOrFollowing: 'followers');
+      await updateFollowingData(
+          user: currentUser, followerOrFollowing: 'following');
     } catch (error) {
       throw ServerErrorException(msg: error.toString());
     }
@@ -88,5 +90,21 @@ class ProfileRemoteDataSource extends BaseProfileRemoteDataSource {
         throw ServerErrorException(msg: error.toString());
       },
     );
+  }
+
+  @override
+  Future<List<UserModel>> getAllUsersData() async {
+    List<UserModel> users = [];
+
+    final usersCollection = await _firebaseFirestore.collection("users").get();
+    if (usersCollection.size > 0) {
+      for (var element in usersCollection.docs) {
+        users.add(UserModel.fromJson(element.data()));
+      }
+      print(users);
+      return users;
+    } else {
+      throw ServerErrorException(msg: "User collection not found");
+    }
   }
 }

@@ -1,14 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:social_app/core/constants.dart';
 import 'package:social_app/core/router/routing_name.dart';
 import 'package:social_app/core/router/undefine_route.dart';
 import 'package:social_app/feature/auth/presentation/screens/login_screen/login_screen.dart';
 import 'package:social_app/feature/auth/presentation/screens/register_screen/register_screen.dart';
 import 'package:social_app/feature/layout/presentation/screen/layout_screen.dart';
-import 'package:social_app/feature/profile/domain/entities/user.dart';
+import 'package:social_app/feature/onboarding/presentation/screen/boarding_view.dart';
 import 'package:social_app/feature/profile/presentation/screen/following_screen.dart';
-
 import '../../feature/feeds/presentation/screens/add_post.dart';
 import '../../feature/profile/presentation/screen/followers_screen.dart';
 import '../../feature/profile/presentation/screen/profile_following_follower_screen.dart';
@@ -17,6 +15,16 @@ import '../../feature/profile/presentation/screen/user_profile_screen.dart';
 class RoutGenerator {
   static Route<dynamic> getRoute(RouteSettings setting) {
     switch (setting.name) {
+      case Routes.boardingRoute:{
+         if (true) {
+            return MaterialPageRoute(
+          builder: (_) => const OnBoardingScreen(),
+        );
+          } else {
+            return MaterialPageRoute(builder: (_) => const LoginScreen());
+          }
+      }
+  
       case Routes.authenticationRoute:
         {
           if (FirebaseAuth.instance.currentUser !=null) {
@@ -25,6 +33,7 @@ class RoutGenerator {
             return MaterialPageRoute(builder: (_) => const LoginScreen());
           }
         }
+        
       case Routes.loginRoute:
         return MaterialPageRoute(
           builder: (_) => const LoginScreen(),

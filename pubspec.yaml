@@ -25,12 +25,14 @@ dependencies:
   equatable:
   dartz:
   intl:
+  smooth_page_indicator: ^1.1.0
 #firebase
   firebase_core:
   firebase_auth:
   cloud_firestore:
   firebase_storage:
   firebase_messaging: ^14.8.0
+  flutter_native_splash: 
 
 dev_dependencies:
   flutter_test:
@@ -42,7 +44,6 @@ flutter:
 
   assets:
     - assets/images/
-    - assets/images/loading.gif
   fonts:
     - family: IconBroken
       fonts:

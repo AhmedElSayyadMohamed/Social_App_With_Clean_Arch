@@ -12,19 +12,14 @@ class DontHaveAccountText extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text(
+        Text(
           StringsManager.dontHaveAnAccount,
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.grey,
-          ),
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.grey),
         ),
         CustomTextButton(
-          onTap: () {
-            Navigator.pushNamed(context, Routes.signUpRoute);
-          },
+          onTap: () => Navigator.pushNamed(context, Routes.signUpRoute),
           buttonLabel: StringsManager.signUp,
-          textColor: Colors.blue,
+          textColor:Theme.of(context).primaryColor,
         ),
       ],
     );

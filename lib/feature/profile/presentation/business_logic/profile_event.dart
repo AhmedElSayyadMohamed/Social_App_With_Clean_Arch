@@ -7,6 +7,7 @@ class GetUserDataEvent extends ProfileEvent {
 
   GetUserDataEvent(this.uId);
 }
+class GetAllUsersDataEvent extends ProfileEvent {}
 
 class GetFollowersDataEvent extends ProfileEvent {
   final List<dynamic> followersId;

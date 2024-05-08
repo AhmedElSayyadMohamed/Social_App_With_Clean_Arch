@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 
-import 'comment.dart';
 
 class Post extends Equatable {
   final String uId;

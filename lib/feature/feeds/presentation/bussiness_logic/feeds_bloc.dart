@@ -24,6 +24,7 @@ class FeedsBloc extends Bloc<FeedsEvent, FeedsStates> {
   final GetMyPostsByIdUseCase getMyPostsByIdUseCase;
   final LikePostUseCase toggleLikePostAndGetPostLikesUseCase;
   final GetTimeLinePostsUseCase getTimeLinePostsUseCase;
+
   FeedsBloc(
     this.addPostUseCase,
     this.getMyPostsByIdUseCase,
@@ -45,7 +46,10 @@ class FeedsBloc extends Bloc<FeedsEvent, FeedsStates> {
     emit(PickImageLoadingState());
 
     if (await requestPermissionForPickImage) {
-      XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
+      XFile? pickedFile = await picker.pickImage(
+          source: ImageSource.gallery,
+          imageQuality:50,
+      );
 
       if (pickedFile != null) {
         imageFile = pickedFile.path;
@@ -70,6 +74,7 @@ class FeedsBloc extends Bloc<FeedsEvent, FeedsStates> {
 
   void closeSelectedImage() {
     imageFile = '';
+    // ignore: invalid_use_of_visible_for_testing_member
     emit(CloseImageState());
   }
 

@@ -30,7 +30,7 @@ class RegisterButton extends StatelessWidget {
           return CustomButton(
             onTap: onTap,
             buttonLabel: StringsManager.signUp,
-            borderRadius: AppBorder.b20,
+            borderRadius: AppBorder.b12,
           );
         }
       },

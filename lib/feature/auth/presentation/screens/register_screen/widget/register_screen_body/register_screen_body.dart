@@ -1,9 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../../core/basics_shared_widgets/custom_text_form_field/custom_text_form_field.dart';
 import '../../../../../../../core/basics_shared_widgets/flutter_toast/flutter_toast.dart';
-import '../../../../../../../core/constants.dart';
 import '../../../../../../../core/router/routing_name.dart';
 import '../../../../../../../core/validation/email_validation/email_validation.dart';
 import '../../../../../../../core/validation/password_validation/password_validation.dart';
@@ -59,7 +57,7 @@ class RegisterScreenBodyState extends State<RegisterScreenBody> {
                       controller: userNameController,
                       textFormLabel: StringsManager.userName,
                       keyboardType: TextInputType.text,
-                      formBorderRadius: AppPadding.p20,
+                      formBorderRadius: AppPadding.p12,
                       validator: (userName) =>
                           NameValidator.checkNameValidation(userName),
                     ),
@@ -70,7 +68,7 @@ class RegisterScreenBodyState extends State<RegisterScreenBody> {
                       controller: emailController,
                       textFormLabel: StringsManager.email,
                       keyboardType: TextInputType.emailAddress,
-                      formBorderRadius: AppPadding.p20,
+                      formBorderRadius: AppPadding.p12,
                       validator: (email) =>
                           EmailValidator.checkEmailValidation(email),
                     ),
@@ -81,7 +79,7 @@ class RegisterScreenBodyState extends State<RegisterScreenBody> {
                       controller: phoneController,
                       textFormLabel: StringsManager.phone,
                       keyboardType: TextInputType.number,
-                      formBorderRadius: AppPadding.p20,
+                      formBorderRadius: AppPadding.p12,
                       validator: (email) =>
                           PhoneValidator.checkPhoneValidation(email),
                     ),
@@ -92,7 +90,7 @@ class RegisterScreenBodyState extends State<RegisterScreenBody> {
                       controller: passwordController,
                       textFormLabel: StringsManager.password,
                       keyboardType: TextInputType.emailAddress,
-                      formBorderRadius: AppPadding.p20,
+                      formBorderRadius: AppPadding.p12,
                       obSecureText: cubit.isSecure,
                       suffixIcon: const RegisterToggleEyeIcon(),
                       onFieldSubmitted: (value) =>
@@ -107,7 +105,7 @@ class RegisterScreenBodyState extends State<RegisterScreenBody> {
                       controller: confirmPasswordController,
                       textFormLabel: StringsManager.confirmPassword,
                       keyboardType: TextInputType.emailAddress,
-                      formBorderRadius: AppPadding.p20,
+                      formBorderRadius: AppPadding.p12,
                       obSecureText: cubit.isSecure,
                       onFieldSubmitted: (value) =>
                           _checkFormValidationAndRegisterWithEmailAndPassword,
@@ -117,10 +115,15 @@ class RegisterScreenBodyState extends State<RegisterScreenBody> {
                     const SizedBox(
                       height: AppSize.s3,
                     ),
-                    RegisterButton(
-                      onTap: () =>
-                          _checkFormValidationAndRegisterWithEmailAndPassword,
+                    SizedBox(
+                      height: AppSize.s6,
+                      width: double.infinity,
+                      child:  RegisterButton(
+                        onTap: () =>
+                        _checkFormValidationAndRegisterWithEmailAndPassword,
+                      ),
                     ),
+
                   ],
                 ),
               ),
